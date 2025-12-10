@@ -67,7 +67,7 @@
             
             <div class="page-title-head d-flex align-items-center gap-2">
                 <div class="flex-grow-1">
-                    <h4 class="fs-18 fw-bold mb-0">Agregar coche</h4>
+                    <h4 class="fs-18 fw-bold mb-0">Agregar Marca</h4>
                 </div>
 
                 <div class="text-end">
@@ -76,7 +76,7 @@
                         
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
                         
-                        <li class="breadcrumb-item active">Agregar coche</li>
+                        <li class="breadcrumb-item active">Agregar Marca</li>
                     </ol>
                 </div>
             </div>
@@ -89,193 +89,37 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Información del Vehículo</h5>
+                                <h5 class="card-title">Información de la Marca</h5>
                             </div>
                             <div class="card-body">
                                 <form method="POST" action="">
-                                    <!-- Marca y Modelo -->
+                                    <!-- Nombre de la Marca -->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="id_marca" class="form-label">Marca <span class="text-danger">*</span></label>
-                                                <select class="form-select" id="id_marca" name="id_marca" required>
-                                                    <option selected disabled value="">Selecciona una marca</option>
-                                                    <option value="1">Toyota</option>
-                                                    <option value="2">Honda</option>
-                                                    <option value="3">Ford</option>
-                                                    <option value="4">BMW</option>
-                                                    <option value="5">Mercedes-Benz</option>
-                                                    <option value="6">Audi</option>
-                                                    <option value="7">Volkswagen</option>
-                                                    <option value="8">Chevrolet</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="modelo" class="form-label">Modelo <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Ej: Corolla, Civic, Mustang" required>
+                                                <label for="nombre" class="form-label">Nombre de la Marca <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Toyota, Honda, Ford" required>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Tipo y Año -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="tipo" class="form-label">Tipo de Vehículo</label>
-                                                <select class="form-select" id="tipo" name="tipo">
-                                                    <option selected value="">Selecciona un tipo</option>
-                                                    <option value="Sedán">Sedán</option>
-                                                    <option value="SUV">SUV</option>
-                                                    <option value="Hatchback">Hatchback</option>
-                                                    <option value="Coupé">Coupé</option>
-                                                    <option value="Convertible">Convertible</option>
-                                                    <option value="Camioneta">Camioneta</option>
-                                                    <option value="Minivan">Minivan</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="year" class="form-label">Año <span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="year" name="year" min="1990" max="2099" placeholder="2023" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Color y Transmisión -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label d-block">Color</label>
-                                                <div class="d-flex gap-2 flex-wrap">
-                                                    <input type="hidden" id="color" name="color" value="">
-                                                    
-                                                    <!-- Blanco -->
-                                                    <label class="color-option" title="Blanco">
-                                                        <input type="radio" name="color_option" value="Blanco" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #FFFFFF; border: 2px solid #333;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Negro -->
-                                                    <label class="color-option" title="Negro">
-                                                        <input type="radio" name="color_option" value="Negro" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #000000;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Gris -->
-                                                    <label class="color-option" title="Gris">
-                                                        <input type="radio" name="color_option" value="Gris" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #808080;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Rojo -->
-                                                    <label class="color-option" title="Rojo">
-                                                        <input type="radio" name="color_option" value="Rojo" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #E31E24;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Azul -->
-                                                    <label class="color-option" title="Azul">
-                                                        <input type="radio" name="color_option" value="Azul" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #0066CC;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Plata -->
-                                                    <label class="color-option" title="Plata">
-                                                        <input type="radio" name="color_option" value="Plata" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #C0C0C0; border: 1px solid #999;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Marrón -->
-                                                    <label class="color-option" title="Marrón">
-                                                        <input type="radio" name="color_option" value="Marrón" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #8B4513;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Verde -->
-                                                    <label class="color-option" title="Verde">
-                                                        <input type="radio" name="color_option" value="Verde" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #228B22;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Naranja -->
-                                                    <label class="color-option" title="Naranja">
-                                                        <input type="radio" name="color_option" value="Naranja" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #FF8C00;"></span>
-                                                    </label>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="transmision" class="form-label">Transmisión</label>
-                                                <select class="form-select" id="transmision" name="transmision">
-                                                    <option selected value="">Selecciona una transmisión</option>
-                                                    <option value="Automática">Automática</option>
-                                                    <option value="Manual">Manual</option>
-                                                    <option value="CVT">CVT</option>
-                                                    <option value="Híbrida">Híbrida</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Combustible y Kilometraje -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="combustible" class="form-label">Combustible</label>
-                                                <select class="form-select" id="combustible" name="combustible">
-                                                    <option selected value="">Selecciona un combustible</option>
-                                                    <option value="Gasolina">Gasolina</option>
-                                                    <option value="Diésel">Diésel</option>
-                                                    <option value="Híbrido">Híbrido</option>
-                                                    <option value="Eléctrico">Eléctrico</option>
-                                                    <option value="GLP">GLP</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="kilometraje" class="form-label">Kilometraje</label>
-                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" placeholder="Ej: 50000">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Precio -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">$</span>
-                                                    <input type="number" class="form-control" id="precio" name="precio" min="0" step="0.01" placeholder="0.00" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Imágenes del Vehículo -->
+                                    <!-- Logo de la Marca -->
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="mb-3">
-                                                <label class="form-label d-block">Imágenes del Vehículo <span class="text-danger">*</span></label>
-                                                <div class="border border-2 border-dashed rounded-3 p-4 text-center" id="dropZone">
+                                                <label class="form-label d-block">Logo de la Marca <span class="text-danger">*</span></label>
+                                                <div class="border border-2 border-dashed rounded-3 p-4 text-center" id="dropZoneLogo">
                                                     <i class="ri-image-add-line fs-40 text-muted d-block mb-2"></i>
-                                                    <h5 class="mb-2">Arrastra imágenes aquí</h5>
-                                                    <p class="text-muted mb-3">o haz clic para seleccionar archivos</p>
-                                                    <input type="file" id="imagenes" name="imagenes[]" multiple accept=".jpg,.jpeg,.png" class="d-none" required />
-                                                    <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('imagenes').click()">
-                                                        <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar Imágenes
+                                                    <h5 class="mb-2">Arrastra la imagen aquí</h5>
+                                                    <p class="text-muted mb-3">o haz clic para seleccionar un archivo</p>
+                                                    <input type="file" id="logo" name="logo" accept=".jpg,.jpeg,.png" class="d-none" required />
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('logo').click()">
+                                                        <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar Logo
                                                     </button>
                                                     <p class="text-muted fs-13 mt-3 mb-0">Formatos permitidos: JPG, PNG</p>
                                                 </div>
-                                                <!-- Vista previa de imágenes -->
-                                                <div id="imagePreviewContainer" class="mt-3"></div>
+                                                <!-- Vista previa del logo -->
+                                                <div id="logoPreviewContainer" class="mt-3"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -285,7 +129,7 @@
                                         <div class="col-12">
                                             <div class="d-flex gap-2">
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="ri-add-line me-1"></i>Agregar Coche
+                                                    <i class="ri-add-line me-1"></i>Agregar Marca
                                                 </button>
                                                 <button type="reset" class="btn btn-secondary">
                                                     <i class="ri-refresh-line me-1"></i>Limpiar
@@ -298,6 +142,7 @@
                         </div>
                     </div>
                 </div>
+            </div> <!-- container -->
 
 
             <!-- Footer -->
@@ -712,100 +557,63 @@
     <!-- App js -->
     <script src="assets/js/app.js"></script>
 
-
     <style>
-        .color-option {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
 
-        .color-option input[type="radio"] {
-            display: none;
-        }
-
-        .color-circle {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .color-option input[type="radio"]:checked + .color-circle {
-            border-color: #3c86d8;
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3c86d8;
-            transform: scale(1.1);
-        }
-
-        .color-option:hover .color-circle {
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Image Upload Styles */
-        #dropZone {
+        #dropZoneLogo {
             cursor: pointer;
             background-color: var(--bs-gray-100);
             transition: all 0.3s ease;
         }
 
-        [data-bs-theme="dark"] #dropZone {
+        [data-bs-theme="dark"] #dropZoneLogo {
             background-color: var(--bs-gray-800);
         }
 
-        #dropZone:hover,
-        #dropZone.dragover {
+        #dropZoneLogo:hover,
+        #dropZoneLogo.dragover {
             background-color: rgba(60, 134, 216, 0.1);
             border-color: #3c86d8 !important;
         }
 
-        .image-preview-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
+        .logo-preview-container {
+            display: flex;
+            justify-content: center;
             margin-top: 1.5rem;
         }
 
-        .image-preview-wrapper {
+        .logo-preview-wrapper {
             position: relative;
             border-radius: 8px;
             overflow: hidden;
             background-color: var(--bs-gray-100);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            max-width: 250px;
         }
 
-        [data-bs-theme="dark"] .image-preview-wrapper {
+        [data-bs-theme="dark"] .logo-preview-wrapper {
             background-color: var(--bs-gray-800);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .image-preview-wrapper:hover {
+        .logo-preview-wrapper:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        [data-bs-theme="dark"] .image-preview-wrapper:hover {
+        [data-bs-theme="dark"] .logo-preview-wrapper:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
-        .image-preview-wrapper img {
+        .logo-preview-wrapper img {
             width: 100%;
-            height: 150px;
-            object-fit: cover;
+            height: auto;
+            max-height: 250px;
+            object-fit: contain;
+            padding: 1rem;
             display: block;
         }
 
-        .image-preview-wrapper.primary img {
-            border: 3px solid #3c86d8;
-        }
-
-        .image-preview-overlay {
+        .logo-preview-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -815,21 +623,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .image-preview-wrapper:hover .image-preview-overlay {
+        .logo-preview-wrapper:hover .logo-preview-overlay {
             opacity: 1;
         }
 
-        .image-overlay-btn {
-            padding: 6px 10px;
+        .logo-overlay-btn {
+            padding: 8px 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
             transition: all 0.3s ease;
             color: white;
             display: flex;
@@ -837,48 +644,29 @@
             gap: 4px;
         }
 
-        .btn-set-primary {
+        .btn-change-logo {
             background-color: #3c86d8;
         }
 
-        .btn-set-primary:hover {
+        .btn-change-logo:hover {
             background-color: #2e6ab1;
         }
 
-        .btn-delete {
+        .btn-delete-logo {
             background-color: #e31e24;
         }
 
-        .btn-delete:hover {
+        .btn-delete-logo:hover {
             background-color: #c91a1f;
         }
 
-        .image-badge-primary {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background-color: #3c86d8;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        [data-bs-theme="dark"] .image-badge-primary {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .empty-state {
+        .empty-state-logo {
             text-align: center;
             padding: 2rem;
             color: var(--bs-text-muted);
         }
 
-        .empty-state i {
+        .empty-state-logo i {
             font-size: 2rem;
             margin-bottom: 1rem;
             opacity: 0.5;
@@ -886,141 +674,109 @@
     </style>
 
     <script>
-        // Colores
-        document.querySelectorAll('.color-radio').forEach(radio => {
-            radio.addEventListener('change', function() {
-                document.getElementById('color').value = this.value;
-            });
-        });
+        // Carga del logo
+        const dropZoneLogo = document.getElementById('dropZoneLogo');
+        const logoInput = document.getElementById('logo');
+        const logoPreviewContainer = document.getElementById('logoPreviewContainer');
+        let uploadedLogo = null;
 
-        // carga de imagenes
-        const dropZone = document.getElementById('dropZone');
-        const imageInput = document.getElementById('imagenes');
-        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-        let uploadedImages = [];
-        let primaryImageIndex = -1;
-
-        // Drag and drop
-        dropZone.addEventListener('dragover', (e) => {
+        // Drag and drop events
+        dropZoneLogo.addEventListener('dragover', (e) => {
             e.preventDefault();
-            dropZone.classList.add('dragover');
+            dropZoneLogo.classList.add('dragover');
         });
 
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
+        dropZoneLogo.addEventListener('dragleave', () => {
+            dropZoneLogo.classList.remove('dragover');
         });
 
-        dropZone.addEventListener('drop', (e) => {
+        dropZoneLogo.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropZone.classList.remove('dragover');
-            handleFiles(e.dataTransfer.files);
+            dropZoneLogo.classList.remove('dragover');
+            handleLogoFile(e.dataTransfer.files);
         });
 
-        imageInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
+        logoInput.addEventListener('change', (e) => {
+            handleLogoFile(e.target.files);
         });
 
-        function handleFiles(files) {
+        function handleLogoFile(files) {
             const allowedFormats = ['image/jpeg', 'image/png'];
 
-            Array.from(files).forEach((file) => {
-                if (allowedFormats.includes(file.type)) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        uploadedImages.push({
-                            src: e.target.result,
-                            name: file.name,
-                            file: file
-                        });
-                        if (primaryImageIndex === -1) {
-                            primaryImageIndex = 0;
-                        }
-                        renderImages();
+            if (files.length === 0) return;
+
+            const file = files[0];
+            if (allowedFormats.includes(file.type)) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedLogo = {
+                        src: e.target.result,
+                        name: file.name,
+                        file: file
                     };
-                    reader.readAsDataURL(file);
-                } else {
-                    alert(`Formato no permitido: ${file.name}. Usa JPG, PNG o WEBP`);
-                }
-            });
+                    renderLogo();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert(`Formato no permitido: ${file.name}. Usa JPG o PNG`);
+                logoInput.value = '';
+            }
         }
 
-        function renderImages() {
-            imagePreviewContainer.innerHTML = '';
+        function renderLogo() {
+            logoPreviewContainer.innerHTML = '';
 
-            if (uploadedImages.length === 0) {
-                imagePreviewContainer.innerHTML = '<div class="empty-state"><i class="ri-gallery-line"></i><p>No hay imágenes cargadas</p></div>';
+            if (!uploadedLogo) {
+                logoPreviewContainer.innerHTML = '<div class="empty-state-logo"><i class="ri-image-line"></i><p>No hay logo cargado</p></div>';
                 return;
             }
 
-            const previewRow = document.createElement('div');
-            previewRow.className = 'image-preview-row';
+            const container = document.createElement('div');
+            container.className = 'logo-preview-container';
 
-            uploadedImages.forEach((image, index) => {
-                const wrapper = document.createElement('div');
-                wrapper.className = `image-preview-wrapper ${index === primaryImageIndex ? 'primary' : ''}`;
+            const wrapper = document.createElement('div');
+            wrapper.className = 'logo-preview-wrapper';
 
-                const img = document.createElement('img');
-                img.src = image.src;
-                img.alt = image.name;
+            const img = document.createElement('img');
+            img.src = uploadedLogo.src;
+            img.alt = uploadedLogo.name;
 
-                if (index === primaryImageIndex) {
-                    const badge = document.createElement('div');
-                    badge.className = 'image-badge-primary';
-                    badge.innerHTML = '<i class="ri-star-fill"></i>Principal';
-                    wrapper.appendChild(badge);
-                }
+            const overlay = document.createElement('div');
+            overlay.className = 'logo-preview-overlay';
 
-                const overlay = document.createElement('div');
-                overlay.className = 'image-preview-overlay';
+            const changeBtn = document.createElement('button');
+            changeBtn.type = 'button';
+            changeBtn.className = 'logo-overlay-btn btn-change-logo';
+            changeBtn.innerHTML = '<i class="ri-image-edit-line"></i>Cambiar';
+            changeBtn.onclick = () => {
+                logoInput.click();
+            };
 
-                const primaryBtn = document.createElement('button');
-                primaryBtn.type = 'button';
-                primaryBtn.className = 'image-overlay-btn btn-set-primary';
-                primaryBtn.innerHTML = '<i class="ri-star-line"></i>Principal';
-                primaryBtn.onclick = () => setPrimaryImage(index);
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'logo-overlay-btn btn-delete-logo';
+            deleteBtn.innerHTML = '<i class="ri-delete-bin-line"></i>Eliminar';
+            deleteBtn.onclick = () => {
+                uploadedLogo = null;
+                logoInput.value = '';
+                renderLogo();
+            };
 
-                const deleteBtn = document.createElement('button');
-                deleteBtn.type = 'button';
-                deleteBtn.className = 'image-overlay-btn btn-delete';
-                deleteBtn.innerHTML = '<i class="ri-delete-bin-line"></i>Eliminar';
-                deleteBtn.onclick = () => deleteImage(index);
+            overlay.appendChild(changeBtn);
+            overlay.appendChild(deleteBtn);
 
-                overlay.appendChild(primaryBtn);
-                overlay.appendChild(deleteBtn);
+            wrapper.appendChild(img);
+            wrapper.appendChild(overlay);
+            container.appendChild(wrapper);
 
-                wrapper.appendChild(img);
-                wrapper.appendChild(overlay);
-                previewRow.appendChild(wrapper);
-            });
-
-            imagePreviewContainer.appendChild(previewRow);
-        }
-
-        function setPrimaryImage(index) {
-            primaryImageIndex = index;
-            renderImages();
-        }
-
-        function deleteImage(index) {
-            uploadedImages.splice(index, 1);
-            if (primaryImageIndex === index) {
-                primaryImageIndex = uploadedImages.length > 0 ? 0 : -1;
-            } else if (primaryImageIndex > index) {
-                primaryImageIndex--;
-            }
-            renderImages();
+            logoPreviewContainer.appendChild(container);
         }
 
         // Reset form
         document.querySelector('form').addEventListener('reset', function() {
-            document.getElementById('color').value = '';
-            document.querySelectorAll('.color-radio').forEach(radio => {
-                radio.checked = false;
-            });
-            uploadedImages = [];
-            primaryImageIndex = -1;
-            imageInput.value = '';
-            renderImages();
+            uploadedLogo = null;
+            logoInput.value = '';
+            renderLogo();
         });
     </script>
 
