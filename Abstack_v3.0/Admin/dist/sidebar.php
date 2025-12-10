@@ -1,4 +1,4 @@
-        <!-- Sidenav Menu Start -->
+
         <div class="sidenav-menu">
 
             <!-- Brand Logo -->
@@ -26,10 +26,10 @@
                     <li class="side-nav-title">Navigation</li>
 
                     <li class="side-nav-item">
-                        <a href="index.html" class="side-nav-link">
+                        <a href="index.php" class="side-nav-link">
                             <span class="menu-icon"><i data-lucide="airplay"></i></span>
-                            <span class="menu-text"> Prueba </span>
-                            <span class="badge bg-danger rounded">3</span>
+                            <span class="menu-text"> Dashboard </span>
+                            <!-- <span class="badge bg-danger rounded">3</span> -->
                         </a>
                     </li>
 
@@ -779,4 +779,3 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-        <!-- Sidenav Menu End -->
