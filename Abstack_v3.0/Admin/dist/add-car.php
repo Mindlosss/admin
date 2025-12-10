@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Dashboard | Abstack - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>Form Elements | Abstack - Responsive Bootstrap 5 Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -27,6 +27,8 @@
 <body>
     <!-- Begin page -->
     <div class="wrapper">
+
+        
 
         <!-- Menu -->
 
@@ -54,6 +56,8 @@
             </div>
         </div>
 
+                        
+
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
@@ -63,87 +67,165 @@
             
             <div class="page-title-head d-flex align-items-center gap-2">
                 <div class="flex-grow-1">
-                    <h4 class="fs-18 fw-bold mb-0">Dashboard</h4>
+                    <h4 class="fs-18 fw-bold mb-0">Agregar coche</h4>
                 </div>
 
                 <div class="text-end">
                     <ol class="breadcrumb m-0 py-0 fs-13">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Abstack</a></li>
                         
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                        
+                        <li class="breadcrumb-item active">Agregar coche</li>
                     </ol>
                 </div>
             </div>
             
-            <!-- container -->
+
+            
+
             <div class="page-container">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Lista de Coches</h5>
+                                <h5 class="card-title">Información del Vehículo</h5>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Marca</th>
-                                                <th>Modelo</th>
-                                                <th>Año</th>
-                                                <th>Color</th>
-                                                <th>Precio</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Toyota</td>
-                                                <td>Corolla</td>
-                                                <td>2023</td>
-                                                <td>Blanco</td>
-                                                <td>$25,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Honda</td>
-                                                <td>Civic</td>
-                                                <td>2023</td>
-                                                <td>Negro</td>
-                                                <td>$27,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ford</td>
-                                                <td>Mustang</td>
-                                                <td>2022</td>
-                                                <td>Rojo</td>
-                                                <td>$35,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>BMW</td>
-                                                <td>X5</td>
-                                                <td>2023</td>
-                                                <td>Plata</td>
-                                                <td>$65,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Mercedes-Benz</td>
-                                                <td>C-Class</td>
-                                                <td>2022</td>
-                                                <td>Azul</td>
-                                                <td>$55,000</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <form method="POST" action="">
+                                    <!-- Marca y Modelo -->
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="id_marca" class="form-label">Marca <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="id_marca" name="id_marca" required>
+                                                    <option selected disabled value="">Selecciona una marca</option>
+                                                    <option value="1">Toyota</option>
+                                                    <option value="2">Honda</option>
+                                                    <option value="3">Ford</option>
+                                                    <option value="4">BMW</option>
+                                                    <option value="5">Mercedes-Benz</option>
+                                                    <option value="6">Audi</option>
+                                                    <option value="7">Volkswagen</option>
+                                                    <option value="8">Chevrolet</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="modelo" class="form-label">Modelo <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Ej: Corolla, Civic, Mustang" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tipo y Año -->
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="tipo" class="form-label">Tipo de Vehículo</label>
+                                                <select class="form-select" id="tipo" name="tipo">
+                                                    <option selected value="">Selecciona un tipo</option>
+                                                    <option value="Sedán">Sedán</option>
+                                                    <option value="SUV">SUV</option>
+                                                    <option value="Hatchback">Hatchback</option>
+                                                    <option value="Coupé">Coupé</option>
+                                                    <option value="Convertible">Convertible</option>
+                                                    <option value="Camioneta">Camioneta</option>
+                                                    <option value="Minivan">Minivan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="year" class="form-label">Año <span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" id="year" name="year" min="1990" max="2099" placeholder="2023" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Color y Transmisión -->
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="color" class="form-label">Color</label>
+                                                <input type="text" class="form-control" id="color" name="color" placeholder="Ej: Blanco, Negro, Rojo">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="transmision" class="form-label">Transmisión</label>
+                                                <select class="form-select" id="transmision" name="transmision">
+                                                    <option selected value="">Selecciona una transmisión</option>
+                                                    <option value="Automática">Automática</option>
+                                                    <option value="Manual">Manual</option>
+                                                    <option value="CVT">CVT</option>
+                                                    <option value="Híbrida">Híbrida</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Combustible y Kilometraje -->
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="combustible" class="form-label">Combustible</label>
+                                                <select class="form-select" id="combustible" name="combustible">
+                                                    <option selected value="">Selecciona un combustible</option>
+                                                    <option value="Gasolina">Gasolina</option>
+                                                    <option value="Diésel">Diésel</option>
+                                                    <option value="Híbrido">Híbrido</option>
+                                                    <option value="Eléctrico">Eléctrico</option>
+                                                    <option value="GLP">GLP</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="kilometraje" class="form-label">Kilometraje</label>
+                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" placeholder="Ej: 50000">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Precio -->
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input type="number" class="form-control" id="precio" name="precio" min="0" step="0.01" placeholder="0.00" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Botones -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="d-flex gap-2">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="ri-add-line me-1"></i>Agregar Coche
+                                                </button>
+                                                <button type="reset" class="btn btn-secondary">
+                                                    <i class="ri-refresh-line me-1"></i>Limpiar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
-            <!-- container -->
+            </div> <!-- container -->
 
 
             <!-- Footer -->
             <?php include 'footer.php'; ?>
+
 
         </div>
 
@@ -552,12 +634,6 @@
 
     <!-- App js -->
     <script src="assets/js/app.js"></script>
-
-    <!-- Apex Chart js -->
-    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-
-    <!-- Projects Analytics Dashboard App js -->
-    <script src="assets/js/pages/dashboard.js"></script>
 
 </body>
 
