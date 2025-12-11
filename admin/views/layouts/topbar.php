@@ -45,7 +45,8 @@
 
 
             <!-- Language Dropdown -->
-            <div class="topbar-item">
+
+            <!-- <div class="topbar-item">
                 <div class="dropdown">
                     <button class="topbar-link" data-bs-toggle="dropdown" data-bs-offset="0,32" type="button"
                         aria-haspopup="false" aria-expanded="false">
@@ -54,37 +55,37 @@
                     </button>
 
                     <div class="dropdown-menu dropdown-menu-end">
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item" data-translator-lang="en">
                             <img src="assets/images/flags/us.svg" alt="user-image" class="me-1 rounded" height="18"
                                 data-translator-image> <span class="align-middle">English</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item" data-translator-lang="hi">
                             <img src="assets/images/flags/in.svg" alt="user-image" class="me-1 rounded" height="18"
                                 data-translator-image> <span class="align-middle">Hindi</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <img src="assets/images/flags/de.svg" alt="user-image" class="me-1 rounded" height="18">
                             <span class="align-middle">German</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <img src="assets/images/flags/it.svg" alt="user-image" class="me-1 rounded" height="18">
                             <span class="align-middle">Italian</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <img src="assets/images/flags/es.svg" alt="user-image" class="me-1 rounded" height="18">
                             <span class="align-middle">Spanish</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <img src="assets/images/flags/ru.svg" alt="user-image" class="me-1 rounded" height="18">
                             <span class="align-middle">Russian</span>
@@ -92,10 +93,10 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Notification Dropdown -->
-            <div class="topbar-item">
+            <!-- <div class="topbar-item">
                 <div class="dropdown">
                     <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown"
                         data-bs-offset="0,25" type="button" data-bs-auto-close="outside" aria-haspopup="false"
@@ -117,13 +118,13 @@
                                             <i class="ri-settings-2-line fs-22 align-middle"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <!-- item-->
+                                            
                                             <a href="javascript:void(0);" class="dropdown-item">Mark as Read</a>
-                                            <!-- item-->
+                                            
                                             <a href="javascript:void(0);" class="dropdown-item">Delete All</a>
-                                            <!-- item-->
+                                            
                                             <a href="javascript:void(0);" class="dropdown-item">Do not Disturb</a>
-                                            <!-- item-->
+                                            
                                             <a href="javascript:void(0);" class="dropdown-item">Other Settings</a>
                                         </div>
                                     </div>
@@ -132,7 +133,7 @@
                         </div>
 
                         <div class="position-relative rounded-0" style="max-height: 300px;" data-simplebar>
-                            <!-- item-->
+                            
                             <div class="dropdown-item notification-item py-2 text-wrap active" id="notification-1">
                                 <span class="d-flex align-items-center">
                                     <span class="me-3 position-relative flex-shrink-0">
@@ -155,7 +156,7 @@
                                 </span>
                             </div>
 
-                            <!-- item-->
+                            
                             <div class="dropdown-item notification-item py-2 text-wrap" id="notification-2">
                                 <span class="d-flex align-items-center">
                                     <span class="me-3 position-relative flex-shrink-0">
@@ -179,7 +180,7 @@
                                 </span>
                             </div>
 
-                            <!-- item-->
+                            
                             <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
                                 <span class="d-flex align-items-center">
                                     <div class="avatar-lg flex-shrink-0 me-3">
@@ -203,7 +204,7 @@
                                 </span>
                             </div>
 
-                            <!-- item-->
+                            
                             <div class="dropdown-item notification-item py-2 text-wrap" id="notification-4">
                                 <span class="d-flex align-items-center">
                                     <span class="me-3 position-relative flex-shrink-0">
@@ -226,7 +227,7 @@
                                 </span>
                             </div>
 
-                            <!-- item-->
+                            
                             <div class="dropdown-item notification-item py-2 text-wrap" id="notification-5">
                                 <span class="d-flex align-items-center">
                                     <span class="me-3 position-relative flex-shrink-0">
@@ -250,17 +251,17 @@
                             </div>
                         </div>
 
-                        <!-- All-->
+                        
                         <a href="javascript:void(0);"
                             class="dropdown-item position-absolute bottom-0 notification-item text-center text-reset text-decoration-underline fw-bold notify-item border-top border-light py-2">
                             View All
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Apps Dropdown -->
-            <div class="topbar-item d-none d-sm-flex">
+            <!-- <div class="topbar-item d-none d-sm-flex">
                 <div class="dropdown">
                     <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown"
                         data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
@@ -308,7 +309,7 @@
                                         <span>G Cloud</span>
                                     </a>
                                 </div>
-                            </div> <!-- end row-->
+                            </div> 
 
                             <div class="row g-0">
                                 <div class="col">
@@ -329,11 +330,11 @@
                                         <span>Bootstrap</span>
                                     </a>
                                 </div>
-                            </div> <!-- end row-->
+                            </div> 
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Button Trigger Customizer Offcanvas -->
             <div class="topbar-item d-none d-sm-flex">
@@ -364,30 +365,31 @@
                         <i class="ri-arrow-down-s-line d-none d-lg-block align-middle ms-2"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <!-- item-->
+                        
+                        <!-- 
                         <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Welcome !</h6>
                         </div>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <i class="ri-account-circle-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">My Account</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <i class="ri-wallet-3-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">Wallet : <span class="fw-semibold">$89.25k</span></span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <i class="ri-settings-2-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">Settings</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <i class="ri-question-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">Support</span>
@@ -395,13 +397,14 @@
 
                         <div class="dropdown-divider"></div>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <i class="ri-lock-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">Lock Screen</span>
                         </a>
-
-                        <!-- item-->
+                        -->
+                            
+                        
                         <a href="javascript:void(0);" class="dropdown-item fw-semibold text-danger">
                             <i class="ri-logout-box-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">Sign Out</span>

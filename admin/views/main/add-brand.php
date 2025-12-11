@@ -66,7 +66,7 @@
                     <h4 class="fs-18 fw-bold mb-0">Agregar Marca</h4>
                 </div>
 
-                <div class="text-end">
+                <!-- <div class="text-end">
                     <ol class="breadcrumb m-0 py-0 fs-13">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Abstack</a></li>
                         
@@ -74,7 +74,7 @@
                         
                         <li class="breadcrumb-item active">Agregar Marca</li>
                     </ol>
-                </div>
+                </div> -->
             </div>
             
 
