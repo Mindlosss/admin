@@ -5,13 +5,12 @@
             <!-- Brand Logo -->
             <a href="index.php" class="logo">
                 <span class="logo-light">
-                    <span class="logo-lg"><img src="assets/images/logo.png" alt="logo"></span>
-                    <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo"></span>
+                    <span class="logo-lg"><img src="assets/images/logo.png" alt="logo"  width="25" height="200"></span>
+                    <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo" width="100" height="200"></span>
                 </span>
-
                 <span class="logo-dark">
-                    <span class="logo-lg"><img src="assets/images/logo-dark.png" alt="dark logo"></span>
-                    <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo"></span>
+                    <span class="logo-lg"><img src="assets/images/logo-dark.png" alt="dark logo"  width="25" height="200"></span>
+                    <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo" width="100" height="200"></span>
                 </span>
             </a>
 
