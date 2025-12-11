@@ -42,13 +42,13 @@
 
             <li class="side-nav-item">
                 <a href="add-brand.php" class="side-nav-link">
-                    <span class="menu-icon"><i data-lucide="folder-open"></i></span>
+                    <span class="menu-icon"><i data-lucide="tag"></i></span>
                     <span class="menu-text"> Agregar Marca </span>
                     <!-- <span class="badge bg-danger rounded">3</span> -->
                 </a>
             </li>
 
-            <li class="side-nav-title">Apps</li>
+            <!-- <li class="side-nav-title">Apps</li>
 
             <li class="side-nav-item">
                 <a href="apps-calendar.html" class="side-nav-link">
@@ -788,7 +788,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> -->
         </ul>
 
         <div class="clearfix"></div>
