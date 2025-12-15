@@ -202,6 +202,14 @@
                                                         <span class="color-circle" style="background-color: #FF8C00;"></span>
                                                     </label>
                                                     
+                                                    <!-- Personalizado -->
+                                                    <label class="color-option" title="Personalizado">
+                                                        <input type="radio" name="color_option" value="Personalizado" class="color-radio">
+                                                        <span class="color-circle custom-color-circle">
+                                                            <input type="color" id="custom-color-input" value="#ffffffff" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
+                                                        </span>
+                                                    </label>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -733,18 +741,23 @@
             justify-content: center;
         }
 
-        .color-option input[type="radio"]:checked + .color-circle {
+        .color-option input[type="radio"]:checked + .color-circle,
+        .color-option input[type="radio"]:checked + .custom-color-circle {
             border-color: #3c86d8;
             box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3c86d8;
             transform: scale(1.1);
         }
 
-        .color-option:hover .color-circle {
+        .color-option:hover .color-circle,
+        .color-option:hover .custom-color-circle {
             transform: scale(1.05);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
-        /* Image Upload Styles */
+        .custom-color-circle {
+            background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080);
+            position: relative;
+        }
         #dropZone {
             cursor: pointer;
             background-color: var(--bs-gray-100);
@@ -885,8 +898,18 @@
         // Colores
         document.querySelectorAll('.color-radio').forEach(radio => {
             radio.addEventListener('change', function() {
-                document.getElementById('color').value = this.value;
+                if (this.value === 'Personalizado') {
+                    document.getElementById('color').value = document.getElementById('custom-color-input').value;
+                } else {
+                    document.getElementById('color').value = this.value;
+                }
             });
+        });
+
+        // Custom color input
+        document.getElementById('custom-color-input').addEventListener('input', function() {
+            document.getElementById('color').value = this.value;
+            document.querySelector('input[name="color_option"][value="Personalizado"]').checked = true;
         });
 
         // carga de imagenes
@@ -1013,6 +1036,7 @@
             document.querySelectorAll('.color-radio').forEach(radio => {
                 radio.checked = false;
             });
+            document.getElementById('custom-color-input').value = '#ffffffff';
             uploadedImages = [];
             primaryImageIndex = -1;
             imageInput.value = '';
