@@ -405,7 +405,7 @@
                         -->
                             
                         
-                        <a href="javascript:void(0);" class="dropdown-item fw-semibold text-danger">
+                        <a href="index.php?view=logout" class="dropdown-item fw-semibold text-danger">
                             <i class="ri-logout-box-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">Sign Out</span>
                         </a>

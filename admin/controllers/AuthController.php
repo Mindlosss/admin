@@ -16,10 +16,12 @@ if (isset($_POST['accion'])) {
 
         if (isset($resultado['status']) && $resultado['status'] === 'ok') {
             $_SESSION['mensaje'] = "Usuario registrado correctamente. Ahora inicia sesión.";
-            header("Location: ../views/auth/login.php");
+            // Redirigir al LOGIN
+            header("Location: ../index.php?view=login");
         } else {
             $_SESSION['error'] = $resultado['message'] ?? "Error al registrar.";
-            header("Location: ../views/auth/register.php");
+            // Redirigir al REGISTRO
+            header("Location: ../index.php?view=register");
         }
     }
 
@@ -33,11 +35,13 @@ if (isset($_POST['accion'])) {
         if ($resultado['status'] === 'success') {
             $_SESSION['usuario_id'] = $resultado['data']['id_usuario'];
             $_SESSION['usuario_nombre'] = $resultado['data']['nombre'];
-            // redireccionar al index
-            header("Location: ../views/main/index.php"); 
+            
+            // Éxito: Redirigir al DASHBOARD
+            header("Location: ../index.php?view=dashboard");
         } else {
             $_SESSION['error'] = "Correo o contraseña incorrectos.";
-            header("Location: ../views/auth/login.php");
+            // Error: Redirigir al LOGIN
+            header("Location: ../index.php?view=login");
         }
     }
 }

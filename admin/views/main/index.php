@@ -8,19 +8,14 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
 
-    <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-    <!-- Vendor css -->
     <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- App css -->
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
-    <!-- Icons css -->
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- Theme Config Js -->
     <script src="assets/js/config.js"></script>
 </head>
 
