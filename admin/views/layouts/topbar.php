@@ -6,12 +6,12 @@
             <a href="index.php" class="logo">
                 <span class="logo-light">
                     <span class="logo-lg"><img src="assets/images/logo.png" alt="logo"></span>
-                    <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo"></span>
+                    <span class="logo-sm"><img src="assets/images/logo.png" alt="small logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"><img src="assets/images/logo-dark.png" alt="dark logo"></span>
-                    <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo"></span>
+                    <span class="logo-lg"><img src="assets/images/logo.png" alt="dark logo"></span>
+                    <span class="logo-sm"><img src="assets/images/logo.png" alt="small logo"></span>
                 </span>
             </a>
 
@@ -357,10 +357,13 @@
                 <div class="dropdown">
                     <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown"
                         data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="assets/images/users/avatar-3.jpg" width="32" class="rounded-circle me-lg-2 d-flex"
-                            alt="user-image">
+                        <i data-lucide="user" class="fs-22 me-lg-2 align-middle"></i>
                         <span class="d-lg-flex flex-column gap-1 d-none">
-                            <span class="fw-semibold">Samuel</span>
+                            <span class="my-0">
+                                <?php 
+                                    echo isset($_SESSION['usuario_nombre']) ? $_SESSION['usuario_nombre'] : 'Usuario'; 
+                                ?>
+                            </span>
                         </span>
                         <i class="ri-arrow-down-s-line d-none d-lg-block align-middle ms-2"></i>
                     </a>
