@@ -756,7 +756,9 @@
 
         .custom-color-circle {
             background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080);
+            /* background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); */
             position: relative;
+            overflow: hidden;
         }
         #dropZone {
             cursor: pointer;
@@ -895,31 +897,53 @@
     </style>
 
     <script>
-        // Colores
-        document.querySelectorAll('.color-radio').forEach(radio => {
+
+        const customColorInput = document.getElementById('custom-color-input');
+        const customCircle = document.querySelector('.custom-color-circle');
+        const hiddenColorInput = document.getElementById('color');
+        const colorRadios = document.querySelectorAll('.color-radio');
+
+        // logica de los circulos
+        colorRadios.forEach(radio => {
             radio.addEventListener('change', function() {
                 if (this.value === 'Personalizado') {
-                    document.getElementById('color').value = document.getElementById('custom-color-input').value;
+                    // Si selecciona  manualmente, asignamos el valor actual del input color
+                    hiddenColorInput.value = customColorInput.value;
+                    // Pintamos el circulo con el color que tenga el input
+                    customCircle.style.background = customColorInput.value;
                 } else {
-                    document.getElementById('color').value = this.value;
+                    // Si es un color predefinido
+                    hiddenColorInput.value = this.value;
+                    // reiniciamos el circulo arcoiris
+                    customCircle.style.background = ''; 
                 }
             });
         });
 
-        // Custom color input
-        document.getElementById('custom-color-input').addEventListener('input', function() {
-            document.getElementById('color').value = this.value;
+        //color picker
+        customColorInput.addEventListener('input', function() {
+            // Actualizamos el input oculto que se envia al servidor
+            hiddenColorInput.value = this.value;
+            
+            //Forzamos la selección del radio button "Personalizado"
             document.querySelector('input[name="color_option"][value="Personalizado"]').checked = true;
+
+            // cambiamos el background del circulo con el color que seleccionamos
+            customCircle.style.background = this.value;
         });
 
-        // carga de imagenes
+
+        // Logica para las imagenes, drag and drop y preview
+
         const dropZone = document.getElementById('dropZone');
         const imageInput = document.getElementById('imagenes');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        
+        // Variables de estado
         let uploadedImages = [];
         let primaryImageIndex = -1;
 
-        // Drag and drop
+        // Eventos Drag and drop visuales
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             dropZone.classList.add('dragover');
@@ -935,12 +959,14 @@
             handleFiles(e.dataTransfer.files);
         });
 
+        // seleccion manual usando el boton
         imageInput.addEventListener('change', (e) => {
             handleFiles(e.target.files);
         });
 
+        // Procesar archivos seleccionados
         function handleFiles(files) {
-            const allowedFormats = ['image/jpeg', 'image/png'];
+            const allowedFormats = ['image/jpeg', 'image/png', 'image/webp'];
 
             Array.from(files).forEach((file) => {
                 if (allowedFormats.includes(file.type)) {
@@ -951,6 +977,7 @@
                             name: file.name,
                             file: file
                         });
+                        // Si es la primera imagen y no hay principal haces esa principal
                         if (primaryImageIndex === -1) {
                             primaryImageIndex = 0;
                         }
@@ -958,16 +985,21 @@
                     };
                     reader.readAsDataURL(file);
                 } else {
-                    alert(`Formato no permitido: ${file.name}. Usa JPG, PNG o WEBP`);
+                    alert(`Formato no permitido: ${file.name}. Usa JPG o PNG.`);
                 }
             });
         }
 
+        // Renderizar la vista previa de las imágenes
         function renderImages() {
             imagePreviewContainer.innerHTML = '';
 
             if (uploadedImages.length === 0) {
-                imagePreviewContainer.innerHTML = '<div class="empty-state"><i class="ri-gallery-line"></i><p>No hay imágenes cargadas</p></div>';
+                imagePreviewContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="ri-gallery-line"></i>
+                        <p>No hay imágenes cargadas</p>
+                    </div>`;
                 return;
             }
 
@@ -976,12 +1008,14 @@
 
             uploadedImages.forEach((image, index) => {
                 const wrapper = document.createElement('div');
+                // Agregar la clase primary si es la principal
                 wrapper.className = `image-preview-wrapper ${index === primaryImageIndex ? 'primary' : ''}`;
 
                 const img = document.createElement('img');
                 img.src = image.src;
                 img.alt = image.name;
 
+                // Badge visual de de princial
                 if (index === primaryImageIndex) {
                     const badge = document.createElement('div');
                     badge.className = 'image-badge-primary';
@@ -989,6 +1023,7 @@
                     wrapper.appendChild(badge);
                 }
 
+                // Overlay con botones
                 const overlay = document.createElement('div');
                 overlay.className = 'image-preview-overlay';
 
@@ -1015,13 +1050,17 @@
             imagePreviewContainer.appendChild(previewRow);
         }
 
+        // Establecer imagen principal
         function setPrimaryImage(index) {
             primaryImageIndex = index;
             renderImages();
         }
 
+        // Eliminar imagen
         function deleteImage(index) {
             uploadedImages.splice(index, 1);
+            
+            // re asignar índice de principal si se borró la imagen marcada como principal
             if (primaryImageIndex === index) {
                 primaryImageIndex = uploadedImages.length > 0 ? 0 : -1;
             } else if (primaryImageIndex > index) {
@@ -1030,18 +1069,29 @@
             renderImages();
         }
 
-        // Reset form
+
+        // RESETEO DEL FORMULARIO
+
         document.querySelector('form').addEventListener('reset', function() {
-            document.getElementById('color').value = '';
-            document.querySelectorAll('.color-radio').forEach(radio => {
+            //limpiar campos de color
+            hiddenColorInput.value = '';
+            customColorInput.value = '#ffffff'; //picker default
+            
+            // picker default
+            customCircle.style.background = ''; 
+            
+            //Desmarcar radios
+            colorRadios.forEach(radio => {
                 radio.checked = false;
             });
-            document.getElementById('custom-color-input').value = '#ffffffff';
+
+            // clear images
             uploadedImages = [];
             primaryImageIndex = -1;
-            imageInput.value = '';
+            imageInput.value = ''; // Limpiar input file del DOM
             renderImages();
         });
+        
     </script>
 
 </body>

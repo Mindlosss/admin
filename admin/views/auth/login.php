@@ -25,7 +25,7 @@
         <div class="row g-0 justify-content-center w-100 m-xxl-5 px-xxl-4 m-3">
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="card overflow-hidden text-center rounded-4 p-xxl-4 p-3 mb-0">
-                    <a href="index.html" class="auth-brand mb-4">
+                    <a class="auth-brand mb-4">
                         <img src="assets/images/logo.png" alt="dark logo" height="26" class="logo-dark">
                         <img src="assets/images/logo.png" alt="logo light" height="26" class="logo-light">
                     </a>
