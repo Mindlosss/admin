@@ -38,7 +38,7 @@
                             <div class="px-3 py-2 d-flex flex-row align-items-center" id="top-search">
                                 <i class="ri-search-line fs-22"></i>
                                 <input type="search" class="form-control border-0" id="search-modal-input"
-                                    placeholder="Search for actions, people,">
+                                    placeholder="Buscar...">
                                 <button type="submit" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">[esc]</button>
                             </div>
                         </div>

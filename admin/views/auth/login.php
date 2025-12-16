@@ -26,13 +26,13 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="card overflow-hidden text-center rounded-4 p-xxl-4 p-3 mb-0">
                     <a href="index.html" class="auth-brand mb-4">
-                        <img src="assets/images/logo-dark.png" alt="dark logo" height="26" class="logo-dark">
+                        <img src="assets/images/logo.png" alt="dark logo" height="26" class="logo-dark">
                         <img src="assets/images/logo.png" alt="logo light" height="26" class="logo-light">
                     </a>
 
-                    <h4 class="fw-semibold mb-2 fs-18">Log in to your account</h4>
+                    <h4 class="fw-semibold mb-2 fs-18">Inicia sesión con tu cuenta</h4>
 
-                    <p class="text-muted mb-4">Enter your email address and password to access admin panel.</p>
+                    <p class="text-muted mb-4">Ingresa tu correo y contraseña para acceder al panel de administrador.</p>
 
                     <form action="controllers/AuthController.php" method="POST" class="text-start mb-3">
                         
@@ -49,36 +49,34 @@
 
                         <div class="mb-2">
                             <input type="email" id="example-email" name="correo" class="form-control"
-                                placeholder="Enter your email" required>
+                                placeholder="Ingresa tu correo" required>
                         </div>
 
                         <div class="mb-3">
                             <input type="password" id="example-password" name="password" class="form-control"
-                                placeholder="Enter your password" required>
+                                placeholder="Ingresa tu contraseña" required>
                         </div>
 
                         <div class="d-flex justify-content-between mb-3">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="checkbox-signin">
-                                <label class="form-check-label" for="checkbox-signin">Remember me</label>
+                                <label class="form-check-label" for="checkbox-signin">Recuerdame</label>
                             </div>
 
-                            <a href="auth-recoverpw.html" class="text-muted border-bottom border-dashed">Forget
-                                Password</a>
+                            <a href="auth-recoverpw.html" class="text-muted border-bottom border-dashed">Olvidé mi contraseña</a>
                         </div>
 
                         <div class="d-grid">
-                            <button class="btn btn-primary fw-semibold" type="submit">Login</button>
+                            <button class="btn btn-primary fw-semibold" type="submit">Iniciar sesión</button>
                         </div>
                     </form>
-                    <p class="text-muted fs-14 mb-0">Don't have an account?
-                        <a href="index.php?view=register" class="fw-semibold text-danger ms-1">Sign Up !</a>
+                    <p class="text-muted fs-14 mb-0">No tienes una cuenta?
+                        <a href="index.php?view=register" class="fw-semibold text-danger ms-1">Registrate!</a>
                     </p>
                 </div>
 
                 <p class="mt-4 text-center mb-0">
-                    <script>document.write(new Date().getFullYear())</script> © Abstack - By <span
-                        class="fw-bold text-decoration-underline text-uppercase text-reset fs-12">Coderthemes</span>
+                    <script>document.write(new Date().getFullYear())</script> © Código y chips
                 </p>
             </div>
         </div>

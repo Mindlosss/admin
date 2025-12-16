@@ -36,7 +36,7 @@
             <div class="topbar-search d-none d-xl-flex gap-2 me-2 align-items-center" data-bs-toggle="modal"
                 data-bs-target="#searchModal" type="button">
                 <i class="ri-search-line fs-18"></i>
-                <span class="me-2">Search something..</span>
+                <span class="me-2">Buscar...</span>
             </div>
         </div>
 
@@ -407,7 +407,7 @@
                         
                         <a href="index.php?view=logout" class="dropdown-item fw-semibold text-danger">
                             <i class="ri-logout-box-line me-1 fs-16 align-middle"></i>
-                            <span class="align-middle">Sign Out</span>
+                            <span class="align-middle">Cerrar sesión</span>
                         </a>
                     </div>
                 </div>
