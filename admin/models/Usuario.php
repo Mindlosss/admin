@@ -2,19 +2,22 @@
 require_once __DIR__ . '/../config/db.php';
 
 class Usuario {
-    private $db;
+    private PDO $conn;
 
     public function __construct() {
-        $this->db = new Con();
+        $database = new Database();
+        $this->conn = $database->getConnection();
     }
 
     // Registrar nuevo usuario
     public function registrar($nombre, $correo, $password) {
+
         // Verificamos si el correo ya está en bd
-        $check = $this->db->ejecutar("SELECT id_usuario FROM usuarios WHERE correo = '$correo'");
-        $data = json_decode($check, true);
-        
-        if (!empty($data) && !isset($data['status'])) {
+        $sqlCheck = "SELECT id_usuario FROM usuarios WHERE correo = :correo";
+        $stmt = $this->conn->prepare($sqlCheck);
+        $stmt->execute([':correo' => $correo]);
+
+        if ($stmt->rowCount() > 0) {
             return ["status" => "error", "message" => "El correo ya está registrado."];
         }
 
@@ -22,31 +25,33 @@ class Usuario {
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
         // Insertar
-        $sql = "INSERT INTO usuarios (nombre, correo, contra) VALUES ('$nombre', '$correo', '$hash')";
-        $result = $this->db->ejecutar($sql);
-        
-        return json_decode($result, true);
+        $sql = "INSERT INTO usuarios (nombre, correo, contra) 
+                VALUES (:nombre, :correo, :contra)";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':nombre' => $nombre,
+            ':correo' => $correo,
+            ':contra' => $hash
+        ]);
+
+        return ["status" => "success", "message" => "Usuario registrado correctamente."];
     }
 
     // Validar Login
     public function login($correo, $password) {
-        $sql = "SELECT * FROM usuarios WHERE correo = '$correo'";
-        $result = $this->db->ejecutar($sql);
-        $usuario = json_decode($result, true);
 
-        // Si encontramos al usuario
-        if (!empty($usuario) && !isset($usuario['status'])) {
-            $userDatos = $usuario[0]; // Tomamos el primer resultado
-            
-            // Verificamos hash
-            if (password_verify($password, $userDatos['contra'])) {
-                // retornamos los datos del usuario
-                unset($userDatos['contra']);
-                return ["status" => "success", "data" => $userDatos];
-            }
+        $sql = "SELECT * FROM usuarios WHERE correo = :correo LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':correo' => $correo]);
+
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($usuario && password_verify($password, $usuario['contra'])) {
+            unset($usuario['contra']);
+            return ["status" => "success", "data" => $usuario];
         }
 
         return ["status" => "error", "message" => "Credenciales incorrectas."];
     }
 }
-?>
