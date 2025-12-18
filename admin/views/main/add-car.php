@@ -173,55 +173,55 @@ unset($_SESSION['tipo_mensaje']);
                                                     
                                                     <!-- Blanco -->
                                                     <label class="color-option" title="Blanco">
-                                                        <input type="radio" name="color_option" value="Blanco" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#FFFFFF" class="color-radio">
                                                         <span class="color-circle" style="background-color: #FFFFFF; border: 2px solid #333;"></span>
                                                     </label>
                                                     
                                                     <!-- Negro -->
                                                     <label class="color-option" title="Negro">
-                                                        <input type="radio" name="color_option" value="Negro" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#000000" class="color-radio">
                                                         <span class="color-circle" style="background-color: #000000;"></span>
                                                     </label>
                                                     
                                                     <!-- Gris -->
                                                     <label class="color-option" title="Gris">
-                                                        <input type="radio" name="color_option" value="Gris" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#808080" class="color-radio">
                                                         <span class="color-circle" style="background-color: #808080;"></span>
                                                     </label>
                                                     
                                                     <!-- Rojo -->
                                                     <label class="color-option" title="Rojo">
-                                                        <input type="radio" name="color_option" value="Rojo" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#E31E24" class="color-radio">
                                                         <span class="color-circle" style="background-color: #E31E24;"></span>
                                                     </label>
                                                     
                                                     <!-- Azul -->
                                                     <label class="color-option" title="Azul">
-                                                        <input type="radio" name="color_option" value="Azul" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#0066CC" class="color-radio">
                                                         <span class="color-circle" style="background-color: #0066CC;"></span>
                                                     </label>
                                                     
                                                     <!-- Plata -->
                                                     <label class="color-option" title="Plata">
-                                                        <input type="radio" name="color_option" value="Plata" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#C0C0C0" class="color-radio">
                                                         <span class="color-circle" style="background-color: #C0C0C0; border: 1px solid #999;"></span>
                                                     </label>
                                                     
                                                     <!-- Marrón -->
                                                     <label class="color-option" title="Marrón">
-                                                        <input type="radio" name="color_option" value="Marrón" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#8B4513" class="color-radio">
                                                         <span class="color-circle" style="background-color: #8B4513;"></span>
                                                     </label>
                                                     
                                                     <!-- Verde -->
                                                     <label class="color-option" title="Verde">
-                                                        <input type="radio" name="color_option" value="Verde" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#228B22" class="color-radio">
                                                         <span class="color-circle" style="background-color: #228B22;"></span>
                                                     </label>
                                                     
                                                     <!-- Naranja -->
                                                     <label class="color-option" title="Naranja">
-                                                        <input type="radio" name="color_option" value="Naranja" class="color-radio">
+                                                        <input type="radio" name="color_option" value="#FF8C00" class="color-radio">
                                                         <span class="color-circle" style="background-color: #FF8C00;"></span>
                                                     </label>
                                                     

@@ -102,26 +102,34 @@ $stmtAutos = $autoModel->obtenerTodos();
                                                 while ($row = $stmtAutos->fetch(PDO::FETCH_ASSOC)) {
                                                     // Procesar imagen, usa una por defecto si no hay imagen
                                                     $imagenUrl = !empty($row['imagen']) ? $row['imagen'] : 'assets/images/small/small-2.jpg';
-                                                    $colorDisplay = $row['color'];
                                             ?>
-                                                <tr>
-                                                    <td>
-                                                        <img src="<?= $imagenUrl ?>" alt="coche" class="avatar-sm rounded-3 object-fit-cover">
-                                                    </td>
-                                                    <td class="fw-semibold"><?= htmlspecialchars($row['marca']) ?></td>
-                                                    <td><?= htmlspecialchars($row['modelo']) ?></td>
-                                                    <td><?= $row['year'] ?></td>
-                                                    <td><?= $colorDisplay ?></td>
-                                                    <td>$<?= number_format($row['precio'], 2) ?></td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="text-reset fs-16 px-1"> 
-                                                            <i class="ri-edit-2-line"></i>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="text-reset fs-16 px-1 text-danger"> 
-                                                            <i class="ri-delete-bin-2-line"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="<?= $imagenUrl ?>" alt="coche" class="avatar-sm rounded-3 object-fit-cover">
+                                                        </td>
+                                                        <td class="fw-semibold"><?= htmlspecialchars($row['marca']) ?></td>
+                                                        <td><?= htmlspecialchars($row['modelo']) ?></td>
+                                                        <td><?= $row['year'] ?></td>
+                                                        
+                                                        <td>
+                                                            <div class="d-flex align-items-center gap-2">
+                                                                <span class="rounded-circle border" 
+                                                                    style="width: 20px; height: 20px; background-color: <?= $row['color'] ?>;"
+                                                                    title="<?= $row['color'] ?>">
+                                                                </span>
+                                                                <span class="font-monospace fs-13"><?= $row['color'] ?></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>$<?= number_format($row['precio'], 2) ?></td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="text-reset fs-16 px-1"> 
+                                                                <i class="ri-edit-2-line"></i>
+                                                            </a>
+                                                            <a href="javascript:void(0);" class="text-reset fs-16 px-1 text-danger"> 
+                                                                <i class="ri-delete-bin-2-line"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                             <?php 
                                                 }
                                             } else {
