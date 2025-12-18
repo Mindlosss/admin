@@ -1,3 +1,10 @@
+<?php
+require_once 'models/Auto.php';
+//obtener datos
+$autoModel = new Auto();
+$stmtAutos = $autoModel->obtenerTodos();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +60,7 @@
 
         <div class="page-content">
 
-            
+
             <div class="page-title-head d-flex align-items-center gap-2">
                 <div class="flex-grow-1">
                     <h4 class="fs-18 fw-bold mb-0">Dashboard</h4>
@@ -81,49 +88,53 @@
                                     <table class="table table-hover mb-0">
                                         <thead>
                                             <tr>
-                                                <th>Marca</th>
+                                                <th>Imagen</th> <th>Marca</th>
                                                 <th>Modelo</th>
                                                 <th>Año</th>
                                                 <th>Color</th>
                                                 <th>Precio</th>
-                                            </tr>
+                                                <th>Acciones</th> </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Toyota</td>
-                                                <td>Corolla</td>
-                                                <td>2023</td>
-                                                <td>Blanco</td>
-                                                <td>$25,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Honda</td>
-                                                <td>Civic</td>
-                                                <td>2023</td>
-                                                <td>Negro</td>
-                                                <td>$27,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ford</td>
-                                                <td>Mustang</td>
-                                                <td>2022</td>
-                                                <td>Rojo</td>
-                                                <td>$35,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>BMW</td>
-                                                <td>X5</td>
-                                                <td>2023</td>
-                                                <td>Plata</td>
-                                                <td>$65,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Mercedes-Benz</td>
-                                                <td>C-Class</td>
-                                                <td>2022</td>
-                                                <td>Azul</td>
-                                                <td>$55,000</td>
-                                            </tr>
+                                            <?php 
+                                            // Verificar si hay resultados
+                                            if ($stmtAutos->rowCount() > 0) {
+                                                while ($row = $stmtAutos->fetch(PDO::FETCH_ASSOC)) {
+                                                    // Procesar imagen, usa una por defecto si no hay imagen
+                                                    $imagenUrl = !empty($row['imagen']) ? $row['imagen'] : 'assets/images/small/small-2.jpg';
+                                                    $colorDisplay = $row['color'];
+                                            ?>
+                                                <tr>
+                                                    <td>
+                                                        <img src="<?= $imagenUrl ?>" alt="coche" class="avatar-sm rounded-3 object-fit-cover">
+                                                    </td>
+                                                    <td class="fw-semibold"><?= htmlspecialchars($row['marca']) ?></td>
+                                                    <td><?= htmlspecialchars($row['modelo']) ?></td>
+                                                    <td><?= $row['year'] ?></td>
+                                                    <td><?= $colorDisplay ?></td>
+                                                    <td>$<?= number_format($row['precio'], 2) ?></td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="text-reset fs-16 px-1"> 
+                                                            <i class="ri-edit-2-line"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="text-reset fs-16 px-1 text-danger"> 
+                                                            <i class="ri-delete-bin-2-line"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php 
+                                                }
+                                            } else {
+                                            ?>
+                                                <tr>
+                                                    <td colspan="7" class="text-center py-4">
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <i class="ri-car-line fs-30 text-muted mb-2"></i>
+                                                            <p class="text-muted mb-0">No hay coches registrados aún.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -144,7 +155,7 @@
         <!-- End Page content -->
         <!-- ============================================================== -->
 
-    </div>
+        </div>
     <!-- END wrapper -->
 
     <!-- theme settings -->

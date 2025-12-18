@@ -1,3 +1,15 @@
+<?php
+require_once 'models/Marca.php';
+
+$marcaModel = new Marca();
+$stmtMarcas = $marcaModel->obtenerTodas();
+
+$mensaje = $_SESSION['mensaje'] ?? '';
+$tipo_mensaje = $_SESSION['tipo_mensaje'] ?? '';
+unset($_SESSION['mensaje']);
+unset($_SESSION['tipo_mensaje']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,6 +93,14 @@
             
 
             <div class="page-container">
+
+                <?php if($mensaje): ?>
+                    <div class="alert alert-<?= $tipo_mensaje ?> alert-dismissible fade show" role="alert">
+                        <?= $mensaje ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <?php endif; ?>
+
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -88,7 +108,9 @@
                                 <h5 class="card-title">Información del Vehículo</h5>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="">
+                                <form method="POST" action="controllers/AutoController.php" enctype="multipart/form-data">
+                                    <input type="hidden" name="accion" value="crear_auto">
+                                    
                                     <!-- Marca y Modelo -->
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -96,14 +118,15 @@
                                                 <label for="id_marca" class="form-label">Marca <span class="text-danger">*</span></label>
                                                 <select class="form-select" id="id_marca" name="id_marca" required>
                                                     <option selected disabled value="">Selecciona una marca</option>
-                                                    <option value="1">Toyota</option>
-                                                    <option value="2">Honda</option>
-                                                    <option value="3">Ford</option>
-                                                    <option value="4">BMW</option>
-                                                    <option value="5">Mercedes-Benz</option>
-                                                    <option value="6">Audi</option>
-                                                    <option value="7">Volkswagen</option>
-                                                    <option value="8">Chevrolet</option>
+                                                    
+                                                    <?php 
+                                                    if(isset($stmtMarcas)) {
+                                                        while ($row = $stmtMarcas->fetch(PDO::FETCH_ASSOC)) {
+                                                            echo '<option value="' . $row['id_marca'] . '">' . $row['nombre'] . '</option>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                    
                                                 </select>
                                             </div>
                                         </div>
@@ -206,10 +229,9 @@
                                                     <label class="color-option" title="Personalizado">
                                                         <input type="radio" name="color_option" value="Personalizado" class="color-radio">
                                                         <span class="color-circle custom-color-circle">
-                                                            <input type="color" id="custom-color-input" value="#ffffffff" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
+                                                            <input type="color" id="custom-color-input" value="#ffffff" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
                                                         </span>
                                                     </label>
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -272,7 +294,9 @@
                                                     <i class="ri-image-add-line fs-40 text-muted d-block mb-2"></i>
                                                     <h5 class="mb-2">Arrastra imágenes aquí</h5>
                                                     <p class="text-muted mb-3">o haz clic para seleccionar archivos</p>
+                                                    
                                                     <input type="file" id="imagenes" name="imagenes[]" multiple accept=".jpg,.jpeg,.png" class="d-none" required />
+                                                    
                                                     <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('imagenes').click()">
                                                         <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar Imágenes
                                                     </button>

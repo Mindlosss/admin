@@ -1,3 +1,13 @@
+<?php
+// recuperar mensajes
+$mensaje = $_SESSION['mensaje'] ?? "";
+$tipo_mensaje = $_SESSION['tipo_mensaje'] ?? "";
+
+// Limpiar mensajes despues de leerlos
+unset($_SESSION['mensaje']);
+unset($_SESSION['tipo_mensaje']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,6 +91,14 @@
             
 
             <div class="page-container">
+
+                <?php if($mensaje): ?>
+                    <div class="alert alert-<?= $tipo_mensaje ?> alert-dismissible fade show" role="alert">
+                        <?= $mensaje ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -88,7 +106,10 @@
                                 <h5 class="card-title">Información de la Marca</h5>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="">
+
+                                <form method="POST" action="controllers/MarcaController.php" enctype="multipart/form-data">
+                                    <input type="hidden" name="accion" value="crear_marca">
+                                    
                                     <!-- Nombre de la Marca -->
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -133,6 +154,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
