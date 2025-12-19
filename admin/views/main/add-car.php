@@ -558,7 +558,7 @@ unset($_SESSION['tipo_mensaje']);
         customColorInput.addEventListener('input', function() {
             // Actualizamos el input oculto que se envia al servidor
             hiddenColorInput.value = this.value;
-            
+                
             //Forzamos la selección del radio button "Personalizado"
             document.querySelector('input[name="color_option"][value="Personalizado"]').checked = true;
 
@@ -595,7 +595,11 @@ unset($_SESSION['tipo_mensaje']);
 
         // seleccion manual usando el boton
         imageInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
+            // Nota: Al seleccionar manual, input.files ya tiene los archivos,
+            // pero necesitamos procesarlos para añadirlos a nuestro array y permitir añadir más después.
+            if (e.target.files.length > 0) {
+                handleFiles(e.target.files);
+            }
         });
 
         // Procesar archivos seleccionados
@@ -604,24 +608,46 @@ unset($_SESSION['tipo_mensaje']);
 
             Array.from(files).forEach((file) => {
                 if (allowedFormats.includes(file.type)) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        uploadedImages.push({
-                            src: e.target.result,
-                            name: file.name,
-                            file: file
-                        });
-                        // Si es la primera imagen y no hay principal haces esa principal
-                        if (primaryImageIndex === -1) {
-                            primaryImageIndex = 0;
-                        }
-                        renderImages();
-                    };
-                    reader.readAsDataURL(file);
+                    
+                    // Evitar duplicados por nombre y tamaño
+                    const exists = uploadedImages.some(img => img.file.name === file.name && img.file.size === file.size);
+                    
+                    if (!exists) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            uploadedImages.push({
+                                src: e.target.result,
+                                name: file.name,
+                                file: file // Guardamos el objeto File original
+                            });
+
+                            // Si es la primera imagen y no hay principal, se asigna
+                            if (primaryImageIndex === -1) {
+                                primaryImageIndex = 0;
+                            }
+                            
+                            renderImages();
+                            updateInputFiles(); //  Actualizar el input real
+                        };
+                        reader.readAsDataURL(file);
+                    }
                 } else {
                     alert(`Formato no permitido: ${file.name}. Usa JPG o PNG.`);
                 }
             });
+        }
+
+        // Sincronizar Array JS con Input HTML
+        function updateInputFiles() {
+            const dataTransfer = new DataTransfer();
+            
+            // Agregar cada archivo de nuestro array JS al objeto DataTransfer
+            uploadedImages.forEach(imageObj => {
+                dataTransfer.items.add(imageObj.file);
+            });
+
+            // Asignar los archivos al input real
+            imageInput.files = dataTransfer.files;
         }
 
         // Renderizar la vista previa de las imágenes
@@ -700,7 +726,9 @@ unset($_SESSION['tipo_mensaje']);
             } else if (primaryImageIndex > index) {
                 primaryImageIndex--;
             }
+            
             renderImages();
+            updateInputFiles(); // Actualizar el input real al borrar
         }
 
 
@@ -710,7 +738,7 @@ unset($_SESSION['tipo_mensaje']);
             //limpiar campos de color
             hiddenColorInput.value = '';
             customColorInput.value = '#ffffff'; //picker default
-            
+                
             // picker default
             customCircle.style.background = ''; 
             

@@ -301,112 +301,129 @@ unset($_SESSION['tipo_mensaje']);
         }
     </style>
 
-    <script>
-        // Carga del logo
-        const dropZoneLogo = document.getElementById('dropZoneLogo');
-        const logoInput = document.getElementById('logo');
-        const logoPreviewContainer = document.getElementById('logoPreviewContainer');
-        let uploadedLogo = null;
+<script>
+    // Carga del logo
+    const dropZoneLogo = document.getElementById('dropZoneLogo');
+    const logoInput = document.getElementById('logo');
+    const logoPreviewContainer = document.getElementById('logoPreviewContainer');
+    let uploadedLogo = null;
 
-        // Drag and drop events
-        dropZoneLogo.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZoneLogo.classList.add('dragover');
-        });
+    // Drag and drop events
+    dropZoneLogo.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZoneLogo.classList.add('dragover');
+    });
 
-        dropZoneLogo.addEventListener('dragleave', () => {
-            dropZoneLogo.classList.remove('dragover');
-        });
+    dropZoneLogo.addEventListener('dragleave', () => {
+        dropZoneLogo.classList.remove('dragover');
+    });
 
-        dropZoneLogo.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZoneLogo.classList.remove('dragover');
-            handleLogoFile(e.dataTransfer.files);
-        });
+    dropZoneLogo.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZoneLogo.classList.remove('dragover');
+        handleLogoFile(e.dataTransfer.files);
+    });
 
-        logoInput.addEventListener('change', (e) => {
+    logoInput.addEventListener('change', (e) => {
+        if(e.target.files.length > 0) {
             handleLogoFile(e.target.files);
-        });
+        }
+    });
 
-        function handleLogoFile(files) {
-            const allowedFormats = ['image/jpeg', 'image/png'];
+    function handleLogoFile(files) {
+        const allowedFormats = ['image/jpeg', 'image/png'];
 
-            if (files.length === 0) return;
+        if (files.length === 0) return;
 
-            const file = files[0];
-            if (allowedFormats.includes(file.type)) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    uploadedLogo = {
-                        src: e.target.result,
-                        name: file.name,
-                        file: file
-                    };
-                    renderLogo();
+        const file = files[0];
+        if (allowedFormats.includes(file.type)) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedLogo = {
+                    src: e.target.result,
+                    name: file.name,
+                    file: file
                 };
-                reader.readAsDataURL(file);
-            } else {
-                alert(`Formato no permitido: ${file.name}. Usa JPG o PNG`);
-                logoInput.value = '';
-            }
-        }
-
-        function renderLogo() {
-            logoPreviewContainer.innerHTML = '';
-
-            if (!uploadedLogo) {
-                logoPreviewContainer.innerHTML = '<div class="empty-state-logo"><i class="ri-image-line"></i><p>No hay logo cargado</p></div>';
-                return;
-            }
-
-            const container = document.createElement('div');
-            container.className = 'logo-preview-container';
-
-            const wrapper = document.createElement('div');
-            wrapper.className = 'logo-preview-wrapper';
-
-            const img = document.createElement('img');
-            img.src = uploadedLogo.src;
-            img.alt = uploadedLogo.name;
-
-            const overlay = document.createElement('div');
-            overlay.className = 'logo-preview-overlay';
-
-            const changeBtn = document.createElement('button');
-            changeBtn.type = 'button';
-            changeBtn.className = 'logo-overlay-btn btn-change-logo';
-            changeBtn.innerHTML = '<i class="ri-image-edit-line"></i>Cambiar';
-            changeBtn.onclick = () => {
-                logoInput.click();
-            };
-
-            const deleteBtn = document.createElement('button');
-            deleteBtn.type = 'button';
-            deleteBtn.className = 'logo-overlay-btn btn-delete-logo';
-            deleteBtn.innerHTML = '<i class="ri-delete-bin-line"></i>Eliminar';
-            deleteBtn.onclick = () => {
-                uploadedLogo = null;
-                logoInput.value = '';
                 renderLogo();
+                updateLogoInput(); // sincronizar input
             };
+            reader.readAsDataURL(file);
+        } else {
+            alert(`Formato no permitido: ${file.name}. Usa JPG o PNG`);
+            logoInput.value = ''; // Limpiar si es inválido
+            uploadedLogo = null;
+            renderLogo();
+        }
+    }
 
-            overlay.appendChild(changeBtn);
-            overlay.appendChild(deleteBtn);
+    // funcion nueva: sincronizar js con el input del formulario
+    function updateLogoInput() {
+        const dataTransfer = new DataTransfer();
+        
+        if (uploadedLogo) {
+            dataTransfer.items.add(uploadedLogo.file);
+            logoInput.files = dataTransfer.files;
+        } else {
+            logoInput.value = ''; // Vaciar si no hay logo
+        }
+    }
 
-            wrapper.appendChild(img);
-            wrapper.appendChild(overlay);
-            container.appendChild(wrapper);
+    function renderLogo() {
+        logoPreviewContainer.innerHTML = '';
 
-            logoPreviewContainer.appendChild(container);
+        if (!uploadedLogo) {
+            logoPreviewContainer.innerHTML = '<div class="empty-state-logo"><i class="ri-image-line"></i><p>No hay logo cargado</p></div>';
+            return;
         }
 
-        // Reset form
-        document.querySelector('form').addEventListener('reset', function() {
+        const container = document.createElement('div');
+        container.className = 'logo-preview-container';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'logo-preview-wrapper';
+
+        const img = document.createElement('img');
+        img.src = uploadedLogo.src;
+        img.alt = uploadedLogo.name;
+
+        const overlay = document.createElement('div');
+        overlay.className = 'logo-preview-overlay';
+
+        const changeBtn = document.createElement('button');
+        changeBtn.type = 'button';
+        changeBtn.className = 'logo-overlay-btn btn-change-logo';
+        changeBtn.innerHTML = '<i class="ri-image-edit-line"></i>Cambiar';
+        changeBtn.onclick = () => {
+            logoInput.click();
+        };
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'logo-overlay-btn btn-delete-logo';
+        deleteBtn.innerHTML = '<i class="ri-delete-bin-line"></i>Eliminar';
+        deleteBtn.onclick = () => {
             uploadedLogo = null;
-            logoInput.value = '';
+            updateLogoInput(); // sincronizar input al borrar
             renderLogo();
-        });
-    </script>
+        };
+
+        overlay.appendChild(changeBtn);
+        overlay.appendChild(deleteBtn);
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(overlay);
+        container.appendChild(wrapper);
+
+        logoPreviewContainer.appendChild(container);
+    }
+
+    // Reset form
+    document.querySelector('form').addEventListener('reset', function() {
+        uploadedLogo = null;
+        logoInput.value = '';
+        renderLogo();
+    });
+</script>
 
 </body>
 
