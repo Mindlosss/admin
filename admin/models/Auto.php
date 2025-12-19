@@ -73,5 +73,36 @@ class Auto {
         $stmt->execute();
         return $stmt;
     }
+
+    public function eliminar($id) {
+        try {
+            $this->conn->beginTransaction();
+
+            $queryImg = "SELECT imagen FROM " . $this->table_img . " WHERE id_auto = :id";
+            $stmtImg = $this->conn->prepare($queryImg);
+            $stmtImg->execute([':id' => $id]);
+            
+            while($img = $stmtImg->fetch(PDO::FETCH_ASSOC)){
+                $rutaArchivo = __DIR__ . "/../" . $img['imagen']; 
+                if(file_exists($rutaArchivo)){
+                    unlink($rutaArchivo);
+                }
+            }
+
+            $queryDelImg = "DELETE FROM " . $this->table_img . " WHERE id_auto = :id";
+            $stmtDelImg = $this->conn->prepare($queryDelImg);
+            $stmtDelImg->execute([':id' => $id]);
+
+            $queryDelAuto = "DELETE FROM " . $this->table . " WHERE id_auto = :id";
+            $stmtDelAuto = $this->conn->prepare($queryDelAuto);
+            $stmtDelAuto->execute([':id' => $id]);
+
+            $this->conn->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->conn->rollBack();
+            return false;
+        }
+    }
 }
 ?>
