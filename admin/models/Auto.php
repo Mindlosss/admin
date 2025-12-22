@@ -11,6 +11,7 @@ class Auto {
         $this->conn = $database->getConnection();
     }
 
+    // crear un nuevo auto con imagenes
     public function crear($datos, $imagenes, $id_usuario) {
         try {
             // Iniciar transacción para asegurar que se guarde el auto y las fotos o nada
@@ -61,6 +62,7 @@ class Auto {
         }
     }
 
+    // obtener todos los autos con marca y su imagen principal
     public function obtenerTodos() {
         // join para obtener marca y una imagen thumbnail
         $query = "SELECT a.id_auto, a.modelo, a.year, a.color, a.precio, m.nombre as marca, i.imagen 
@@ -74,6 +76,121 @@ class Auto {
         return $stmt;
     }
 
+    // buscar un auto por id
+    public function obtenerPorId($id) {
+        $query = "SELECT * FROM " . $this->table . " WHERE id_auto = :id LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Obtener imágenes asociadas a un auto
+    public function obtenerImagenesPorAuto($id_auto) {
+        $query = "SELECT id_imagen, imagen, thumbnail FROM " . $this->table_img . " WHERE id_auto = :id_auto ORDER BY id_imagen ASC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([':id_auto' => $id_auto]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Actualizar datos del auto
+    public function actualizar($id, $datos) {
+        $query = "UPDATE " . $this->table . " 
+                  SET id_marca = :marca, modelo = :modelo, tipo = :tipo, 
+                      year = :year, color = :color, kilometraje = :km, 
+                      precio = :precio, transmision = :transmision, combustible = :combustible
+                  WHERE id_auto = :id";
+        
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':marca', $datos['id_marca']);
+        $stmt->bindParam(':modelo', $datos['modelo']);
+        $stmt->bindParam(':tipo', $datos['tipo']);
+        $stmt->bindParam(':year', $datos['year']);
+        $stmt->bindParam(':color', $datos['color']);
+        $stmt->bindParam(':km', $datos['kilometraje']);
+        $stmt->bindParam(':precio', $datos['precio']);
+        $stmt->bindParam(':transmision', $datos['transmision']);
+        $stmt->bindParam(':combustible', $datos['combustible']);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    // Agregar nuevas imágenes para un auto existente
+    public function agregarImagenes($id_auto, $imagenes, $id_usuario) {
+        $queryImg = "INSERT INTO " . $this->table_img . " (id_auto, imagen, thumbnail, created_by) VALUES (:id_auto, :imagen, :thumb, :user)";
+        $stmtImg = $this->conn->prepare($queryImg);
+
+        $insertedIds = [];
+        foreach($imagenes as $index => $rutaImagen) {
+            $thumb = 0; // se controla aparte la principal
+            $stmtImg->execute([
+                ':id_auto' => $id_auto,
+                ':imagen' => $rutaImagen,
+                ':thumb' => $thumb,
+                ':user' => $id_usuario
+            ]);
+            $insertedIds[] = $this->conn->lastInsertId();
+        }
+        return $insertedIds;
+    }
+
+    // Marcar una imagen como principal
+    public function establecerImagenPrincipal($id_auto, $id_imagen) {
+        $queryReset = "UPDATE " . $this->table_img . " SET thumbnail = 0 WHERE id_auto = :id_auto";
+        $stmtReset = $this->conn->prepare($queryReset);
+        $stmtReset->execute([':id_auto' => $id_auto]);
+
+        $querySet = "UPDATE " . $this->table_img . " SET thumbnail = 1 WHERE id_imagen = :id_imagen AND id_auto = :id_auto";
+        $stmtSet = $this->conn->prepare($querySet);
+        $stmtSet->execute([':id_imagen' => $id_imagen, ':id_auto' => $id_auto]);
+    }
+
+    // Asegura que haya al menos una imagen marcada como principal
+    public function asegurarImagenPrincipal($id_auto) {
+        $queryCheck = "SELECT id_imagen FROM " . $this->table_img . " WHERE id_auto = :id_auto AND thumbnail = 1 LIMIT 1";
+        $stmtCheck = $this->conn->prepare($queryCheck);
+        $stmtCheck->execute([':id_auto' => $id_auto]);
+        $hayPrincipal = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+        if (!$hayPrincipal) {
+            $queryFirst = "SELECT id_imagen FROM " . $this->table_img . " WHERE id_auto = :id_auto ORDER BY id_imagen ASC LIMIT 1";
+            $stmtFirst = $this->conn->prepare($queryFirst);
+            $stmtFirst->execute([':id_auto' => $id_auto]);
+            $first = $stmtFirst->fetch(PDO::FETCH_ASSOC);
+            if ($first) {
+                $this->establecerImagenPrincipal($id_auto, $first['id_imagen']);
+            }
+        }
+    }
+
+    // Eliminar imágenes específicas
+    public function eliminarImagenesPorIds($ids = []) {
+        if (empty($ids)) return;
+
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $query = "SELECT id_imagen, imagen FROM " . $this->table_img . " WHERE id_imagen IN ($placeholders)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute($ids);
+        $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($imagenes as $img) {
+            $rutaArchivo = __DIR__ . "/../" . $img['imagen'];
+            if (file_exists($rutaArchivo)) {
+                unlink($rutaArchivo);
+            }
+        }
+
+        $queryDelete = "DELETE FROM " . $this->table_img . " WHERE id_imagen IN ($placeholders)";
+        $stmtDel = $this->conn->prepare($queryDelete);
+        $stmtDel->execute($ids);
+    }
+
+    // eliminar auto y sus imagenes asociadas
     public function eliminar($id) {
         try {
             $this->conn->beginTransaction();

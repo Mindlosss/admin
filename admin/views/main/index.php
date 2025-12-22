@@ -79,6 +79,14 @@ $stmtAutos = $autoModel->obtenerTodos();
             <div class="page-container">
                 <div class="row">
                     <div class="col-12">
+
+                        <?php if(isset($_SESSION['mensaje'])): ?>
+                            <div class="alert alert-<?= $_SESSION['tipo_mensaje'] ?> alert-dismissible fade show" role="alert">
+                                <strong>Notificación:</strong> <?= $_SESSION['mensaje'] ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <?php unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']); ?>
+                        <?php endif; ?>
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">Lista de Coches</h5>
@@ -88,12 +96,14 @@ $stmtAutos = $autoModel->obtenerTodos();
                                     <table class="table table-hover mb-0">
                                         <thead>
                                             <tr>
-                                                <th>Imagen</th> <th>Marca</th>
+                                                <th>Imagen</th> 
+                                                <th>Marca</th>
                                                 <th>Modelo</th>
                                                 <th>Año</th>
                                                 <th>Color</th>
                                                 <th>Precio</th>
-                                                <th>Acciones</th> </tr>
+                                                <th>Acciones</th> 
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
@@ -121,13 +131,22 @@ $stmtAutos = $autoModel->obtenerTodos();
                                                             </div>
                                                         </td>
                                                         <td>$<?= number_format($row['precio'], 2) ?></td>
+                                                        
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-reset fs-16 px-1"> 
+                                                            <a href="index.php?view=edit-car&id=<?= $row['id_auto'] ?>" class="text-reset fs-16 px-1" title="Editar"> 
                                                                 <i class="ri-edit-2-line"></i>
                                                             </a>
-                                                            <a href="javascript:void(0);" class="text-reset fs-16 px-1 text-danger"> 
-                                                                <i class="ri-delete-bin-2-line"></i>
-                                                            </a>
+
+                                                            <form action="controllers/AutoController.php" method="POST" style="display:inline-block;">
+                                                                <input type="hidden" name="accion" value="eliminar_auto">
+                                                                <input type="hidden" name="id_auto" value="<?= $row['id_auto'] ?>">
+                                                                
+                                                                <button type="submit" class="text-reset fs-16 px-1 text-danger border-0 bg-transparent" 
+                                                                        onclick="return confirm('¿Estás seguro de eliminar el <?= $row['modelo'] ?>? No se puede deshacer.')" 
+                                                                        title="Eliminar"> 
+                                                                    <i class="ri-delete-bin-2-line"></i>
+                                                                </button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                             <?php 
@@ -153,7 +172,7 @@ $stmtAutos = $autoModel->obtenerTodos();
             </div> 
             <!-- container -->
 
-
+            
             <!-- Footer -->
             <?php require_once 'views/layouts/footer.php'; ?>
 
@@ -163,9 +182,9 @@ $stmtAutos = $autoModel->obtenerTodos();
         <!-- End Page content -->
         <!-- ============================================================== -->
 
-        </div>
+    </div>
     <!-- END wrapper -->
-
+    
     <!-- theme settings -->
     <?php require_once 'views/layouts/theme.php'; ?>
 
