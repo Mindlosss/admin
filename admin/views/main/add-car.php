@@ -105,7 +105,7 @@ unset($_SESSION['tipo_mensaje']);
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Información del Vehículo</h5>
+                                <h5 class="card-title">Datos del vehículo</h5>
                             </div>
                             <div class="card-body">
                                 <form method="POST" action="controllers/AutoController.php" enctype="multipart/form-data">
@@ -142,7 +142,7 @@ unset($_SESSION['tipo_mensaje']);
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="tipo" class="form-label">Tipo de Vehículo</label>
+                                                <label for="tipo" class="form-label">Tipo de vehículo</label>
                                                 <select class="form-select" id="tipo" name="tipo">
                                                     <option selected value="">Selecciona un tipo</option>
                                                     <option value="Sedán">Sedán</option>

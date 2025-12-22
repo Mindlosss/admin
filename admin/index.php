@@ -41,6 +41,10 @@ switch ($vista) {
         require_once 'views/main/add-brand.php';
         break;
 
+    case 'edit-car':
+        require_once 'views/main/edit-car.php'; 
+        break;
+
     case 'logout':
         // Acción de salir
         session_destroy();
