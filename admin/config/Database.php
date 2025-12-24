@@ -1,14 +1,26 @@
 <?php
+declare(strict_types=1);
 
-class Database {
-    private $conn;
+namespace App\Config;
+
+use PDO;
+use PDOException;
+
+class Database
+{
+    private ?PDO $conn = null;
     private string $host = 'localhost';
-    private string $db   = 'd4537_autos_gen';
+    private string $db = 'd4537_autos_gen';
     private string $user = 'root';
     private string $pass = '';
     private string $charset = 'utf8mb4';
 
-    public function getConnection() {
+    public function getConnection(): PDO
+    {
+        if ($this->conn instanceof PDO) {
+            return $this->conn;
+        }
+
         $dsn = "mysql:host={$this->host};dbname={$this->db};charset={$this->charset}";
 
         try {
@@ -20,4 +32,3 @@ class Database {
         }
     }
 }
-?>
