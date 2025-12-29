@@ -1,48 +1,74 @@
 <?php
-session_start();
-require_once __DIR__ . '/../models/Usuario.php';
+declare(strict_types=1);
 
-$usuarioModel = new Usuario();
+namespace App\Controllers;
 
-if (isset($_POST['accion'])) {
-    
-    // REGISTRO
-    if ($_POST['accion'] === 'registrar') {
-        $nombre = $_POST['nombre'];
-        $correo = $_POST['correo'];
-        $password = $_POST['password'];
+use App\Core\View;
+use App\Models\Usuario;
+use function App\Core\flash;
+use function App\Core\redirect;
 
-        $resultado = $usuarioModel->registrar($nombre, $correo, $password);
+class AuthController
+{
+    private Usuario $usuarios;
 
-        if (isset($resultado['status']) && $resultado['status'] === 'ok') {
-            $_SESSION['mensaje'] = "Usuario registrado correctamente. Ahora inicia sesión.";
-            // Redirigir al LOGIN
-            header("Location: ../index.php?view=login");
-        } else {
-            $_SESSION['error'] = $resultado['message'] ?? "Error al registrar.";
-            // Redirigir al REGISTRO
-            header("Location: ../index.php?view=register");
-        }
+    public function __construct()
+    {
+        $this->usuarios = new Usuario();
     }
 
-    // LOGIN
-    if ($_POST['accion'] === 'login') {
-        $correo = $_POST['correo'];
-        $password = $_POST['password'];
+    public function showLogin(): void
+    {
+        View::render('auth/login', [
+            'mensaje' => flash('mensaje'),
+            'error' => flash('error'),
+        ]);
+    }
 
-        $resultado = $usuarioModel->login($correo, $password);
+    public function showRegister(): void
+    {
+        View::render('auth/register', [
+            'error' => flash('error'),
+        ]);
+    }
 
-        if ($resultado['status'] === 'success') {
+    public function register(): void
+    {
+        $nombre = $_POST['nombre'] ?? '';
+        $correo = $_POST['correo'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        $resultado = $this->usuarios->registrar($nombre, $correo, $password);
+
+        if (($resultado['status'] ?? '') === 'success' || ($resultado['status'] ?? '') === 'ok') {
+            flash('mensaje', "Usuario registrado correctamente. Ahora inicia sesión.");
+            redirect('login');
+        }
+
+        flash('error', $resultado['message'] ?? "Error al registrar.");
+        redirect('register');
+    }
+
+    public function login(): void
+    {
+        $correo = $_POST['correo'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        $resultado = $this->usuarios->login($correo, $password);
+
+        if (($resultado['status'] ?? '') === 'success') {
             $_SESSION['usuario_id'] = $resultado['data']['id_usuario'];
             $_SESSION['usuario_nombre'] = $resultado['data']['nombre'];
-            
-            // Éxito: Redirigir al DASHBOARD
-            header("Location: ../index.php?view=dashboard");
-        } else {
-            $_SESSION['error'] = "Correo o contraseña incorrectos.";
-            // Error: Redirigir al LOGIN
-            header("Location: ../index.php?view=login");
+            redirect('dashboard');
         }
+
+        flash('error', "Correo o contraseña incorrectos.");
+        redirect('login');
+    }
+
+    public function logout(): void
+    {
+        session_destroy();
+        redirect('login');
     }
 }
-?>
