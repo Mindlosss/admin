@@ -408,7 +408,7 @@
                         -->
                             
                         
-                        <a href="index.php?view=logout" class="dropdown-item fw-semibold text-danger">
+                        <a href="index.php?route=logout" class="dropdown-item fw-semibold text-danger">
                             <i class="ri-logout-box-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">Cerrar sesión</span>
                         </a>

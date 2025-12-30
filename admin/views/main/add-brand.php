@@ -1,13 +1,3 @@
-<?php
-// recuperar mensajes
-$mensaje = $_SESSION['mensaje'] ?? "";
-$tipo_mensaje = $_SESSION['tipo_mensaje'] ?? "";
-
-// Limpiar mensajes despues de leerlos
-unset($_SESSION['mensaje']);
-unset($_SESSION['tipo_mensaje']);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,6 +25,10 @@ unset($_SESSION['tipo_mensaje']);
 </head>
 
 <body>
+    <?php
+    $mensaje = $mensaje ?? '';
+    $tipo_mensaje = $tipo_mensaje ?? 'info';
+    ?>
     <!-- Begin page -->
     <div class="wrapper">
 
@@ -107,8 +101,7 @@ unset($_SESSION['tipo_mensaje']);
                             </div>
                             <div class="card-body">
 
-                                <form method="POST" action="controllers/MarcaController.php" enctype="multipart/form-data">
-                                    <input type="hidden" name="accion" value="crear_marca">
+                                <form method="POST" action="index.php?route=brands" enctype="multipart/form-data">
                                     
                                     <!-- Nombre de la Marca -->
                                     <div class="row">

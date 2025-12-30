@@ -20,6 +20,10 @@
 </head>
 
 <body>
+    <?php
+    $mensaje = $mensaje ?? null;
+    $error = $error ?? null;
+    ?>
 
     <div class="auth-bg d-flex min-vh-100 justify-content-center align-items-center">
         <div class="row g-0 justify-content-center w-100 m-xxl-5 px-xxl-4 m-3">
@@ -34,17 +38,12 @@
 
                     <p class="text-muted mb-4">Ingresa tu correo y contraseña para acceder al panel de administrador.</p>
 
-                    <form action="controllers/AuthController.php" method="POST" class="text-start mb-3">
-                        
-                        <input type="hidden" name="accion" value="login">
-
-                        <?php 
-                        if(isset($_SESSION['mensaje'])): ?>
-                            <div class="alert alert-success"><?= $_SESSION['mensaje']; unset($_SESSION['mensaje']); ?></div>
+                    <form action="index.php?route=login" method="POST" class="text-start mb-3">
+                        <?php if($mensaje): ?>
+                            <div class="alert alert-success"><?= $mensaje; ?></div>
                         <?php endif; ?>
-                        
-                        <?php if(isset($_SESSION['error'])): ?>
-                            <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+                        <?php if($error): ?>
+                            <div class="alert alert-danger"><?= $error; ?></div>
                         <?php endif; ?>
 
                         <div class="mb-2">
@@ -71,7 +70,7 @@
                         </div>
                     </form>
                     <p class="text-muted fs-14 mb-0">No tienes una cuenta?
-                        <a href="index.php?view=register" class="fw-semibold text-danger ms-1">Registrate!</a>
+                        <a href="index.php?route=register" class="fw-semibold text-danger ms-1">Registrate!</a>
                     </p>
                 </div>
 

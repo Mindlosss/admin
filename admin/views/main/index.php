@@ -1,10 +1,3 @@
-<?php
-require_once 'models/Auto.php';
-//obtener datos
-$autoModel = new Auto();
-$stmtAutos = $autoModel->obtenerTodos();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,12 +73,11 @@ $stmtAutos = $autoModel->obtenerTodos();
                 <div class="row">
                     <div class="col-12">
 
-                        <?php if(isset($_SESSION['mensaje'])): ?>
-                            <div class="alert alert-<?= $_SESSION['tipo_mensaje'] ?> alert-dismissible fade show" role="alert">
-                                <strong>Notificación:</strong> <?= $_SESSION['mensaje'] ?>
+                        <?php if(!empty($mensaje)): ?>
+                            <div class="alert alert-<?= $tipo_mensaje ?? 'info' ?> alert-dismissible fade show" role="alert">
+                                <strong>Notificación:</strong> <?= $mensaje ?>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
-                            <?php unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']); ?>
                         <?php endif; ?>
                         <div class="card">
                             <div class="card-header">
@@ -106,53 +98,44 @@ $stmtAutos = $autoModel->obtenerTodos();
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php 
-                                            // Verificar si hay resultados
-                                            if ($stmtAutos->rowCount() > 0) {
-                                                while ($row = $stmtAutos->fetch(PDO::FETCH_ASSOC)) {
-                                                    // Procesar imagen, usa una por defecto si no hay imagen
-                                                    $imagenUrl = !empty($row['imagen']) ? $row['imagen'] : 'assets/images/small/small-2.jpg';
-                                            ?>
+                                            <?php if (!empty($autos)): ?>
+                                                <?php foreach ($autos as $row): ?>
+                                                    <?php $imagenUrl = !empty($row['imagen']) ? $row['imagen'] : 'assets/images/small/small-2.jpg'; ?>
                                                     <tr>
                                                         <td>
                                                             <img src="<?= $imagenUrl ?>" alt="coche" class="avatar-sm rounded-3 object-fit-cover">
                                                         </td>
-                                                        <td class="fw-semibold"><?= htmlspecialchars($row['marca']) ?></td>
-                                                        <td><?= htmlspecialchars($row['modelo']) ?></td>
-                                                        <td><?= $row['year'] ?></td>
+                                                        <td class="fw-semibold"><?= htmlspecialchars($row['marca'] ?? '') ?></td>
+                                                        <td><?= htmlspecialchars($row['modelo'] ?? '') ?></td>
+                                                        <td><?= $row['year'] ?? '' ?></td>
                                                         
                                                         <td>
                                                             <div class="d-flex align-items-center gap-2">
                                                                 <span class="rounded-circle border" 
-                                                                    style="width: 20px; height: 20px; background-color: <?= $row['color'] ?>;"
-                                                                    title="<?= $row['color'] ?>">
+                                                                    style="width: 20px; height: 20px; background-color: <?= $row['color'] ?? '#ccc' ?>;"
+                                                                    title="<?= $row['color'] ?? '' ?>">
                                                                 </span>
-                                                                <span class="font-monospace fs-13"><?= $row['color'] ?></span>
+                                                                <span class="font-monospace fs-13"><?= $row['color'] ?? '' ?></span>
                                                             </div>
                                                         </td>
-                                                        <td>$<?= number_format($row['precio'], 2) ?></td>
+                                                        <td>$<?= number_format((float) ($row['precio'] ?? 0), 2) ?></td>
                                                         
                                                         <td>
-                                                            <a href="index.php?view=edit-car&id=<?= $row['id_auto'] ?>" class="text-reset fs-16 px-1" title="Editar"> 
+                                                            <a href="index.php?route=autos/<?= $row['id_auto'] ?>/edit" class="text-reset fs-16 px-1" title="Editar"> 
                                                                 <i class="ri-edit-2-line"></i>
                                                             </a>
 
-                                                            <form action="controllers/AutoController.php" method="POST" style="display:inline-block;">
-                                                                <input type="hidden" name="accion" value="eliminar_auto">
-                                                                <input type="hidden" name="id_auto" value="<?= $row['id_auto'] ?>">
-                                                                
+                                                            <form action="index.php?route=autos/<?= $row['id_auto'] ?>/delete" method="POST" style="display:inline-block;">
                                                                 <button type="submit" class="text-reset fs-16 px-1 text-danger border-0 bg-transparent" 
-                                                                        onclick="return confirm('¿Estás seguro de eliminar el <?= $row['modelo'] ?>? No se puede deshacer.')" 
+                                                                        onclick="return confirm('¿Estás seguro de eliminar el <?= htmlspecialchars($row['modelo'] ?? '') ?>? No se puede deshacer.')" 
                                                                         title="Eliminar"> 
                                                                     <i class="ri-delete-bin-2-line"></i>
                                                                 </button>
                                                             </form>
                                                         </td>
                                                     </tr>
-                                            <?php 
-                                                }
-                                            } else {
-                                            ?>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
                                                 <tr>
                                                     <td colspan="7" class="text-center py-4">
                                                         <div class="d-flex flex-column align-items-center">
@@ -161,7 +144,7 @@ $stmtAutos = $autoModel->obtenerTodos();
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            <?php } ?>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>

@@ -1,35 +1,3 @@
-<?php
-require_once 'models/Auto.php';
-require_once 'models/Marca.php';
-
-$idAuto = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-
-if ($idAuto <= 0) {
-    $_SESSION['mensaje'] = "Coche no encontrado.";
-    $_SESSION['tipo_mensaje'] = "warning";
-    header("Location: index.php");
-    exit();
-}
-
-$autoModel = new Auto();
-$auto = $autoModel->obtenerPorId($idAuto);
-$imagenes = $autoModel->obtenerImagenesPorAuto($idAuto);
-
-if (!$auto) {
-    $_SESSION['mensaje'] = "El coche solicitado no existe.";
-    $_SESSION['tipo_mensaje'] = "warning";
-    header("Location: index.php");
-    exit();
-}
-
-$marcaModel = new Marca();
-$stmtMarcas = $marcaModel->obtenerTodas();
-
-$mensaje = $_SESSION['mensaje'] ?? '';
-$tipo_mensaje = $_SESSION['tipo_mensaje'] ?? '';
-unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,6 +25,13 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
 </head>
 
 <body>
+    <?php
+    $auto = $auto ?? [];
+    $imagenes = $imagenes ?? [];
+    $marcas = $marcas ?? [];
+    $mensaje = $mensaje ?? '';
+    $tipo_mensaje = $tipo_mensaje ?? 'info';
+    ?>
     <div class="wrapper">
 
         <?php require_once 'views/layouts/sidebar.php'; ?>
@@ -86,31 +61,25 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                 <h5 class="card-title">Datos del vehículo</h5>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="controllers/AutoController.php" enctype="multipart/form-data">
-                                    <input type="hidden" name="accion" value="editar_auto">
-                                    <input type="hidden" name="id_auto" value="<?= $auto['id_auto']; ?>">
-
+                                <form method="POST" action="index.php?route=autos/<?= $auto['id_auto'] ?>/update" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="id_marca" class="form-label">Marca <span class="text-danger">*</span></label>
                                                 <select class="form-select" id="id_marca" name="id_marca" required>
                                                     <option disabled value="">Selecciona una marca</option>
-                                                    <?php 
-                                                    if(isset($stmtMarcas)) {
-                                                        while ($row = $stmtMarcas->fetch(PDO::FETCH_ASSOC)) {
-                                                            $selected = ($row['id_marca'] == $auto['id_marca']) ? 'selected' : '';
-                                                            echo '<option value="' . $row['id_marca'] . '" ' . $selected . '>' . $row['nombre'] . '</option>';
-                                                        }
-                                                    }
-                                                    ?>
+                                                    <?php foreach ($marcas as $row): ?>
+                                                        <option value="<?= $row['id_marca'] ?>" <?= $row['id_marca'] == $auto['id_marca'] ? 'selected' : '' ?>>
+                                                            <?= $row['nombre'] ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="modelo" class="form-label">Modelo <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="modelo" name="modelo" value="<?= htmlspecialchars($auto['modelo']); ?>" required>
+                                                <input type="text" class="form-control" id="modelo" name="modelo" value="<?= htmlspecialchars($auto['modelo'] ?? '') ?>" required>
                                             </div>
                                         </div>
                                     </div>
@@ -124,7 +93,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                                     $tipos = ["", "Sedán", "SUV", "Hatchback", "Coupe", "Convertible", "Camioneta", "Minivan"];
                                                     foreach ($tipos as $tipo) {
                                                         $label = $tipo === "" ? "Selecciona un tipo" : $tipo;
-                                                        $selected = ($tipo === $auto['tipo']) ? 'selected' : '';
+                                                        $selected = ($tipo === ($auto['tipo'] ?? '')) ? 'selected' : '';
                                                         echo '<option value="' . $tipo . '" ' . $selected . '>' . $label . '</option>';
                                                     }
                                                     ?>
@@ -134,7 +103,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="year" class="form-label">Año <span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="year" name="year" min="1990" max="2099" value="<?= htmlspecialchars($auto['year']); ?>" required>
+                                                <input type="number" class="form-control" id="year" name="year" min="1990" max="2099" value="<?= htmlspecialchars($auto['year'] ?? '') ?>" required>
                                             </div>
                                         </div>
                                     </div>
@@ -143,12 +112,12 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label d-block">Color</label>
-                                                <input type="hidden" id="color" name="color" value="<?= htmlspecialchars($auto['color']); ?>">
+                                                <input type="hidden" id="color" name="color" value="<?= htmlspecialchars($auto['color'] ?? '') ?>">
                                                 <div class="d-flex gap-2 flex-wrap">
                                                     <?php 
                                                     $colores = ["#FFFFFF" => "Blanco", "#000000" => "Negro", "#808080" => "Gris", "#E31E24" => "Rojo", "#0066CC" => "Azul", "#C0C0C0" => "Plata", "#8B4513" => "Marrón", "#228B22" => "Verde", "#FF8C00" => "Naranja"];
                                                     foreach ($colores as $hex => $nombre): 
-                                                        $checked = (strtolower($auto['color']) === strtolower($hex)) ? 'checked' : '';
+                                                        $checked = (strtolower($auto['color'] ?? '') === strtolower($hex)) ? 'checked' : '';
                                                     ?>
                                                         <label class="color-option" title="<?= $nombre ?>">
                                                             <input type="radio" name="color_option" value="<?= $hex ?>" class="color-radio" <?= $checked ?>>
@@ -159,7 +128,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                                     <label class="color-option" title="Personalizado">
                                                         <input type="radio" name="color_option" value="Personalizado" class="color-radio">
                                                         <span class="color-circle custom-color-circle">
-                                                            <input type="color" id="custom-color-input" value="<?= htmlspecialchars($auto['color']); ?>" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
+                                                            <input type="color" id="custom-color-input" value="<?= htmlspecialchars($auto['color'] ?? '#ffffff') ?>" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
                                                         </span>
                                                     </label>
                                                 </div>
@@ -170,10 +139,10 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                                 <label for="transmision" class="form-label">Transmisión</label>
                                                 <select class="form-select" id="transmision" name="transmision">
                                                     <?php
-                                                    $transmisiones = ["", "Automática", "Manual", "CVT", "Hibrida"];
+                                                    $transmisiones = ["", "Automática", "Manual", "CVT", "Híbrida"];
                                                     foreach ($transmisiones as $t) {
                                                         $label = $t === "" ? "Selecciona una transmisión" : $t;
-                                                        $selected = ($t === $auto['transmision']) ? 'selected' : '';
+                                                        $selected = ($t === ($auto['transmision'] ?? '')) ? 'selected' : '';
                                                         echo '<option value="' . $t . '" ' . $selected . '>' . $label . '</option>';
                                                     }
                                                     ?>
@@ -191,7 +160,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                                     $combustibles = ["", "Gasolina", "Diésel", "Híbrido", "Eléctrico", "GLP"];
                                                     foreach ($combustibles as $c) {
                                                         $label = $c === "" ? "Selecciona un combustible" : $c;
-                                                        $selected = ($c === $auto['combustible']) ? 'selected' : '';
+                                                        $selected = ($c === ($auto['combustible'] ?? '')) ? 'selected' : '';
                                                         echo '<option value="' . $c . '" ' . $selected . '>' . $label . '</option>';
                                                     }
                                                     ?>
@@ -201,7 +170,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="kilometraje" class="form-label">Kilometraje</label>
-                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" value="<?= htmlspecialchars($auto['kilometraje']); ?>">
+                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" value="<?= htmlspecialchars($auto['kilometraje'] ?? '') ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -212,7 +181,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                                 <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">$</span>
-                                                    <input type="number" class="form-control" id="precio" name="precio" min="0" step="0.01" value="<?= htmlspecialchars($auto['precio']); ?>" required>
+                                                    <input type="number" class="form-control" id="precio" name="precio" min="0" step="0.01" value="<?= htmlspecialchars($auto['precio'] ?? '') ?>" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -226,7 +195,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                                 <div class="image-preview-row">
                                                     <?php foreach ($imagenes as $img): ?>
                                                         <div class="image-preview-wrapper <?= $img['thumbnail'] ? 'primary' : '' ?>">
-                                                            <img src="<?= htmlspecialchars($img['imagen']); ?>" alt="Imagen del vehículo">
+                                                            <img src="<?= htmlspecialchars($img['imagen']) ?>" alt="Imagen del vehículo">
                                                             <?php if ($img['thumbnail']): ?>
                                                                 <div class="image-badge-primary">
                                                                     <i class="ri-star-fill"></i>Principal
@@ -234,12 +203,12 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                                             <?php endif; ?>
                                                             <div class="p-2 d-flex flex-column gap-1">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="imagen_principal" id="img_principal_<?= $img['id_imagen']; ?>" value="<?= $img['id_imagen']; ?>" <?= $img['thumbnail'] ? 'checked' : '' ?>>
-                                                                    <label class="form-check-label" for="img_principal_<?= $img['id_imagen']; ?>">Usar como principal</label>
+                                                                    <input class="form-check-input" type="radio" name="imagen_principal" id="img_principal_<?= $img['id_imagen'] ?>" value="<?= $img['id_imagen'] ?>" <?= $img['thumbnail'] ? 'checked' : '' ?>>
+                                                                    <label class="form-check-label" for="img_principal_<?= $img['id_imagen'] ?>">Usar como principal</label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" name="eliminar_imagen[]" id="eliminar_img_<?= $img['id_imagen']; ?>" value="<?= $img['id_imagen']; ?>">
-                                                                    <label class="form-check-label text-danger" for="eliminar_img_<?= $img['id_imagen']; ?>">Eliminar esta imagen</label>
+                                                                    <input class="form-check-input" type="checkbox" name="eliminar_imagen[]" id="eliminar_img_<?= $img['id_imagen'] ?>" value="<?= $img['id_imagen'] ?>">
+                                                                    <label class="form-check-label text-danger" for="eliminar_img_<?= $img['id_imagen'] ?>">Eliminar esta imagen</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -255,16 +224,16 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                     <div class="row mt-3">
                                         <div class="col-12">
                                             <div class="mb-3">
-                                                <label class="form-label d-block">Agregar nuevas Imágenes</label>
+                                                <label class="form-label d-block">Agregar nuevas imágenes</label>
                                                 <div class="border border-2 border-dashed rounded-3 p-2 text-center" id="dropZone">
                                                     <i class="ri-image-add-line fs-40 text-muted d-block mb-2"></i>
-                                                    <h5 class="mb-2">Arrastra Imágenes aquí</h5>
+                                                    <h5 class="mb-2">Arrastra imágenes aquí</h5>
                                                     <p class="text-muted mb-3">o haz clic para seleccionar archivos</p>
                                                     
                                                     <input type="file" id="nuevas_imagenes" name="nuevas_imagenes[]" multiple accept=".jpg,.jpeg,.png" class="d-none" />
                                                     
                                                     <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('nuevas_imagenes').click()">
-                                                        <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar Imágenes
+                                                        <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar imágenes
                                                     </button>
                                                     <p class="text-muted fs-13 mt-3 mb-0">Formatos permitidos: JPG, PNG</p>
                                                 </div>
@@ -277,7 +246,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                                         <button type="submit" class="btn btn-primary">
                                             <i class="ri-save-3-line me-1"></i>Guardar cambios
                                         </button>
-                                        <a href="index.php" class="btn btn-light">
+                                        <a href="index.php?route=dashboard" class="btn btn-light">
                                             <i class="ri-arrow-go-back-line me-1"></i>Volver al listado
                                         </a>
                                     </div>
@@ -417,7 +386,7 @@ unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
                 imagePreviewContainer.innerHTML = `
                     <div class="text-center text-muted py-3">
                         <i class="ri-gallery-line fs-20 d-block mb-1"></i>
-                        <p class="mb-0">Aún no agregas nuevas imA­genes</p>
+                        <p class="mb-0">Aún no agregas nuevas imagenes</p>
                     </div>`;
                 return;
             }
