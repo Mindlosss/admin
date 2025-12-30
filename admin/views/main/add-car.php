@@ -1,15 +1,3 @@
-<?php
-require_once 'models/Marca.php';
-
-$marcaModel = new Marca();
-$stmtMarcas = $marcaModel->obtenerTodas();
-
-$mensaje = $_SESSION['mensaje'] ?? '';
-$tipo_mensaje = $_SESSION['tipo_mensaje'] ?? '';
-unset($_SESSION['mensaje']);
-unset($_SESSION['tipo_mensaje']);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +25,11 @@ unset($_SESSION['tipo_mensaje']);
 </head>
 
 <body>
+    <?php
+    $mensaje = $mensaje ?? '';
+    $tipo_mensaje = $tipo_mensaje ?? 'info';
+    $marcas = $marcas ?? [];
+    ?>
     <!-- Begin page -->
     <div class="wrapper">
 
@@ -108,8 +101,7 @@ unset($_SESSION['tipo_mensaje']);
                                 <h5 class="card-title">Datos del vehículo</h5>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="controllers/AutoController.php" enctype="multipart/form-data">
-                                    <input type="hidden" name="accion" value="crear_auto">
+                                <form method="POST" action="index.php?route=autos" enctype="multipart/form-data">
                                     
                                     <!-- Marca y Modelo -->
                                     <div class="row">
@@ -119,13 +111,9 @@ unset($_SESSION['tipo_mensaje']);
                                                 <select class="form-select" id="id_marca" name="id_marca" required>
                                                     <option selected disabled value="">Selecciona una marca</option>
                                                     
-                                                    <?php 
-                                                    if(isset($stmtMarcas)) {
-                                                        while ($row = $stmtMarcas->fetch(PDO::FETCH_ASSOC)) {
-                                                            echo '<option value="' . $row['id_marca'] . '">' . $row['nombre'] . '</option>';
-                                                        }
-                                                    }
-                                                    ?>
+                                                    <?php foreach ($marcas as $row): ?>
+                                                        <option value="<?= $row['id_marca'] ?>"><?= $row['nombre'] ?></option>
+                                                    <?php endforeach; ?>
                                                     
                                                 </select>
                                             </div>

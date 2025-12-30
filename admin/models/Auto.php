@@ -1,8 +1,14 @@
 <?php
-require_once __DIR__ . '/../config/db.php';
+declare(strict_types=1);
+
+namespace App\Models;
+
+use App\Config\Database;
+use Exception;
+use PDO;
 
 class Auto {
-    private $conn;
+    private PDO $conn;
     private $table = "autos";
     private $table_img = "imagenes";
 

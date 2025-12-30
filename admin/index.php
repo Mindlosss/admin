@@ -1,61 +1,39 @@
 <?php
+declare(strict_types=1);
 
 session_start();
 
-// default view
-$vista = isset($_GET['view']) ? $_GET['view'] : 'dashboard';
+require __DIR__ . '/core/autoload.php';
+require __DIR__ . '/core/helpers.php';
 
-// seguridad
-if (!isset($_SESSION['usuario_id'])) {
-    // sino esta logueado solo puede ir al login o registro
-    if ($vista !== 'register') {
-        $vista = 'login';
-    }
-} else {
-    // si ya esta logueado vamos a dashboard
-    if ($vista === 'login' || $vista === 'register') {
-        header("Location: index.php?view=dashboard");
-        exit();
-    }
-}
+use App\Core\AuthMiddleware;
+use App\Core\Router;
+use App\Controllers\AuthController;
+use App\Controllers\AutoController;
+use App\Controllers\MarcaController;
 
-// switch para cargar las vistas
-switch ($vista) {
-    case 'login':
-        require_once 'views/auth/login.php';
-        break;
-        
-    case 'register':
-        require_once 'views/auth/register.php';
-        break;
-        
-    case 'dashboard':
-        require_once 'views/main/index.php';
-        break;
-        
-    case 'add-car':
-        require_once 'views/main/add-car.php';
-        break;
-        
-    case 'add-brand':
-        require_once 'views/main/add-brand.php';
-        break;
+$router = new Router();
+$authMiddleware = [[AuthMiddleware::class, 'handle']];
 
-    case 'edit-car':
-        require_once 'views/main/edit-car.php'; 
-        break;
+// Auth
+$router->get('login', [AuthController::class, 'showLogin']);
+$router->post('login', [AuthController::class, 'login']);
+$router->get('register', [AuthController::class, 'showRegister']);
+$router->post('register', [AuthController::class, 'register']);
+$router->get('logout', [AuthController::class, 'logout'], $authMiddleware);
 
-    case 'logout':
-        // Acción de salir
-        session_destroy();
-        header("Location: index.php?view=login");
-        exit();
-        break;
-        
-    default:
-        // si escribe cualquier cosa en la url ir a login
-        header("Location: index.php?view=login");
-        exit();
-        break;
-}
-?>
+// Autos
+$router->get('', [AutoController::class, 'index'], $authMiddleware);
+$router->get('dashboard', [AutoController::class, 'index'], $authMiddleware);
+$router->get('autos/create', [AutoController::class, 'create'], $authMiddleware);
+$router->post('autos', [AutoController::class, 'store'], $authMiddleware);
+$router->get('autos/{id}/edit', [AutoController::class, 'edit'], $authMiddleware);
+$router->post('autos/{id}/update', [AutoController::class, 'update'], $authMiddleware);
+$router->post('autos/{id}/delete', [AutoController::class, 'destroy'], $authMiddleware);
+
+// Marcas
+$router->get('brands/create', [MarcaController::class, 'create'], $authMiddleware);
+$router->post('brands', [MarcaController::class, 'store'], $authMiddleware);
+
+$route = $_GET['route'] ?? 'dashboard';
+$router->dispatch($route, $_SERVER['REQUEST_METHOD'] ?? 'GET');

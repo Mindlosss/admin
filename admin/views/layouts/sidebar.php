@@ -1,5 +1,5 @@
 <?php
-$vista_actual = isset($_GET['view']) ? trim($_GET['view']) : 'dashboard';
+$vista_actual = isset($_GET['route']) ? trim($_GET['route']) : 'dashboard';
 ?>
 
 <div class="sidenav-menu">
@@ -29,23 +29,23 @@ $vista_actual = isset($_GET['view']) ? trim($_GET['view']) : 'dashboard';
             <li class="side-nav-title">Navigation</li>
 
             <li class="side-nav-item <?= $vista_actual == 'dashboard' ? 'active' : '' ?>">
-                <a href="index.php?view=dashboard" class="side-nav-link <?= $vista_actual == 'dashboard' ? 'active' : '' ?>">
+                <a href="index.php?route=dashboard" class="side-nav-link <?= $vista_actual == 'dashboard' ? 'active' : '' ?>">
                     <span class="menu-icon"><i data-lucide="airplay"></i></span>
                     <span class="menu-text"> Dashboard </span>
                     <!-- <span class="badge bg-danger rounded">3</span> -->
                 </a>
             </li>
 
-            <li class="side-nav-item <?= $vista_actual == 'add-car' ? 'active' : '' ?>">
-                <a href="index.php?view=add-car" class="side-nav-link <?= $vista_actual == 'add-car' ? 'active' : '' ?>">
+            <li class="side-nav-item <?= $vista_actual == 'autos/create' ? 'active' : '' ?>">
+                <a href="index.php?route=autos/create" class="side-nav-link <?= $vista_actual == 'autos/create' ? 'active' : '' ?>">
                     <span class="menu-icon"><i data-lucide="car-front"></i></span>
                     <span class="menu-text"> Agregar coche </span>
                     <!-- <span class="badge bg-danger rounded">3</span> -->
                 </a>
             </li>
 
-            <li class="side-nav-item <?= $vista_actual == 'add-brand' ? 'active' : '' ?>">
-                <a href="index.php?view=add-brand" class="side-nav-link <?= $vista_actual == 'add-brand' ? 'active' : '' ?>">
+            <li class="side-nav-item <?= $vista_actual == 'brands/create' ? 'active' : '' ?>">
+                <a href="index.php?route=brands/create" class="side-nav-link <?= $vista_actual == 'brands/create' ? 'active' : '' ?>">
                     <span class="menu-icon"><i data-lucide="tag"></i></span>
                     <span class="menu-text"> Agregar Marca </span>
                     <!-- <span class="badge bg-danger rounded">3</span> -->

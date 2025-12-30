@@ -1,8 +1,13 @@
 <?php
-require_once __DIR__ . '/../config/db.php';
+declare(strict_types=1);
+
+namespace App\Models;
+
+use App\Config\Database;
+use PDO;
 
 class Marca {
-    private $conn;
+    private PDO $conn;
     private $table_name = "marcas";
 
     public function __construct() {
