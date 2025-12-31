@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 session_start();
 
-require 'core/autoload.php';
-require 'core/helpers.php';
+require __DIR__ . '/core/autoload.php';
+require __DIR__ . '/core/helpers.php';
 
 use App\Core\AuthMiddleware;
 use App\Core\Router;
