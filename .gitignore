@@ -1,2 +1,3 @@
 admin/assets/images/brands/*
 admin/assets/images/cars/*
+admin/config/Database.php
