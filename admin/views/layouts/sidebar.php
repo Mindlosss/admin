@@ -1,19 +1,19 @@
 <?php
 $vista_actual = isset($_GET['route']) ? trim($_GET['route']) : 'dashboard';
+$esAutos = strpos($vista_actual, 'autos') === 0;
+$esMarcas = strpos($vista_actual, 'brands') === 0;
 ?>
 
 <div class="sidenav-menu">
-
-    <!-- Brand Logo -->
-    <a href="index.html" class="logo">
+    <a href="index.php?route=dashboard" class="logo">
         <span class="logo-light">
-            <span class="logo-lg"><img src="../../assets/images/logo.png" alt="logo"></span>
-            <span class="logo-sm"><img src="../../assets/images/logo-sm.png" alt="small logo"></span>
+            <span class="logo-lg"><img src="assets/images/logo.png" alt="logo"></span>
+            <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo"></span>
         </span>
 
         <span class="logo-dark">
-            <span class="logo-lg"><img src="../../assets/images/logo.png" alt="dark logo"></span>
-            <span class="logo-sm"><img src="../../assets/images/logo-sm.png" alt="small logo"></span>
+            <span class="logo-lg"><img src="assets/images/logo.png" alt="dark logo"></span>
+            <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo"></span>
         </span>
     </a>
 
@@ -28,26 +28,25 @@ $vista_actual = isset($_GET['route']) ? trim($_GET['route']) : 'dashboard';
         <ul class="side-nav">
             <li class="side-nav-title">Navigation</li>
 
-            <li class="side-nav-item <?= $vista_actual == 'dashboard' ? 'active' : '' ?>">
-                <a href="index.php?route=dashboard" class="side-nav-link <?= $vista_actual == 'dashboard' ? 'active' : '' ?>">
+            <li class="side-nav-item <?= $vista_actual === 'dashboard' ? 'active' : '' ?>">
+                <a href="index.php?route=dashboard" class="side-nav-link <?= $vista_actual === 'dashboard' ? 'active' : '' ?>">
                     <span class="menu-icon"><i data-lucide="airplay"></i></span>
                     <span class="menu-text"> Dashboard </span>
                     <!-- <span class="badge bg-danger rounded">3</span> -->
                 </a>
             </li>
 
-            <li class="side-nav-item <?= $vista_actual == 'autos/create' ? 'active' : '' ?>">
-                <a href="index.php?route=autos/create" class="side-nav-link <?= $vista_actual == 'autos/create' ? 'active' : '' ?>">
+            <li class="side-nav-item <?= $vista_actual === 'autos' ? 'active' : '' ?>">
+                <a href="index.php?route=autos" class="side-nav-link <?= $vista_actual === 'autos' ? 'active' : '' ?>">
                     <span class="menu-icon"><i data-lucide="car-front"></i></span>
-                    <span class="menu-text"> Agregar coche </span>
-                    <!-- <span class="badge bg-danger rounded">3</span> -->
+                    <span class="menu-text">Coches</span>
                 </a>
             </li>
 
-            <li class="side-nav-item <?= $vista_actual == 'brands/create' ? 'active' : '' ?>">
-                <a href="index.php?route=brands/create" class="side-nav-link <?= $vista_actual == 'brands/create' ? 'active' : '' ?>">
+            <li class="side-nav-item <?= $vista_actual === 'brands' ? 'active' : '' ?>">
+                <a href="index.php?route=brands" class="side-nav-link <?= $vista_actual === 'brands' ? 'active' : '' ?>">
                     <span class="menu-icon"><i data-lucide="tag"></i></span>
-                    <span class="menu-text"> Agregar Marca </span>
+                    <span class="menu-text"> Marca </span>
                     <!-- <span class="badge bg-danger rounded">3</span> -->
                 </a>
             </li>
@@ -793,7 +792,7 @@ $vista_actual = isset($_GET['route']) ? trim($_GET['route']) : 'dashboard';
                     </ul>
                 </div>
             </li> -->
-            </ul>
+        </ul>
 
         <div class="clearfix"></div>
     </div>

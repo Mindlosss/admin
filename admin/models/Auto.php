@@ -17,6 +17,41 @@ class Auto {
         $this->conn = $database->getConnection();
     }
 
+    // Conteos y estadisticas para dashboard
+    public function contarAutos(): int
+    {
+        $query = "SELECT COUNT(*) AS total FROM " . $this->table;
+        $stmt = $this->conn->query($query);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) ($row['total'] ?? 0);
+    }
+
+    public function valorInventario(): float
+    {
+        $query = "SELECT SUM(precio) AS total FROM " . $this->table;
+        $stmt = $this->conn->query($query);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (float) ($row['total'] ?? 0);
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function obtenerRecientes(int $limite = 5): array
+    {
+        $limite = max(1, $limite);
+        $query = "SELECT a.id_auto, a.modelo, a.year, a.color, a.precio, m.nombre as marca, i.imagen 
+                  FROM " . $this->table . " a
+                  LEFT JOIN marcas m ON a.id_marca = m.id_marca
+                  LEFT JOIN imagenes i ON a.id_auto = i.id_auto AND i.thumbnail = 1
+                  ORDER BY a.created_at DESC
+                  LIMIT {$limite}";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // crear un nuevo auto con imagenes
     public function crear($datos, $imagenes, $id_usuario) {
         try {

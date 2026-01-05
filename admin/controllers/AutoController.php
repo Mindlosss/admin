@@ -25,7 +25,7 @@ class AutoController
         $stmt = $this->autos->obtenerTodos();
         $autos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        View::render('main/index', [
+        View::render('main/autos-index', [
             'autos' => $autos,
             'mensaje' => flash('mensaje'),
             'tipo_mensaje' => flash('tipo_mensaje'),
@@ -85,7 +85,7 @@ class AutoController
         if (!$auto) {
             flash('mensaje', 'Coche no encontrado.');
             flash('tipo_mensaje', 'warning');
-            redirect('dashboard');
+            redirect('autos');
         }
         $imagenes = $this->autos->obtenerImagenesPorAuto((int) $id);
         $marcasStmt = $this->marcas->obtenerTodas();
@@ -144,7 +144,7 @@ class AutoController
             flash('tipo_mensaje', 'warning');
         }
 
-        redirect('dashboard');
+        redirect('autos');
     }
 
     public function destroy(string $id): void
@@ -157,7 +157,7 @@ class AutoController
             flash('tipo_mensaje', 'danger');
         }
 
-        redirect('dashboard');
+        redirect('autos');
     }
 
     /**
