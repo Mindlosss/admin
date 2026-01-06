@@ -155,6 +155,48 @@
             display: block;
         }
 
+        .logo-preview-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: #3c86d8;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-bs-theme="dark"] .logo-preview-badge {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-preview-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 6px 10px;
+            background-color: rgba(0, 0, 0, 0.03);
+            font-size: 12px;
+            color: var(--bs-gray-700);
+        }
+
+        [data-bs-theme="dark"] .logo-preview-meta {
+            background-color: rgba(255, 255, 255, 0.06);
+            color: var(--bs-gray-300);
+        }
+
+        .logo-preview-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .logo-preview-size {
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
         .logo-preview-overlay {
             position: absolute;
             top: 0;
@@ -223,7 +265,7 @@
         let uploadedLogo = null;
 
         if (existingLogoUrl) {
-            uploadedLogo = { src: existingLogoUrl, name: 'Logo actual', file: null, existing: true };
+            uploadedLogo = { src: existingLogoUrl, name: 'Logo actual', file: null, size: null, existing: true };
         }
         renderLogo();
 
@@ -260,6 +302,7 @@
                     uploadedLogo = {
                         src: e.target.result,
                         name: file.name,
+                        size: file.size,
                         file: file
                     };
                     renderLogo();
@@ -303,6 +346,13 @@
             img.src = uploadedLogo.src;
             img.alt = uploadedLogo.name;
 
+            if (uploadedLogo.existing) {
+                const badge = document.createElement('div');
+                badge.className = 'logo-preview-badge';
+                badge.textContent = 'Actual';
+                wrapper.appendChild(badge);
+            }
+
             const overlay = document.createElement('div');
             overlay.className = 'logo-preview-overlay';
 
@@ -329,9 +379,28 @@
 
             wrapper.appendChild(img);
             wrapper.appendChild(overlay);
+            const meta = document.createElement('div');
+            meta.className = 'logo-preview-meta';
+            const sizeLabel = uploadedLogo.size ? formatFileSize(uploadedLogo.size) : (uploadedLogo.existing ? 'Actual' : '');
+            meta.innerHTML = `<span class="logo-preview-name" title="${uploadedLogo.name}">${uploadedLogo.name}</span><span class="logo-preview-size">${sizeLabel}</span>`;
+            wrapper.appendChild(meta);
             container.appendChild(wrapper);
 
             logoPreviewContainer.appendChild(container);
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes) {
+                return '';
+            }
+            const units = ['B', 'KB', 'MB', 'GB'];
+            let size = bytes;
+            let unitIndex = 0;
+            while (size >= 1024 && unitIndex < units.length - 1) {
+                size /= 1024;
+                unitIndex++;
+            }
+            return `${size.toFixed(unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
         }
     </script>
 </body>

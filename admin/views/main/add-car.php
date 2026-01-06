@@ -434,6 +434,32 @@
             display: block;
         }
 
+        .image-preview-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 6px 8px;
+            background-color: rgba(0, 0, 0, 0.03);
+            font-size: 12px;
+            color: var(--bs-gray-700);
+        }
+
+        [data-bs-theme="dark"] .image-preview-meta {
+            background-color: rgba(255, 255, 255, 0.06);
+            color: var(--bs-gray-300);
+        }
+
+        .image-preview-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .image-preview-size {
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
         .image-preview-wrapper.primary img {
             border: 3px solid #3c86d8;
         }
@@ -629,13 +655,33 @@
         function updateInputFiles() {
             const dataTransfer = new DataTransfer();
             
-            // Agregar cada archivo de nuestro array JS al objeto DataTransfer
-            uploadedImages.forEach(imageObj => {
-                dataTransfer.items.add(imageObj.file);
+            // Agregar primero la imagen principal para que el backend la tome como thumbnail
+            if (uploadedImages.length > 0 && primaryImageIndex >= 0 && primaryImageIndex < uploadedImages.length) {
+                dataTransfer.items.add(uploadedImages[primaryImageIndex].file);
+            }
+
+            uploadedImages.forEach((imageObj, index) => {
+                if (index !== primaryImageIndex) {
+                    dataTransfer.items.add(imageObj.file);
+                }
             });
 
             // Asignar los archivos al input real
             imageInput.files = dataTransfer.files;
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes) {
+                return '0 KB';
+            }
+            const units = ['B', 'KB', 'MB', 'GB'];
+            let size = bytes;
+            let unitIndex = 0;
+            while (size >= 1024 && unitIndex < units.length - 1) {
+                size /= 1024;
+                unitIndex++;
+            }
+            return `${size.toFixed(unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
         }
 
         // Renderizar la vista previa de las imágenes
@@ -692,6 +738,10 @@
 
                 wrapper.appendChild(img);
                 wrapper.appendChild(overlay);
+                const meta = document.createElement('div');
+                meta.className = 'image-preview-meta';
+                meta.innerHTML = `<span class="image-preview-name" title="${image.name}">${image.name}</span><span class="image-preview-size">${formatFileSize(image.file.size)}</span>`;
+                wrapper.appendChild(meta);
                 previewRow.appendChild(wrapper);
             });
 
@@ -702,6 +752,7 @@
         function setPrimaryImage(index) {
             primaryImageIndex = index;
             renderImages();
+            updateInputFiles();
         }
 
         // Eliminar imagen

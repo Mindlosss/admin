@@ -234,6 +234,32 @@
             display: block;
         }
 
+        .logo-preview-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 6px 10px;
+            background-color: rgba(0, 0, 0, 0.03);
+            font-size: 12px;
+            color: var(--bs-gray-700);
+        }
+
+        [data-bs-theme="dark"] .logo-preview-meta {
+            background-color: rgba(255, 255, 255, 0.06);
+            color: var(--bs-gray-300);
+        }
+
+        .logo-preview-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .logo-preview-size {
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
         .logo-preview-overlay {
             position: absolute;
             top: 0;
@@ -335,6 +361,7 @@
                 uploadedLogo = {
                     src: e.target.result,
                     name: file.name,
+                    size: file.size,
                     file: file
                 };
                 renderLogo();
@@ -405,9 +432,27 @@
 
         wrapper.appendChild(img);
         wrapper.appendChild(overlay);
+        const meta = document.createElement('div');
+        meta.className = 'logo-preview-meta';
+        meta.innerHTML = `<span class="logo-preview-name" title="${uploadedLogo.name}">${uploadedLogo.name}</span><span class="logo-preview-size">${formatFileSize(uploadedLogo.size)}</span>`;
+        wrapper.appendChild(meta);
         container.appendChild(wrapper);
 
         logoPreviewContainer.appendChild(container);
+    }
+
+    function formatFileSize(bytes) {
+        if (!bytes) {
+            return '0 KB';
+        }
+        const units = ['B', 'KB', 'MB', 'GB'];
+        let size = bytes;
+        let unitIndex = 0;
+        while (size >= 1024 && unitIndex < units.length - 1) {
+            size /= 1024;
+            unitIndex++;
+        }
+        return `${size.toFixed(unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
     }
 
     // Reset form
