@@ -36,7 +36,7 @@
                     </div>
                 <?php endif; ?>
 
-                <div class="row g-3 mb-3">
+                <div class="row g-3">
                     <div class="col-md-4">
                         <div class="card shadow-sm border-0">
                             <div class="card-body d-flex align-items-center">

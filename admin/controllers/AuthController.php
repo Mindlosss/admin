@@ -25,6 +25,7 @@ class AuthController
         ]);
     }
 
+    /*
     public function showRegister(): void
     {
         View::render('auth/register', [
@@ -48,6 +49,7 @@ class AuthController
         flash('error', $resultado['message'] ?? "Error al registrar.");
         redirect('register');
     }
+    */
 
     public function login(): void
     {

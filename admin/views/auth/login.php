@@ -69,9 +69,11 @@
                             <button class="btn btn-primary fw-semibold" type="submit">Iniciar sesión</button>
                         </div>
                     </form>
+                    <!--
                     <p class="text-muted fs-14 mb-0">No tienes una cuenta?
                         <a href="index.php?route=register" class="fw-semibold text-danger ms-1">Registrate!</a>
                     </p>
+                    -->
                 </div>
 
                 <p class="mt-4 text-center mb-0">
