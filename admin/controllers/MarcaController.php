@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Config\App;
 use App\Core\View;
 use App\Models\Marca;
 use function App\Core\flash;
@@ -152,6 +153,7 @@ class MarcaController
         }
 
         $directorio = "assets/images/brands/";
+        $baseUrl = App::imageBaseUrl();
         $destino = __DIR__ . "/../{$directorio}";
         if (!is_dir($destino)) {
             mkdir($destino, 0777, true);
@@ -168,7 +170,7 @@ class MarcaController
         $nombreArchivo = uniqid() . "_brand." . $extension;
 
         if (move_uploaded_file($_FILES['logo']['tmp_name'], $destino . $nombreArchivo)) {
-            return $directorio . $nombreArchivo;
+            return $baseUrl . $directorio . $nombreArchivo;
         }
 
         return $esObligatorio ? '' : null;
@@ -180,7 +182,11 @@ class MarcaController
             return;
         }
 
-        $ruta = __DIR__ . "/../" . ltrim($rutaRelativa, '/');
+        $relativa = App::imageRelativePath($rutaRelativa);
+        if ($relativa === null) {
+            return;
+        }
+        $ruta = __DIR__ . "/../" . $relativa;
         if (file_exists($ruta)) {
             @unlink($ruta);
         }

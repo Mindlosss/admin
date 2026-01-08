@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Config\App;
 use App\Config\Database;
 use PDO;
 
@@ -136,7 +137,11 @@ class Marca {
             return;
         }
 
-        $ruta = __DIR__ . "/../" . ltrim($rutaRelativa, '/');
+        $relativa = App::imageRelativePath($rutaRelativa);
+        if ($relativa === null) {
+            return;
+        }
+        $ruta = __DIR__ . "/../" . $relativa;
         if (file_exists($ruta)) {
             @unlink($ruta);
         }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Config\App;
 use App\Config\Database;
 use Exception;
 use PDO;
@@ -220,7 +221,11 @@ class Auto {
         $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($imagenes as $img) {
-            $rutaArchivo = __DIR__ . "/../" . $img['imagen'];
+            $relativa = App::imageRelativePath($img['imagen'] ?? '');
+            if ($relativa === null) {
+                continue;
+            }
+            $rutaArchivo = __DIR__ . "/../" . $relativa;
             if (file_exists($rutaArchivo)) {
                 unlink($rutaArchivo);
             }
@@ -241,7 +246,11 @@ class Auto {
             $stmtImg->execute([':id' => $id]);
             
             while($img = $stmtImg->fetch(PDO::FETCH_ASSOC)){
-                $rutaArchivo = __DIR__ . "/../" . $img['imagen']; 
+                $relativa = App::imageRelativePath($img['imagen'] ?? '');
+                if ($relativa === null) {
+                    continue;
+                }
+                $rutaArchivo = __DIR__ . "/../" . $relativa;
                 if(file_exists($rutaArchivo)){
                     unlink($rutaArchivo);
                 }

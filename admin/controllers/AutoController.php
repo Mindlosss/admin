@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Config\App;
 use App\Core\View;
 use App\Models\Auto;
 use App\Models\Marca;
@@ -174,6 +175,7 @@ class AutoController
         }
 
         $directorio = "assets/images/cars/";
+        $baseUrl = App::imageBaseUrl();
         $destino = __DIR__ . "/../{$directorio}";
         if (!is_dir($destino)) {
             mkdir($destino, 0777, true);
@@ -186,7 +188,7 @@ class AutoController
                 $nombreArchivo = uniqid() . "_car_" . $i . "." . $extension;
 
                 if (move_uploaded_file($_FILES[$inputName]['tmp_name'][$i], $destino . $nombreArchivo)) {
-                    $rutas[] = $directorio . $nombreArchivo;
+                    $rutas[] = $baseUrl . $directorio . $nombreArchivo;
                 }
             }
         }
