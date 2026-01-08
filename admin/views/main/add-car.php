@@ -157,92 +157,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Color y Transmisión -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label d-block">Color</label>
-                                                <div class="d-flex gap-2 flex-wrap">
-                                                    <input type="hidden" id="color" name="color" value="">
-                                                    
-                                                    <!-- Blanco -->
-                                                    <label class="color-option" title="Blanco">
-                                                        <input type="radio" name="color_option" value="#FFFFFF" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #FFFFFF; border: 2px solid #333;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Negro -->
-                                                    <label class="color-option" title="Negro">
-                                                        <input type="radio" name="color_option" value="#000000" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #000000;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Gris -->
-                                                    <label class="color-option" title="Gris">
-                                                        <input type="radio" name="color_option" value="#808080" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #808080;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Rojo -->
-                                                    <label class="color-option" title="Rojo">
-                                                        <input type="radio" name="color_option" value="#E31E24" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #E31E24;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Azul -->
-                                                    <label class="color-option" title="Azul">
-                                                        <input type="radio" name="color_option" value="#0066CC" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #0066CC;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Plata -->
-                                                    <label class="color-option" title="Plata">
-                                                        <input type="radio" name="color_option" value="#C0C0C0" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #C0C0C0; border: 1px solid #999;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Marrón -->
-                                                    <label class="color-option" title="Marrón">
-                                                        <input type="radio" name="color_option" value="#8B4513" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #8B4513;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Verde -->
-                                                    <label class="color-option" title="Verde">
-                                                        <input type="radio" name="color_option" value="#228B22" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #228B22;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Naranja -->
-                                                    <label class="color-option" title="Naranja">
-                                                        <input type="radio" name="color_option" value="#FF8C00" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #FF8C00;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Personalizado -->
-                                                    <label class="color-option" title="Personalizado">
-                                                        <input type="radio" name="color_option" value="Personalizado" class="color-radio">
-                                                        <span class="color-circle custom-color-circle">
-                                                            <input type="color" id="custom-color-input" value="#ffffff" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="transmision" class="form-label">Transmisión</label>
-                                                <select class="form-select" id="transmision" name="transmision">
-                                                    <option selected value="">Selecciona una transmisión</option>
-                                                    <option value="Automática">Automática</option>
-                                                    <option value="Manual">Manual</option>
-                                                    <option value="CVT">CVT</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Combustible y Kilometraje -->
+                                    <!-- Combustible y Transmisión -->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
@@ -259,20 +174,81 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="kilometraje" class="form-label">Kilometraje</label>
-                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" placeholder="Ej: 50000">
+                                                <label for="transmision" class="form-label">Transmisión</label>
+                                                <select class="form-select" id="transmision" name="transmision">
+                                                    <option selected value="">Selecciona una transmisión</option>
+                                                    <option value="Automática">Automática</option>
+                                                    <option value="Manual">Manual</option>
+                                                    <option value="CVT">CVT</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Precio -->
+                                    <!-- Kilometraje y Precio -->
                                     <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="kilometraje" class="form-label">Kilometraje</label>
+                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" placeholder="Ej: 50000">
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">$</span>
                                                     <input type="number" class="form-control" id="precio" name="precio" min="0" step="0.01" placeholder="0.00" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Color -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label class="form-label d-block">Color</label>
+                                                <div class="d-flex gap-2 flex-wrap">
+                                                    <input type="hidden" id="color" name="color" value="">
+                                                    
+                                                    <!-- Blanco -->
+                                                    <label class="color-option" title="Blanco">
+                                                        <input type="radio" name="color_option" value="#FFFFFF" class="color-radio">
+                                                        <span class="color-circle" style="background-color: #FFFFFF; border: 2px solid #333;"></span>
+                                                    </label>
+                                                    
+                                                    <!-- Gris -->
+                                                    <label class="color-option" title="Gris">
+                                                        <input type="radio" name="color_option" value="#808080" class="color-radio">
+                                                        <span class="color-circle" style="background-color: #808080;"></span>
+                                                    </label>
+                                                    
+                                                    <!-- Negro -->
+                                                    <label class="color-option" title="Negro">
+                                                        <input type="radio" name="color_option" value="#000000" class="color-radio">
+                                                        <span class="color-circle" style="background-color: #000000;"></span>
+                                                    </label>
+                                                    
+                                                    <!-- Rojo -->
+                                                    <label class="color-option" title="Rojo">
+                                                        <input type="radio" name="color_option" value="#E31E24" class="color-radio">
+                                                        <span class="color-circle" style="background-color: #E31E24;"></span>
+                                                    </label>
+                                                    
+                                                    <!-- Azul -->
+                                                    <label class="color-option" title="Azul">
+                                                        <input type="radio" name="color_option" value="#0066CC" class="color-radio">
+                                                        <span class="color-circle" style="background-color: #0066CC;"></span>
+                                                    </label>
+                                                    
+                                                    <!-- Personalizado -->
+                                                    <label class="color-option" title="Personalizado">
+                                                        <input type="radio" name="color_option" value="Personalizado" class="color-radio">
+                                                        <span class="color-circle custom-color-circle">
+                                                            <input type="color" id="custom-color-input" value="#ffffff" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
+                                                        </span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -382,10 +358,24 @@
         }
 
         .custom-color-circle {
-            background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080);
-            /* background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); */
+            background: conic-gradient(#ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000);
+            border: 2px solid #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 2px rgba(0, 0, 0, 0.08);
             position: relative;
             overflow: hidden;
+        }
+
+        .custom-color-circle::after {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.5);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+            pointer-events: none;
         }
         #dropZone {
             cursor: pointer;
