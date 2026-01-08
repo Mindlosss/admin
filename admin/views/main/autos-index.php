@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Coches</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Inventario de coches" name="description" />
+    <meta content="Inventario de autos" name="description" />
     <meta content="Coderthemes" name="author" />
 
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -26,7 +26,7 @@
 
             <div class="page-title-head d-flex align-items-center gap-2">
                 <div class="flex-grow-1">
-                    <h4 class="fs-18 fw-bold mb-0">Coches</h4>
+                    <h4 class="fs-18 fw-bold mb-0">Autos</h4>
                     <p class="text-muted mb-0">Gestiona tu inventario de vehículos.</p>
                 </div>
             </div>
@@ -44,9 +44,9 @@
 
                         <div class="card">
                             <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="card-title mb-0">Lista de Coches</h5>
+                                <h5 class="card-title mb-0">Lista de autos</h5>
                                 <a class="btn btn-primary btn-sm" href="index.php?route=autos/create">
-                                    <i class="ri-add-line me-1"></i>Agregar coche
+                                    <i class="ri-add-line me-1"></i>Agregar auto
                                 </a>
                             </div>
                             <div class="card-body">
@@ -56,8 +56,8 @@
                                             <tr>
                                                 <th>Imagen</th> 
                                                 <th>Marca</th>
+                                                <th>Submarca</th>
                                                 <th>Modelo</th>
-                                                <th>Año</th>
                                                 <th>Color</th>
                                                 <th>Precio</th>
                                                 <th>Acciones</th> 
@@ -69,7 +69,7 @@
                                                     <?php $imagenUrl = !empty($row['imagen']) ? $row['imagen'] : 'assets/images/small/small-2.jpg'; ?>
                                                     <tr>
                                                         <td>
-                                                            <img src="<?= $imagenUrl ?>" alt="coche" class="avatar-sm rounded-3 object-fit-cover">
+                                                            <img src="<?= $imagenUrl ?>" alt="auto" class="avatar-sm rounded-3 object-fit-cover">
                                                         </td>
                                                         <td class="fw-semibold"><?= htmlspecialchars($row['marca'] ?? '') ?></td>
                                                         <td><?= htmlspecialchars($row['modelo'] ?? '') ?></td>
@@ -106,7 +106,7 @@
                                                     <td colspan="7" class="text-center py-4">
                                                         <div class="d-flex flex-column align-items-center">
                                                             <i class="ri-car-line fs-30 text-muted mb-2"></i>
-                                                            <p class="text-muted mb-0">No hay coches registrados aún.</p>
+                                                            <p class="text-muted mb-0">No hay autos registrados aún.</p>
                                                         </div>
                                                     </td>
                                                 </tr>

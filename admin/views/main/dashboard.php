@@ -96,8 +96,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Imagen</th>
-                                                <th>Marca / Modelo</th>
-                                                <th>Año</th>
+                                                <th>Marca / Submarca</th>
+                                                <th>Modelo</th>
                                                 <th>Color</th>
                                                 <th>Precio</th>
                                             </tr>
@@ -114,9 +114,13 @@
                                                         </td>
                                                         <td><?= $auto['year'] ?? '' ?></td>
                                                         <td>
-                                                            <span class="badge bg-light text-dark border" style="border-color: <?= $auto['color'] ?? '#ccc' ?> !important;">
-                                                                <?= $auto['color'] ?? 'N/D' ?>
-                                                            </span>
+                                                            <div class="d-flex align-items-center gap-2">
+                                                                <span class="rounded-circle border"
+                                                                    style="width: 20px; height: 20px; background-color: <?= $auto['color'] ?? '#ccc' ?>;"
+                                                                    title="<?= $auto['color'] ?? '' ?>">
+                                                                </span>
+                                                                <span class="font-monospace fs-13"><?= $auto['color'] ?? '' ?></span>
+                                                            </div>
                                                         </td>
                                                         <td class="fw-semibold">$<?= number_format((float) ($auto['precio'] ?? 0), 2) ?></td>
                                                     </tr>

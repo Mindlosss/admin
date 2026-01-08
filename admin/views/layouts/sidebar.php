@@ -39,14 +39,14 @@ $esMarcas = strpos($vista_actual, 'brands') === 0;
             <li class="side-nav-item <?= $vista_actual === 'autos' ? 'active' : '' ?>">
                 <a href="index.php?route=autos" class="side-nav-link <?= $vista_actual === 'autos' ? 'active' : '' ?>">
                     <span class="menu-icon"><i data-lucide="car-front"></i></span>
-                    <span class="menu-text">Coches</span>
+                    <span class="menu-text">Autos</span>
                 </a>
             </li>
 
             <li class="side-nav-item <?= $vista_actual === 'brands' ? 'active' : '' ?>">
                 <a href="index.php?route=brands" class="side-nav-link <?= $vista_actual === 'brands' ? 'active' : '' ?>">
                     <span class="menu-icon"><i data-lucide="tag"></i></span>
-                    <span class="menu-text"> Marca </span>
+                    <span class="menu-text"> Marcas </span>
                     <!-- <span class="badge bg-danger rounded">3</span> -->
                 </a>
             </li>

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Editar coche</title>
+    <title>Editar auto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -41,7 +41,7 @@
 
             <div class="page-title-head d-flex align-items-center gap-2">
                 <div class="flex-grow-1">
-                    <h4 class="fs-18 fw-bold mb-0">Editar coche</h4>
+                    <h4 class="fs-18 fw-bold mb-0">Editar auto</h4>
                 </div>
             </div>
 
@@ -78,7 +78,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="modelo" class="form-label">Modelo <span class="text-danger">*</span></label>
+                                                <label for="modelo" class="form-label">Submarca <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="modelo" name="modelo" value="<?= htmlspecialchars($auto['modelo'] ?? '') ?>" required>
                                             </div>
                                         </div>
@@ -102,8 +102,21 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="year" class="form-label">Año <span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="year" name="year" min="1990" max="2099" value="<?= htmlspecialchars($auto['year'] ?? '') ?>" required>
+                                                <label for="year" class="form-label">Modelo <span class="text-danger">*</span></label>
+                                                <?php
+                                                $currentYear = (int) date('Y');
+                                                $minYear = 1990;
+                                                $selectedYear = (string) ($auto['year'] ?? '');
+                                                ?>
+                                                <select class="form-select" id="year" name="year" required>
+                                                    <option value="" disabled <?= $selectedYear === '' ? 'selected' : '' ?>>Selecciona</option>
+                                                    <?php if ($selectedYear !== '' && ((int) $selectedYear > $currentYear || (int) $selectedYear < $minYear)): ?>
+                                                        <option value="<?= htmlspecialchars($selectedYear) ?>" selected><?= htmlspecialchars($selectedYear) ?></option>
+                                                    <?php endif; ?>
+                                                    <?php for ($year = $currentYear; $year >= $minYear; $year--): ?>
+                                                        <option value="<?= $year ?>" <?= $selectedYear === (string) $year ? 'selected' : '' ?>><?= $year ?></option>
+                                                    <?php endfor; ?>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

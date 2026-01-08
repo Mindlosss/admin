@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Agregar coche</title>
+    <title>Agregar auto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -68,7 +68,7 @@
             
             <div class="page-title-head d-flex align-items-center gap-2">
                 <div class="flex-grow-1">
-                    <h4 class="fs-18 fw-bold mb-0">Agregar coche</h4>
+                    <h4 class="fs-18 fw-bold mb-0">Agregar auto</h4>
                 </div>
 
                 <!-- <div class="text-end">
@@ -77,7 +77,7 @@
                         
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
                         
-                        <li class="breadcrumb-item active">Agregar coche</li>
+                        <li class="breadcrumb-item active">Agregar auto</li>
                     </ol>
                 </div> -->
             </div>
@@ -103,7 +103,7 @@
                             <div class="card-body">
                                 <form method="POST" action="index.php?route=autos" enctype="multipart/form-data">
                                     
-                                    <!-- Marca y Modelo -->
+                                    <!-- Marca y Submarca -->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
@@ -120,13 +120,13 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="modelo" class="form-label">Modelo <span class="text-danger">*</span></label>
+                                                <label for="modelo" class="form-label">Submarca <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Ej: Corolla, Civic, Mustang" required>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Tipo y Año -->
+                                    <!-- Tipo y Modelo -->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
@@ -145,8 +145,14 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="year" class="form-label">Año <span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="year" name="year" min="1990" max="2099" placeholder="2023" required>
+                                                <label for="year" class="form-label">Modelo <span class="text-danger">*</span></label>
+                                                <?php $currentYear = (int) date('Y'); ?>
+                                                <select class="form-select" id="year" name="year" required>
+                                                    <option value="" disabled selected>Selecciona</option>
+                                                    <?php for ($year = $currentYear; $year >= 1990; $year--): ?>
+                                                        <option value="<?= $year ?>"><?= $year ?></option>
+                                                    <?php endfor; ?>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -231,7 +237,6 @@
                                                     <option value="Automática">Automática</option>
                                                     <option value="Manual">Manual</option>
                                                     <option value="CVT">CVT</option>
-                                                    <option value="Híbrida">Híbrida</option>
                                                 </select>
                                             </div>
                                         </div>

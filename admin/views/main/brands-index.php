@@ -66,7 +66,7 @@
                                                         </td>
                                                         <td class="fw-semibold"><?= htmlspecialchars($marca['nombre'] ?? '') ?></td>
                                                         <td>
-                                                            <span class="badge bg-secondary-subtle text-secondary"><?= $marca['total_autos'] ?? 0 ?> coches</span>
+                                                            <span class="badge bg-secondary-subtle text-secondary"><?= $marca['total_autos'] ?? 0 ?> autos</span>
                                                         </td>
                                                         <td>
                                                             <a href="index.php?route=brands/<?= $marca['id_marca'] ?>/edit" class="text-reset fs-16 px-1" title="Editar">
