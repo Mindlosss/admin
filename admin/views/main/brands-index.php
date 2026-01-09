@@ -62,7 +62,7 @@
                                                     <?php $logo = !empty($marca['imagen']) ? $marca['imagen'] : 'assets/images/small/small-7.jpg'; ?>
                                                     <tr>
                                                         <td>
-                                                            <img src="<?= $logo ?>" alt="<?= htmlspecialchars($marca['nombre'] ?? '') ?>" class="avatar-sm rounded-3 object-fit-cover bg-light">
+                                                            <img src="<?= $logo ?>" alt="<?= htmlspecialchars($marca['nombre'] ?? '') ?>" class="avatar-sm brand-list-image rounded-3 object-fit-cover bg-light">
                                                         </td>
                                                         <td class="fw-semibold"><?= htmlspecialchars($marca['nombre'] ?? '') ?></td>
                                                         <td>

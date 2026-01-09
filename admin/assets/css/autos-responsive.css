@@ -1,0 +1,48 @@
+/* Responsive autos table */
+@media (max-width: 768px) {
+  .autos-table thead {
+    display: none;
+  }
+
+  .autos-table tbody tr {
+    display: block;
+    border: 1px solid var(--ct-border-color, #e2e5e9);
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    background: var(--ct-card-bg, #fff);
+  }
+
+  .autos-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    border-top: 1px solid var(--ct-border-color, #e2e5e9);
+  }
+
+  .autos-table tbody td:first-child {
+    border-top: 0;
+  }
+
+  .autos-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--ct-muted, #6c757d);
+    margin-right: 0.75rem;
+  }
+
+  .autos-table td[data-label="Imagen"] {
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
+  .autos-table td[data-label="Acciones"] {
+    justify-content: flex-start;
+    gap: 0.25rem;
+  }
+
+  .autos-table .car-list-image {
+    width: 56px;
+    height: 42px;
+  }
+}

@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="assets/css/autos-responsive.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <script src="assets/js/config.js"></script>
 </head>
@@ -51,7 +52,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover mb-0">
+                                    <table class="table table-hover mb-0 autos-table">
                                         <thead>
                                             <tr>
                                                 <th>Imagen</th> 
@@ -68,14 +69,14 @@
                                                 <?php foreach ($autos as $row): ?>
                                                     <?php $imagenUrl = !empty($row['imagen']) ? $row['imagen'] : 'assets/images/small/small-2.jpg'; ?>
                                                     <tr>
-                                                        <td>
-                                                            <img src="<?= $imagenUrl ?>" alt="auto" class="avatar-sm rounded-3 object-fit-cover">
+                                                        <td data-label="Imagen">
+                                                            <img src="<?= $imagenUrl ?>" alt="auto" class="avatar-sm car-list-image rounded-3 object-fit-cover">
                                                         </td>
-                                                        <td class="fw-semibold"><?= htmlspecialchars($row['marca'] ?? '') ?></td>
-                                                        <td><?= htmlspecialchars($row['modelo'] ?? '') ?></td>
-                                                        <td><?= $row['year'] ?? '' ?></td>
+                                                        <td data-label="Marca" class="fw-semibold"><?= htmlspecialchars($row['marca'] ?? '') ?></td>
+                                                        <td data-label="Submarca"><?= htmlspecialchars($row['modelo'] ?? '') ?></td>
+                                                        <td data-label="Modelo"><?= $row['year'] ?? '' ?></td>
                                                         
-                                                        <td>
+                                                        <td data-label="Color">
                                                             <div class="d-flex align-items-center gap-2">
                                                                 <span class="rounded-circle border" 
                                                                     style="width: 20px; height: 20px; background-color: <?= $row['color'] ?? '#ccc' ?>;"
@@ -84,9 +85,9 @@
                                                                 <span class="font-monospace fs-13"><?= $row['color'] ?? '' ?></span>
                                                             </div>
                                                         </td>
-                                                        <td>$<?= number_format((float) ($row['precio'] ?? 0), 2) ?></td>
+                                                        <td data-label="Precio">$<?= number_format((float) ($row['precio'] ?? 0), 2) ?></td>
                                                         
-                                                        <td>
+                                                        <td data-label="Acciones">
                                                             <a href="index.php?route=autos/<?= $row['id_auto'] ?>/edit" class="text-reset fs-16 px-1" title="Editar"> 
                                                                 <i class="ri-edit-2-line"></i>
                                                             </a>

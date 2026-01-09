@@ -103,7 +103,7 @@
                                                     <?php $imagenUrl = !empty($row['imagen']) ? $row['imagen'] : 'assets/images/small/small-2.jpg'; ?>
                                                     <tr>
                                                         <td>
-                                                            <img src="<?= $imagenUrl ?>" alt="coche" class="avatar-sm rounded-3 object-fit-cover">
+                                                            <img src="<?= $imagenUrl ?>" alt="coche" class="avatar-sm car-list-image rounded-3 object-fit-cover">
                                                         </td>
                                                         <td class="fw-semibold"><?= htmlspecialchars($row['marca'] ?? '') ?></td>
                                                         <td><?= htmlspecialchars($row['modelo'] ?? '') ?></td>

@@ -107,7 +107,7 @@
                                                 <?php foreach ($autosRecientes as $auto): ?>
                                                     <?php $imagenUrl = !empty($auto['imagen']) ? $auto['imagen'] : 'assets/images/small/small-2.jpg'; ?>
                                                     <tr>
-                                                        <td><img src="<?= $imagenUrl ?>" class="avatar-sm rounded-3 object-fit-cover" alt="auto"></td>
+                                                        <td><img src="<?= $imagenUrl ?>" class="avatar-sm car-list-image rounded-3 object-fit-cover" alt="auto"></td>
                                                         <td>
                                                             <div class="fw-semibold"><?= htmlspecialchars($auto['marca'] ?? '') ?></div>
                                                             <div class="text-muted"><?= htmlspecialchars($auto['modelo'] ?? '') ?></div>
