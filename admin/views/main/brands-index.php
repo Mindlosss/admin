@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="assets/css/autos-responsive.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <script src="assets/js/config.js"></script>
 </head>
@@ -47,7 +48,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover mb-0">
+                                    <table class="table table-hover mb-0 brands-table">
                                         <thead>
                                             <tr>
                                                 <th>Logo</th>
@@ -61,14 +62,14 @@
                                                 <?php foreach ($marcas as $marca): ?>
                                                     <?php $logo = !empty($marca['imagen']) ? $marca['imagen'] : 'assets/images/small/small-7.jpg'; ?>
                                                     <tr>
-                                                        <td>
+                                                        <td data-label="Logo">
                                                             <img src="<?= $logo ?>" alt="<?= htmlspecialchars($marca['nombre'] ?? '') ?>" class="avatar-sm brand-list-image rounded-3 object-fit-cover bg-light">
                                                         </td>
-                                                        <td class="fw-semibold"><?= htmlspecialchars($marca['nombre'] ?? '') ?></td>
-                                                        <td>
+                                                        <td data-label="Nombre" class="fw-semibold"><?= htmlspecialchars($marca['nombre'] ?? '') ?></td>
+                                                        <td data-label="Autos">
                                                             <span class="badge bg-secondary-subtle text-secondary"><?= $marca['total_autos'] ?? 0 ?> autos</span>
                                                         </td>
-                                                        <td>
+                                                        <td data-label="Acciones">
                                                             <a href="index.php?route=brands/<?= $marca['id_marca'] ?>/edit" class="text-reset fs-16 px-1" title="Editar">
                                                                 <i class="ri-edit-2-line"></i>
                                                             </a>
