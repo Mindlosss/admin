@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,11 +31,31 @@
     $marcas = $marcas ?? [];
     $mensaje = $mensaje ?? '';
     $tipo_mensaje = $tipo_mensaje ?? 'info';
+    $color_actual = strtolower($auto['color'] ?? '');
+    $colores_predefinidos = ['#ffffff', '#808080', '#000000', '#e31e24', '#0066cc'];
     ?>
     <div class="wrapper">
 
         <?php require_once 'views/layouts/sidebar.php'; ?>
         <?php require_once 'views/layouts/topbar.php'; ?>
+
+        <!-- Search Modal -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content bg-transparent">
+                    <form>
+                        <div class="card mb-1">
+                            <div class="px-3 py-2 d-flex flex-row align-items-center" id="top-search">
+                                <i class="ri-search-line fs-22"></i>
+                                <input type="search" class="form-control border-0" id="search-modal-input"
+                                    placeholder="Search for actions, people,">
+                                <button type="submit" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">[esc]</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div class="page-content">
 
@@ -58,20 +78,20 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Datos del vehículo</h5>
+                                <h5 class="card-title">Datos del vehiculo</h5>
                             </div>
                             <div class="card-body">
                                 <form method="POST" action="index.php?route=autos/<?= $auto['id_auto'] ?>/update" enctype="multipart/form-data">
+                                    
+                                    <!-- Marca y Submarca -->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="id_marca" class="form-label">Marca <span class="text-danger">*</span></label>
                                                 <select class="form-select" id="id_marca" name="id_marca" required>
-                                                    <option disabled value="">Selecciona una marca</option>
+                                                    <option selected disabled value="">Selecciona una marca</option>
                                                     <?php foreach ($marcas as $row): ?>
-                                                        <option value="<?= $row['id_marca'] ?>" <?= $row['id_marca'] == $auto['id_marca'] ? 'selected' : '' ?>>
-                                                            <?= $row['nombre'] ?>
-                                                        </option>
+                                                        <option value="<?= $row['id_marca'] ?>" <?= $row['id_marca'] == ($auto['id_marca'] ?? '') ? 'selected' : '' ?>><?= $row['nombre'] ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
@@ -79,24 +99,25 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="modelo" class="form-label">Submarca <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="modelo" name="modelo" value="<?= htmlspecialchars($auto['modelo'] ?? '') ?>" required>
+                                                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Ej: Corolla, Civic, Mustang" value="<?= htmlspecialchars($auto['modelo'] ?? '') ?>" required>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <!-- Tipo y Modelo -->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="tipo" class="form-label">Tipo de vehículo</label>
+                                                <label for="tipo" class="form-label">Tipo de vehiculo</label>
                                                 <select class="form-select" id="tipo" name="tipo">
-                                                    <?php
-                                                    $tipos = ["", "Sedán", "SUV", "Hatchback", "Coupe", "Convertible", "Camioneta", "Minivan"];
-                                                    foreach ($tipos as $tipo) {
-                                                        $label = $tipo === "" ? "Selecciona un tipo" : $tipo;
-                                                        $selected = ($tipo === ($auto['tipo'] ?? '')) ? 'selected' : '';
-                                                        echo '<option value="' . $tipo . '" ' . $selected . '>' . $label . '</option>';
-                                                    }
-                                                    ?>
+                                                    <option selected value="">Selecciona un tipo</option>
+                                                    <option value="SedA�n" <?= ($auto['tipo'] ?? '') === 'SedA�n' ? 'selected' : '' ?>>SedA�n</option>
+                                                    <option value="SUV" <?= ($auto['tipo'] ?? '') === 'SUV' ? 'selected' : '' ?>>SUV</option>
+                                                    <option value="Hatchback" <?= ($auto['tipo'] ?? '') === 'Hatchback' ? 'selected' : '' ?>>Hatchback</option>
+                                                    <option value="CoupAc" <?= ($auto['tipo'] ?? '') === 'CoupAc' ? 'selected' : '' ?>>CoupAc</option>
+                                                    <option value="Convertible" <?= ($auto['tipo'] ?? '') === 'Convertible' ? 'selected' : '' ?>>Convertible</option>
+                                                    <option value="Camioneta" <?= ($auto['tipo'] ?? '') === 'Camioneta' ? 'selected' : '' ?>>Camioneta</option>
+                                                    <option value="Minivan" <?= ($auto['tipo'] ?? '') === 'Minivan' ? 'selected' : '' ?>>Minivan</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -121,85 +142,54 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label d-block">Color</label>
-                                                <input type="hidden" id="color" name="color" value="<?= htmlspecialchars($auto['color'] ?? '') ?>">
-                                                <div class="d-flex gap-2 flex-wrap">
-                                                    <?php 
-                                                    $colores = ["#FFFFFF" => "Blanco", "#000000" => "Negro", "#808080" => "Gris", "#E31E24" => "Rojo", "#0066CC" => "Azul", "#C0C0C0" => "Plata", "#8B4513" => "Marrón", "#228B22" => "Verde", "#FF8C00" => "Naranja"];
-                                                    foreach ($colores as $hex => $nombre): 
-                                                        $checked = (strtolower($auto['color'] ?? '') === strtolower($hex)) ? 'checked' : '';
-                                                    ?>
-                                                        <label class="color-option" title="<?= $nombre ?>">
-                                                            <input type="radio" name="color_option" value="<?= $hex ?>" class="color-radio" <?= $checked ?>>
-                                                            <span class="color-circle" style="background-color: <?= $hex ?>;<?= $hex === '#FFFFFF' ? ' border: 2px solid #333;' : '' ?>"></span>
-                                                        </label>
-                                                    <?php endforeach; ?>
-
-                                                    <label class="color-option" title="Personalizado">
-                                                        <input type="radio" name="color_option" value="Personalizado" class="color-radio">
-                                                        <span class="color-circle custom-color-circle">
-                                                            <input type="color" id="custom-color-input" value="<?= htmlspecialchars($auto['color'] ?? '#ffffff') ?>" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="transmision" class="form-label">Transmisión</label>
-                                                <select class="form-select" id="transmision" name="transmision">
-                                                    <?php
-                                                    $transmisiones = ["", "Automática", "Manual", "CVT", "Híbrida"];
-                                                    foreach ($transmisiones as $t) {
-                                                        $label = $t === "" ? "Selecciona una transmisión" : $t;
-                                                        $selected = ($t === ($auto['transmision'] ?? '')) ? 'selected' : '';
-                                                        echo '<option value="' . $t . '" ' . $selected . '>' . $label . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    <!-- Combustible y Transmision -->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="combustible" class="form-label">Combustible</label>
                                                 <select class="form-select" id="combustible" name="combustible">
-                                                    <?php
-                                                    $combustibles = ["", "Gasolina", "Diésel", "Híbrido", "Eléctrico", "GLP"];
-                                                    foreach ($combustibles as $c) {
-                                                        $label = $c === "" ? "Selecciona un combustible" : $c;
-                                                        $selected = ($c === ($auto['combustible'] ?? '')) ? 'selected' : '';
-                                                        echo '<option value="' . $c . '" ' . $selected . '>' . $label . '</option>';
-                                                    }
-                                                    ?>
+                                                    <option selected value="">Selecciona un combustible</option>
+                                                    <option value="Gasolina" <?= ($auto['combustible'] ?? '') === 'Gasolina' ? 'selected' : '' ?>>Gasolina</option>
+                                                    <option value="DiAcsel" <?= ($auto['combustible'] ?? '') === 'DiAcsel' ? 'selected' : '' ?>>DiAcsel</option>
+                                                    <option value="HA-brido" <?= ($auto['combustible'] ?? '') === 'HA-brido' ? 'selected' : '' ?>>HA-brido</option>
+                                                    <option value="ElAcctrico" <?= ($auto['combustible'] ?? '') === 'ElAcctrico' ? 'selected' : '' ?>>ElAcctrico</option>
+                                                    <option value="GLP" <?= ($auto['combustible'] ?? '') === 'GLP' ? 'selected' : '' ?>>GLP</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="kilometraje" class="form-label">Kilometraje</label>
-                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" value="<?= htmlspecialchars($auto['kilometraje'] ?? '') ?>">
+                                                <label for="transmision" class="form-label">Transmision</label>
+                                                <select class="form-select" id="transmision" name="transmision">
+                                                    <option selected value="">Selecciona una transmision</option>
+                                                    <option value="AutomA�tica" <?= ($auto['transmision'] ?? '') === 'AutomA�tica' ? 'selected' : '' ?>>AutomA�tica</option>
+                                                    <option value="Manual" <?= ($auto['transmision'] ?? '') === 'Manual' ? 'selected' : '' ?>>Manual</option>
+                                                    <option value="CVT" <?= ($auto['transmision'] ?? '') === 'CVT' ? 'selected' : '' ?>>CVT</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <!-- Kilometraje y Precio -->
                                     <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="kilometraje" class="form-label">Kilometraje</label>
+                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" placeholder="Ej: 50000" value="<?= htmlspecialchars($auto['kilometraje'] ?? '') ?>">
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">$</span>
-                                                    <input type="number" class="form-control" id="precio" name="precio" min="0" step="0.01" value="<?= htmlspecialchars($auto['precio'] ?? '') ?>" required>
+                                                    <input type="number" class="form-control" id="precio" name="precio" min="0" step="0.01" placeholder="0.00" value="<?= htmlspecialchars($auto['precio'] ?? '') ?>" required>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <!-- Descripcion -->
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="mb-3">
@@ -209,6 +199,7 @@
                                         </div>
                                     </div>
 
+                                    <!-- Opciones -->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3 form-check">
@@ -223,52 +214,109 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Color -->
                                     <div class="row">
                                         <div class="col-12">
-                                            <label class="form-label fw-semibold">Imágenes actuales</label>
-                                            <?php if (!empty($imagenes)): ?>
-                                                <div class="image-preview-row">
-                                                    <?php foreach ($imagenes as $img): ?>
-                                                        <div class="image-preview-wrapper <?= $img['thumbnail'] ? 'primary' : '' ?>">
-                                                            <img src="<?= htmlspecialchars($img['imagen']) ?>" alt="Imagen del vehículo">
-                                                            <?php if ($img['thumbnail']): ?>
-                                                                <div class="image-badge-primary">
-                                                                    <i class="ri-star-fill"></i>Principal
-                                                                </div>
-                                                            <?php endif; ?>
-                                                            <div class="p-2 d-flex flex-column gap-1">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="imagen_principal" id="img_principal_<?= $img['id_imagen'] ?>" value="<?= $img['id_imagen'] ?>" <?= $img['thumbnail'] ? 'checked' : '' ?>>
-                                                                    <label class="form-check-label" for="img_principal_<?= $img['id_imagen'] ?>">Usar como principal</label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" name="eliminar_imagen[]" id="eliminar_img_<?= $img['id_imagen'] ?>" value="<?= $img['id_imagen'] ?>">
-                                                                    <label class="form-check-label text-danger" for="eliminar_img_<?= $img['id_imagen'] ?>">Eliminar esta imagen</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    <?php endforeach; ?>
+                                            <div class="mb-3">
+                                                <label class="form-label d-block">Color</label>
+                                                <div class="d-flex gap-2 flex-wrap">
+                                                    <input type="hidden" id="color" name="color" value="<?= htmlspecialchars($auto['color'] ?? '') ?>">
+                                                    
+                                                    <label class="color-option" title="Blanco">
+                                                        <input type="radio" name="color_option" value="#FFFFFF" class="color-radio" <?= $color_actual === '#ffffff' ? 'checked' : '' ?>>
+                                                        <span class="color-circle" style="background-color: #FFFFFF; border: 2px solid #333;"></span>
+                                                    </label>
+                                                    
+                                                    <label class="color-option" title="Gris">
+                                                        <input type="radio" name="color_option" value="#808080" class="color-radio" <?= $color_actual === '#808080' ? 'checked' : '' ?>>
+                                                        <span class="color-circle" style="background-color: #808080;"></span>
+                                                    </label>
+                                                    
+                                                    <label class="color-option" title="Negro">
+                                                        <input type="radio" name="color_option" value="#000000" class="color-radio" <?= $color_actual === '#000000' ? 'checked' : '' ?>>
+                                                        <span class="color-circle" style="background-color: #000000;"></span>
+                                                    </label>
+                                                    
+                                                    <label class="color-option" title="Rojo">
+                                                        <input type="radio" name="color_option" value="#E31E24" class="color-radio" <?= $color_actual === '#e31e24' ? 'checked' : '' ?>>
+                                                        <span class="color-circle" style="background-color: #E31E24;"></span>
+                                                    </label>
+                                                    
+                                                    <label class="color-option" title="Azul">
+                                                        <input type="radio" name="color_option" value="#0066CC" class="color-radio" <?= $color_actual === '#0066cc' ? 'checked' : '' ?>>
+                                                        <span class="color-circle" style="background-color: #0066CC;"></span>
+                                                    </label>
+                                                    
+                                                    <label class="color-option" title="Personalizado">
+                                                        <input type="radio" name="color_option" value="Personalizado" class="color-radio" <?= ($color_actual && !in_array($color_actual, $colores_predefinidos)) ? 'checked' : '' ?>>
+                                                        <span class="color-circle custom-color-circle">
+                                                            <input type="color" id="custom-color-input" value="<?= htmlspecialchars($auto['color'] ?? '#ffffff') ?>" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
+                                                        </span>
+                                                    </label>
                                                 </div>
-                                            <?php else: ?>
-                                                <div class="alert alert-warning mb-3">Este auto no tiene imágenes cargadas.</div>
-                                            <?php endif; ?>
-                                            <p class="text-muted small mt-2 mb-0">Si no seleccionas una principal y agregas nuevas fotos, se usará la primera nueva como principal.</p>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="row mt-3">
+                                    <!-- Imagenes actuales -->
+                                    <div class="row">
                                         <div class="col-12">
                                             <div class="mb-3">
-                                                <label class="form-label d-block">Agregar nuevas imágenes</label>
+                                                <label class="form-label fw-semibold">Imagenes actuales</label>
+                                                <?php if (!empty($imagenes)): ?>
+                                                    <div class="image-preview-row">
+                                                        <?php foreach ($imagenes as $img): ?>
+                                                            <div class="image-preview-wrapper <?= $img['thumbnail'] ? 'primary' : '' ?>">
+                                                                <img src="<?= htmlspecialchars($img['imagen']) ?>" alt="Imagen del vehiculo">
+                                                                <?php if ($img['thumbnail']): ?>
+                                                                    <div class="image-badge-primary">
+                                                                        <i class="ri-star-fill"></i>Principal
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                                <div class="image-preview-overlay">
+                                                                    <button type="button" class="image-overlay-btn btn-set-primary" onclick="setExistingPrimary('<?= $img['id_imagen'] ?>')">
+                                                                        <i class="ri-star-line"></i>Principal
+                                                                    </button>
+                                                                    <button type="button" class="image-overlay-btn btn-delete" onclick="toggleExistingDelete('<?= $img['id_imagen'] ?>')">
+                                                                        <i class="ri-delete-bin-line"></i>Eliminar
+                                                                    </button>
+                                                                </div>
+                                                                <div class="p-2 d-flex flex-column gap-1">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="imagen_principal" id="img_principal_<?= $img['id_imagen'] ?>" value="<?= $img['id_imagen'] ?>" <?= $img['thumbnail'] ? 'checked' : '' ?>>
+                                                                        <label class="form-check-label" for="img_principal_<?= $img['id_imagen'] ?>">Usar como principal</label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" name="eliminar_imagen[]" id="eliminar_img_<?= $img['id_imagen'] ?>" value="<?= $img['id_imagen'] ?>">
+                                                                        <label class="form-check-label text-danger" for="eliminar_img_<?= $img['id_imagen'] ?>">Eliminar esta imagen</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <div class="alert alert-warning mb-3">Este auto no tiene imagenes cargadas.</div>
+                                                <?php endif; ?>
+                                                <p class="text-muted small mt-2 mb-0">Si no seleccionas una principal y agregas nuevas fotos, se usara la primera nueva como principal.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Agregar nuevas imagenes -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label class="form-label d-block">Imagenes del vehiculo</label>
                                                 <div class="border border-2 border-dashed rounded-3 p-1 text-center" id="dropZone">
                                                     <i class="ri-image-add-line fs-32 text-muted d-block mb-1"></i>
-                                                    <h6 class="mb-1">Arrastra imágenes aquí</h6>
+                                                    <h6 class="mb-1">Arrastra imagenes aqui</h6>
                                                     <p class="text-muted mb-2 small">o haz clic para seleccionar archivos</p>
                                                     
                                                     <input type="file" id="nuevas_imagenes" name="nuevas_imagenes[]" multiple accept=".jpg,.jpeg,.png" class="d-none" />
                                                     
                                                     <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('nuevas_imagenes').click()">
-                                                        <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar imágenes
+                                                        <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar Imagenes
                                                     </button>
                                                     <p class="text-muted fs-13 mt-2 mb-0">Formatos permitidos: JPG, PNG</p>
                                                 </div>
@@ -277,9 +325,13 @@
                                         </div>
                                     </div>
 
+                                    <!-- Botones -->
                                     <div class="d-flex gap-2">
                                         <button type="submit" class="btn btn-primary">
                                             <i class="ri-save-3-line me-1"></i>Guardar cambios
+                                        </button>
+                                        <button type="reset" class="btn btn-secondary">
+                                            <i class="ri-refresh-line me-1"></i>Restablecer
                                         </button>
                                         <a href="index.php?route=dashboard" class="btn btn-light">
                                             <i class="ri-arrow-go-back-line me-1"></i>Volver al listado
@@ -291,39 +343,243 @@
                     </div>
                 </div>
 
+
+                <!-- Footer -->
                 <?php require_once 'views/layouts/footer.php'; ?>
+
+
             </div>
         </div>
 
     </div>
+    <!-- END wrapper -->
 
+    <!-- Theme Settings -->
     <?php require_once 'views/layouts/theme.php'; ?>
     
+    <!-- Vendor js -->
     <script src="assets/js/vendor.min.js"></script>
+
+    <!-- App js -->
     <script src="assets/js/app.js"></script>
 
     <style>
-        .color-option { cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; }
-        .color-option input[type="radio"] { display: none; }
-        .color-circle { width: 35px; height: 35px; border-radius: 50%; border: 3px solid transparent; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .color-option {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .color-option input[type="radio"] {
+            display: none;
+        }
+
+        .color-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .color-option input[type="radio"]:checked + .color-circle,
-        .color-option input[type="radio"]:checked + .custom-color-circle { border-color: #3c86d8; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3c86d8; transform: scale(1.1); }
-        .color-option:hover .color-circle, .color-option:hover .custom-color-circle { transform: scale(1.05); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
-        .custom-color-circle { background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080); position: relative; overflow: hidden; }
-        #dropZone { cursor: pointer; background-color: var(--bs-gray-100); transition: all 0.3s ease; }
-        [data-bs-theme="dark"] #dropZone { background-color: var(--bs-gray-800); }
-        #dropZone:hover, #dropZone.dragover { background-color: rgba(60, 134, 216, 0.1); border-color: #3c86d8 !important; }
-        .image-preview-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; margin-top: 1rem; }
-        .image-preview-wrapper { position: relative; border-radius: 8px; overflow: hidden; background-color: var(--bs-gray-100); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; }
-        [data-bs-theme="dark"] .image-preview-wrapper { background-color: var(--bs-gray-800); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-        .image-preview-wrapper img { width: 100%; height: 150px; object-fit: cover; display: block; }
-        .image-preview-meta { display: flex; justify-content: space-between; gap: 8px; padding: 6px 8px; background-color: rgba(0, 0, 0, 0.03); font-size: 12px; color: var(--bs-gray-700); }
-        [data-bs-theme="dark"] .image-preview-meta { background-color: rgba(255, 255, 255, 0.06); color: var(--bs-gray-300); }
-        .image-preview-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .image-preview-size { flex-shrink: 0; opacity: 0.8; }
-        .image-preview-wrapper.primary img { border: 3px solid #3c86d8; }
-        .image-badge-primary { position: absolute; top: 8px; right: 8px; background-color: #3c86d8; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); display: flex; align-items: center; gap: 4px; }
-        [data-bs-theme="dark"] .image-badge-primary { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
+        .color-option input[type="radio"]:checked + .custom-color-circle {
+            border-color: #3c86d8;
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3c86d8;
+            transform: scale(1.1);
+        }
+
+        .color-option:hover .color-circle,
+        .color-option:hover .custom-color-circle {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .custom-color-circle {
+            background: conic-gradient(#ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000);
+            border: 2px solid #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 2px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .custom-color-circle::after {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.5);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+        }
+        #dropZone {
+            cursor: pointer;
+            background-color: var(--bs-gray-100);
+            transition: all 0.3s ease;
+        }
+
+        [data-bs-theme="dark"] #dropZone {
+            background-color: var(--bs-gray-800);
+        }
+
+        #dropZone:hover,
+        #dropZone.dragover {
+            background-color: rgba(60, 134, 216, 0.1);
+            border-color: #3c86d8 !important;
+        }
+
+        .image-preview-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .image-preview-wrapper {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--bs-gray-100);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        [data-bs-theme="dark"] .image-preview-wrapper {
+            background-color: var(--bs-gray-800);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-preview-wrapper:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-bs-theme="dark"] .image-preview-wrapper:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .image-preview-wrapper img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-preview-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 6px 8px;
+            background-color: rgba(0, 0, 0, 0.03);
+            font-size: 12px;
+            color: var(--bs-gray-700);
+        }
+
+        [data-bs-theme="dark"] .image-preview-meta {
+            background-color: rgba(255, 255, 255, 0.06);
+            color: var(--bs-gray-300);
+        }
+
+        .image-preview-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .image-preview-size {
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        .image-preview-wrapper.primary img {
+            border: 3px solid #3c86d8;
+        }
+
+        .image-preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-preview-wrapper:hover .image-preview-overlay {
+            opacity: 1;
+        }
+
+        .image-overlay-btn {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-set-primary {
+            background-color: #3c86d8;
+        }
+
+        .btn-set-primary:hover {
+            background-color: #2e6ab1;
+        }
+
+        .btn-delete {
+            background-color: #e31e24;
+        }
+
+        .btn-delete:hover {
+            background-color: #c91a1f;
+        }
+
+        .image-badge-primary {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: #3c86d8;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        [data-bs-theme="dark"] .image-badge-primary {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--bs-text-muted);
+        }
+
+        .empty-state i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
     </style>
 
     <script>
@@ -331,21 +587,39 @@
         const customCircle = document.querySelector('.custom-color-circle');
         const hiddenColorInput = document.getElementById('color');
         const colorRadios = document.querySelectorAll('.color-radio');
-        const initialColor = hiddenColorInput.value;
+        const initialColor = (hiddenColorInput.value || '').toLowerCase();
+        const predefinedColors = ['#ffffff', '#808080', '#000000', '#e31e24', '#0066cc'];
 
-        // Marca el color correcto al cargar
-        let matched = false;
-        colorRadios.forEach(radio => {
-            if (radio.value.toLowerCase() === initialColor.toLowerCase()) {
-                radio.checked = true;
-                matched = true;
+        function syncColorSelection(colorValue) {
+            const normalized = (colorValue || '').toLowerCase();
+            let matchedRadio = null;
+            colorRadios.forEach(radio => {
+                radio.checked = false;
+                if (radio.value.toLowerCase() === normalized) {
+                    matchedRadio = radio;
+                }
+            });
+
+            if (matchedRadio) {
+                matchedRadio.checked = true;
+                if (matchedRadio.value === 'Personalizado') {
+                    customCircle.style.background = colorValue;
+                    customColorInput.value = colorValue || '#ffffff';
+                } else {
+                    customCircle.style.background = '';
+                }
+            } else if (normalized) {
+                const customRadio = document.querySelector('input[name="color_option"][value="Personalizado"]');
+                customRadio.checked = true;
+                customCircle.style.background = colorValue;
+                customColorInput.value = colorValue;
+            } else {
+                customCircle.style.background = '';
+                customColorInput.value = '#ffffff';
             }
-        });
-        if (!matched && initialColor) {
-            document.querySelector('input[name="color_option"][value="Personalizado"]').checked = true;
-            customCircle.style.background = initialColor;
-            customColorInput.value = initialColor;
         }
+
+        syncColorSelection(initialColor);
 
         colorRadios.forEach(radio => {
             radio.addEventListener('change', function() {
@@ -365,10 +639,15 @@
             customCircle.style.background = this.value;
         });
 
+
+        // Logica para las imagenes nuevas (drag and drop y preview)
+
         const dropZone = document.getElementById('dropZone');
         const imageInput = document.getElementById('nuevas_imagenes');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        
         let uploadedImages = [];
+        let primaryImageIndex = -1;
 
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -396,11 +675,22 @@
 
             Array.from(files).forEach((file) => {
                 if (allowedFormats.includes(file.type)) {
+                    
                     const exists = uploadedImages.some(img => img.file.name === file.name && img.file.size === file.size);
+                    
                     if (!exists) {
                         const reader = new FileReader();
                         reader.onload = (e) => {
-                            uploadedImages.push({ src: e.target.result, name: file.name, file });
+                            uploadedImages.push({
+                                src: e.target.result,
+                                name: file.name,
+                                file: file
+                            });
+
+                            if (primaryImageIndex === -1) {
+                                primaryImageIndex = 0;
+                            }
+                            
                             renderImages();
                             updateInputFiles();
                         };
@@ -414,7 +704,17 @@
 
         function updateInputFiles() {
             const dataTransfer = new DataTransfer();
-            uploadedImages.forEach(imageObj => dataTransfer.items.add(imageObj.file));
+            
+            if (uploadedImages.length > 0 && primaryImageIndex >= 0 && primaryImageIndex < uploadedImages.length) {
+                dataTransfer.items.add(uploadedImages[primaryImageIndex].file);
+            }
+
+            uploadedImages.forEach((imageObj, index) => {
+                if (index !== primaryImageIndex) {
+                    dataTransfer.items.add(imageObj.file);
+                }
+            });
+
             imageInput.files = dataTransfer.files;
         }
 
@@ -437,9 +737,9 @@
 
             if (uploadedImages.length === 0) {
                 imagePreviewContainer.innerHTML = `
-                    <div class="text-center text-muted py-3">
-                        <i class="ri-gallery-line fs-20 d-block mb-1"></i>
-                        <p class="mb-0">Aún no agregas nuevas imágenes</p>
+                    <div class="empty-state">
+                        <i class="ri-gallery-line"></i>
+                        <p>No hay imagenes nuevas cargadas</p>
                     </div>`;
                 return;
             }
@@ -449,24 +749,39 @@
 
             uploadedImages.forEach((image, index) => {
                 const wrapper = document.createElement('div');
-                wrapper.className = 'image-preview-wrapper';
+                wrapper.className = `image-preview-wrapper ${index === primaryImageIndex ? 'primary' : ''}`;
 
                 const img = document.createElement('img');
                 img.src = image.src;
                 img.alt = image.name;
 
-                const actions = document.createElement('div');
-                actions.className = 'p-2 d-flex justify-content-end';
+                if (index === primaryImageIndex) {
+                    const badge = document.createElement('div');
+                    badge.className = 'image-badge-primary';
+                    badge.innerHTML = '<i class="ri-star-fill"></i>Principal';
+                    wrapper.appendChild(badge);
+                }
+
+                const overlay = document.createElement('div');
+                overlay.className = 'image-preview-overlay';
+
+                const primaryBtn = document.createElement('button');
+                primaryBtn.type = 'button';
+                primaryBtn.className = 'image-overlay-btn btn-set-primary';
+                primaryBtn.innerHTML = '<i class="ri-star-line"></i>Principal';
+                primaryBtn.onclick = () => setPrimaryImage(index);
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.type = 'button';
-                deleteBtn.className = 'btn btn-sm btn-outline-danger';
-                deleteBtn.innerHTML = '<i class="ri-delete-bin-line"></i>';
-                deleteBtn.onclick = () => { deleteImage(index); };
+                deleteBtn.className = 'image-overlay-btn btn-delete';
+                deleteBtn.innerHTML = '<i class="ri-delete-bin-line"></i>Eliminar';
+                deleteBtn.onclick = () => deleteImage(index);
 
-                actions.appendChild(deleteBtn);
+                overlay.appendChild(primaryBtn);
+                overlay.appendChild(deleteBtn);
+
                 wrapper.appendChild(img);
-                wrapper.appendChild(actions);
+                wrapper.appendChild(overlay);
                 const meta = document.createElement('div');
                 meta.className = 'image-preview-meta';
                 meta.innerHTML = `<span class="image-preview-name" title="${image.name}">${image.name}</span><span class="image-preview-size">${formatFileSize(image.file.size)}</span>`;
@@ -477,13 +792,53 @@
             imagePreviewContainer.appendChild(previewRow);
         }
 
-        function deleteImage(index) {
-            uploadedImages.splice(index, 1);
+        function setPrimaryImage(index) {
+            primaryImageIndex = index;
             renderImages();
             updateInputFiles();
         }
+
+        function deleteImage(index) {
+            uploadedImages.splice(index, 1);
+            
+            if (primaryImageIndex === index) {
+                primaryImageIndex = uploadedImages.length > 0 ? 0 : -1;
+            } else if (primaryImageIndex > index) {
+                primaryImageIndex--;
+            }
+            
+            renderImages();
+            updateInputFiles();
+        }
+
+        function setExistingPrimary(id) {
+            const radio = document.getElementById(`img_principal_${id}`);
+            if (radio) {
+                radio.checked = true;
+            }
+        }
+
+        function toggleExistingDelete(id) {
+            const checkbox = document.getElementById(`eliminar_img_${id}`);
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+            }
+        }
+
+        document.querySelector('form').addEventListener('reset', function() {
+            setTimeout(() => {
+                hiddenColorInput.value = initialColor || '';
+                syncColorSelection(initialColor);
+                
+                uploadedImages = [];
+                primaryImageIndex = -1;
+                imageInput.value = '';
+                renderImages();
+            }, 0);
+        });
+        
     </script>
+
 </body>
 
 </html>
-
