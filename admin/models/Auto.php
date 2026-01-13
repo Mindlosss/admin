@@ -61,8 +61,8 @@ class Auto {
 
             // Insertar el auto
             $query = "INSERT INTO " . $this->table . " 
-                    (id_marca, modelo, tipo, year, color, kilometraje, precio, transmision, combustible, created_by) 
-                    VALUES (:marca, :modelo, :tipo, :year, :color, :km, :precio, :transmision, :combustible, :user)";
+                    (id_marca, modelo, tipo, year, color, kilometraje, precio, transmision, combustible, descripcion, ocultar_kilometraje, consignacion, created_by) 
+                    VALUES (:marca, :modelo, :tipo, :year, :color, :km, :precio, :transmision, :combustible, :descripcion, :ocultar_kilometraje, :consignacion, :user)";
             
             $stmt = $this->conn->prepare($query);
             $stmt->execute([
@@ -75,6 +75,9 @@ class Auto {
                 ':precio' => $datos['precio'],
                 ':transmision' => $datos['transmision'],
                 ':combustible' => $datos['combustible'],
+                ':descripcion' => $datos['descripcion'],
+                ':ocultar_kilometraje' => $datos['ocultar_kilometraje'],
+                ':consignacion' => $datos['consignacion'],
                 ':user' => $id_usuario
             ]);
 
@@ -140,7 +143,8 @@ class Auto {
         $query = "UPDATE " . $this->table . " 
                   SET id_marca = :marca, modelo = :modelo, tipo = :tipo, 
                       year = :year, color = :color, kilometraje = :km, 
-                      precio = :precio, transmision = :transmision, combustible = :combustible
+                      precio = :precio, transmision = :transmision, combustible = :combustible,
+                      descripcion = :descripcion, ocultar_kilometraje = :ocultar_kilometraje, consignacion = :consignacion
                   WHERE id_auto = :id";
         
         $stmt = $this->conn->prepare($query);
@@ -155,6 +159,9 @@ class Auto {
         $stmt->bindParam(':precio', $datos['precio']);
         $stmt->bindParam(':transmision', $datos['transmision']);
         $stmt->bindParam(':combustible', $datos['combustible']);
+        $stmt->bindParam(':descripcion', $datos['descripcion']);
+        $stmt->bindParam(':ocultar_kilometraje', $datos['ocultar_kilometraje']);
+        $stmt->bindParam(':consignacion', $datos['consignacion']);
 
         if ($stmt->execute()) {
             return true;

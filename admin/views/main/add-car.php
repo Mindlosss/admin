@@ -204,6 +204,32 @@
                                         </div>
                                     </div>
 
+                                    <!-- Descripcion -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label for="descripcion" class="form-label">Descripcion</label>
+                                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Describe el vehiculo"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Opciones -->
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3 form-check">
+                                                <input type="checkbox" class="form-check-input" id="ocultar_kilometraje" name="ocultar_kilometraje" value="1">
+                                                <label class="form-check-label" for="ocultar_kilometraje">Ocultar kilometraje</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3 form-check">
+                                                <input type="checkbox" class="form-check-input" id="consignacion" name="consignacion" value="1">
+                                                <label class="form-check-label" for="consignacion">Consignacion</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- Color -->
                                     <div class="row">
                                         <div class="col-12">
@@ -259,20 +285,20 @@
                                         <div class="col-12">
                                             <div class="mb-3">
                                                 <label class="form-label d-block">Imágenes del Vehículo <span class="text-danger">*</span></label>
-                                                <div class="border border-2 border-dashed rounded-3 p-2 text-center" id="dropZone">
-                                                    <i class="ri-image-add-line fs-40 text-muted d-block mb-2"></i>
-                                                    <h5 class="mb-2">Arrastra imágenes aquí</h5>
-                                                    <p class="text-muted mb-3">o haz clic para seleccionar archivos</p>
+                                                <div class="border border-2 border-dashed rounded-3 p-1 text-center" id="dropZone">
+                                                    <i class="ri-image-add-line fs-32 text-muted d-block mb-1"></i>
+                                                    <h6 class="mb-1">Arrastra imágenes aquí</h6>
+                                                    <p class="text-muted mb-2 small">o haz clic para seleccionar archivos</p>
                                                     
                                                     <input type="file" id="imagenes" name="imagenes[]" multiple accept=".jpg,.jpeg,.png" class="d-none" required />
                                                     
                                                     <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('imagenes').click()">
                                                         <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar Imágenes
                                                     </button>
-                                                    <p class="text-muted fs-13 mt-3 mb-0">Formatos permitidos: JPG, PNG</p>
+                                                    <p class="text-muted fs-13 mt-2 mb-0">Formatos permitidos: JPG, PNG</p>
                                                 </div>
                                                 <!-- Vista previa de imágenes -->
-                                                <div id="imagePreviewContainer" class="mt-3"></div>
+                                                <div id="imagePreviewContainer" class="mt-2"></div>
                                             </div>
                                         </div>
                                     </div>

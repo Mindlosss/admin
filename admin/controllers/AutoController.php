@@ -59,6 +59,9 @@ class AutoController
             'combustible' => $_POST['combustible'] ?? '',
             'kilometraje' => $_POST['kilometraje'] ?? '',
             'precio' => $_POST['precio'] ?? '',
+            'descripcion' => $_POST['descripcion'] ?? '',
+            'ocultar_kilometraje' => isset($_POST['ocultar_kilometraje']) ? 1 : 0,
+            'consignacion' => isset($_POST['consignacion']) ? 1 : 0,
         ];
 
         $rutasImagenes = $this->procesarImagenes('imagenes');
@@ -114,6 +117,9 @@ class AutoController
             'combustible' => $_POST['combustible'] ?? '',
             'kilometraje' => $_POST['kilometraje'] ?? '',
             'precio' => $_POST['precio'] ?? '',
+            'descripcion' => $_POST['descripcion'] ?? '',
+            'ocultar_kilometraje' => isset($_POST['ocultar_kilometraje']) ? 1 : 0,
+            'consignacion' => isset($_POST['consignacion']) ? 1 : 0,
         ];
 
         $actualizado = $this->autos->actualizar((int) $id, $datos);
