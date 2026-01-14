@@ -67,10 +67,21 @@
                                         <tbody>
                                             <?php if (!empty($autos)): ?>
                                                 <?php foreach ($autos as $row): ?>
-                                                    <?php $imagenUrl = !empty($row['imagen']) ? $row['imagen'] : 'assets/images/small/small-2.jpg'; ?>
+                                                    <?php
+                                                        $imagenes = $row['imagenes'] ?? [];
+                                                        $imagenPrincipal = $imagenes[0] ?? 'assets/images/small/small-2.jpg';
+                                                    ?>
                                                     <tr>
-                                                        <td data-label="Imagen">
-                                                            <img src="<?= $imagenUrl ?>" alt="auto" class="avatar-sm car-list-image rounded-3 object-fit-cover">
+                                                        <td data-label="Imagen" class="car-gallery-cell">
+                                                            <?php if (!empty($imagenes)): ?>
+                                                                <div class="car-gallery">
+                                                                    <?php foreach ($imagenes as $img): ?>
+                                                                        <img src="<?= $img ?>" alt="auto" class="avatar-sm car-list-image rounded-3 object-fit-cover">
+                                                                    <?php endforeach; ?>
+                                                                </div>
+                                                            <?php else: ?>
+                                                                <img src="<?= $imagenPrincipal ?>" alt="auto" class="avatar-sm car-list-image rounded-3 object-fit-cover">
+                                                            <?php endif; ?>
                                                         </td>
                                                         <td data-label="Marca" class="fw-semibold"><?= htmlspecialchars($row['marca'] ?? '') ?></td>
                                                         <td data-label="Submarca"><?= htmlspecialchars($row['modelo'] ?? '') ?></td>

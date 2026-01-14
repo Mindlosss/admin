@@ -26,6 +26,16 @@ class AutoController
         $stmt = $this->autos->obtenerTodos();
         $autos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
+        // Normaliza el string de imA­genes concatenadas a un arreglo ordenado
+        $autos = array_map(static function ($auto) {
+            $imagenes = [];
+            if (!empty($auto['imagenes'])) {
+                $imagenes = array_values(array_filter(explode(',', (string) $auto['imagenes'])));
+            }
+            $auto['imagenes'] = $imagenes;
+            return $auto;
+        }, $autos);
+
         View::render('main/autos-index', [
             'autos' => $autos,
             'mensaje' => flash('mensaje'),

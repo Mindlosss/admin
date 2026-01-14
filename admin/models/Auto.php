@@ -107,13 +107,20 @@ class Auto {
         }
     }
 
-    // obtener todos los autos con marca y su imagen principal
+    // obtener todos los autos con marca y todas sus imA­genes (concat)
     public function obtenerTodos() {
-        // join para obtener marca y una imagen thumbnail
-        $query = "SELECT a.id_auto, a.modelo, a.year, a.color, a.precio, m.nombre as marca, i.imagen 
+        // join para obtener marca y todas las imA­genes (thumbnail primero)
+        $query = "SELECT a.id_auto,
+                         a.modelo,
+                         a.year,
+                         a.color,
+                         a.precio,
+                         m.nombre as marca,
+                         GROUP_CONCAT(i.imagen ORDER BY i.thumbnail DESC, i.id_imagen ASC) AS imagenes
                   FROM " . $this->table . " a
                   LEFT JOIN marcas m ON a.id_marca = m.id_marca
-                  LEFT JOIN imagenes i ON a.id_auto = i.id_auto AND i.thumbnail = 1
+                  LEFT JOIN imagenes i ON a.id_auto = i.id_auto
+                  GROUP BY a.id_auto, a.modelo, a.year, a.color, a.precio, m.nombre
                   ORDER BY a.created_at DESC";
 
         $stmt = $this->conn->prepare($query);
