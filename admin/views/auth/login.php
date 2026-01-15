@@ -15,6 +15,7 @@
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/forms-minimal.css" rel="stylesheet" type="text/css" />
 
     <script src="assets/js/config.js"></script>
 </head>
@@ -28,7 +29,7 @@
     <div class="auth-bg d-flex min-vh-100 justify-content-center align-items-center">
         <div class="row g-0 justify-content-center w-100 m-xxl-5 px-xxl-4 m-3">
             <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="card overflow-hidden text-center rounded-4 p-xxl-4 p-3 mb-0">
+                <div class="card form-card-minimal overflow-hidden text-center rounded-4 p-xxl-4 p-3 mb-0">
                     <a class="auth-brand mb-4">
                         <img src="assets/images/logo.png" alt="dark logo" height="26" class="logo-dark">
                         <img src="assets/images/logo.png" alt="logo light" height="26" class="logo-light">
@@ -38,7 +39,7 @@
 
                     <p class="text-muted mb-4">Ingresa tu correo y contraseña para acceder al panel de administrador.</p>
 
-                    <form action="index.php?route=login" method="POST" class="text-start mb-3">
+                    <form action="index.php?route=login" method="POST" class="text-start mb-3 form-minimal">
                         <?php if($mensaje): ?>
                             <div class="alert alert-success"><?= $mensaje; ?></div>
                         <?php endif; ?>

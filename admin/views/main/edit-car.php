@@ -19,6 +19,7 @@
 
     <!-- Icons css -->
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/forms-minimal.css" rel="stylesheet" type="text/css" />
 
     <!-- Theme Config Js -->
     <script src="assets/js/config.js"></script>
@@ -76,12 +77,12 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card form-card-minimal">
                             <div class="card-header">
                                 <h5 class="card-title">Datos del vehiculo</h5>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="index.php?route=autos/<?= $auto['id_auto'] ?>/update" enctype="multipart/form-data">
+                                <form method="POST" action="index.php?route=autos/<?= $auto['id_auto'] ?>/update" enctype="multipart/form-data" class="form-minimal">
                                     
                                     <!-- Marca y Submarca -->
                                     <div class="row">
@@ -308,7 +309,7 @@
                                         <div class="col-12">
                                             <div class="mb-3">
                                                 <label class="form-label d-block">Imagenes del vehiculo</label>
-                                                <div class="border border-2 border-dashed rounded-3 p-1 text-center" id="dropZone">
+                                                <div class="border border-2 border-dashed rounded-3 p-1 text-center dropzone-compact" id="dropZone">
                                                     <i class="ri-image-add-line fs-32 text-muted d-block mb-1"></i>
                                                     <h6 class="mb-1">Arrastra imagenes aqui</h6>
                                                     <p class="text-muted mb-2 small">o haz clic para seleccionar archivos</p>
