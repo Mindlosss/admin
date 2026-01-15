@@ -1,93 +1,102 @@
+<?php
+$mensaje = $mensaje ?? null;
+$error = $error ?? null;
+$alertStyles = [
+    'success' => 'border-emerald-200 bg-emerald-50 text-emerald-900',
+    'danger' => 'border-rose-200 bg-rose-50 text-rose-900',
+    'warning' => 'border-amber-200 bg-amber-50 text-amber-900',
+    'info' => 'border-sky-200 bg-sky-50 text-sky-900',
+];
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
     <title>Login Autos C&C</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
-
+    <meta name="description" content="Acceso al panel de administracion de Autos C&C">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-    <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
-
-    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/forms-minimal.css" rel="stylesheet" type="text/css" />
-
-    <script src="assets/js/config.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-up {
+            animation: fadeUp 0.6s ease both;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
-<body>
-    <?php
-    $mensaje = $mensaje ?? null;
-    $error = $error ?? null;
-    ?>
+<body class="min-h-screen bg-slate-50 text-slate-900" style="font-family: 'Space Grotesk', sans-serif;">
+    <div class="relative min-h-screen overflow-hidden">
+        <div class="pointer-events-none absolute inset-0">
+            <div class="absolute -top-24 right-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl"></div>
+            <div class="absolute bottom-10 left-10 h-72 w-72 rounded-full bg-sky-200/40 blur-3xl"></div>
+        </div>
 
-    <div class="auth-bg d-flex min-vh-100 justify-content-center align-items-center">
-        <div class="row g-0 justify-content-center w-100 m-xxl-5 px-xxl-4 m-3">
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="card form-card-minimal overflow-hidden text-center rounded-4 p-xxl-4 p-3 mb-0">
-                    <a class="auth-brand mb-4">
-                        <img src="assets/images/logo.png" alt="dark logo" height="26" class="logo-dark">
-                        <img src="assets/images/logo.png" alt="logo light" height="26" class="logo-light">
-                    </a>
+        <main class="relative z-10 flex min-h-screen items-center justify-center px-4 py-12">
+            <div class="w-full max-w-md">
+                <div class="fade-up rounded-3xl border border-slate-200/80 bg-white/80 p-8 shadow-xl backdrop-blur">
+                    <div class="flex items-center gap-3">
+                        <img src="assets/images/logo.png" alt="Autos C&C" class="h-8 w-auto">
+                        <div class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Panel</div>
+                    </div>
 
-                    <h4 class="fw-semibold mb-2 fs-18">Inicia sesión con tu cuenta</h4>
+                    <h1 class="mt-6 text-2xl font-semibold tracking-tight">Inicia sesion</h1>
+                    <p class="mt-2 text-sm text-slate-600">Accede con tu correo y contrasena para administrar el inventario.</p>
 
-                    <p class="text-muted mb-4">Ingresa tu correo y contraseña para acceder al panel de administrador.</p>
-
-                    <form action="index.php?route=login" method="POST" class="text-start mb-3 form-minimal">
-                        <?php if($mensaje): ?>
-                            <div class="alert alert-success"><?= $mensaje; ?></div>
-                        <?php endif; ?>
-                        <?php if($error): ?>
-                            <div class="alert alert-danger"><?= $error; ?></div>
-                        <?php endif; ?>
-
-                        <div class="mb-2">
-                            <input type="email" id="example-email" name="correo" class="form-control"
-                                placeholder="Ingresa tu correo" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <input type="password" id="example-password" name="password" class="form-control"
-                                placeholder="Ingresa tu contraseña" required>
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-3">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkbox-signin">
-                                <label class="form-check-label" for="checkbox-signin">Recuerdame</label>
+                    <form action="index.php?route=login" method="POST" class="mt-6 space-y-4">
+                        <?php if ($mensaje): ?>
+                            <div class="rounded-xl border px-4 py-3 text-sm <?= $alertStyles['success'] ?>">
+                                <?= htmlspecialchars((string) $mensaje) ?>
                             </div>
+                        <?php endif; ?>
+                        <?php if ($error): ?>
+                            <div class="rounded-xl border px-4 py-3 text-sm <?= $alertStyles['danger'] ?>">
+                                <?= htmlspecialchars((string) $error) ?>
+                            </div>
+                        <?php endif; ?>
 
-                            <a href="auth-recoverpw.html" class="text-muted border-bottom border-dashed">Olvidé mi contraseña</a>
+                        <div>
+                            <label for="email" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Correo</label>
+                            <input type="email" id="email" name="correo" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" placeholder="correo@dominio.com" required>
                         </div>
 
-                        <div class="d-grid">
-                            <button class="btn btn-primary fw-semibold" type="submit">Iniciar sesión</button>
+                        <div>
+                            <label for="password" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Contrasena</label>
+                            <input type="password" id="password" name="password" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" placeholder="••••••••" required>
                         </div>
+
+                        <div class="flex items-center justify-between text-sm text-slate-600">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-sky-500 focus:ring-sky-400">
+                                Recuerdame
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-slate-800">
+                            Entrar
+                        </button>
                     </form>
-                    <!--
-                    <p class="text-muted fs-14 mb-0">No tienes una cuenta?
-                        <a href="index.php?route=register" class="fw-semibold text-danger ms-1">Registrate!</a>
-                    </p>
-                    -->
                 </div>
 
-                <p class="mt-4 text-center mb-0">
-                    <script>document.write(new Date().getFullYear())</script> © Código y chips
+                <p class="mt-6 text-center text-xs text-slate-500">
+                    &copy; <?= date('Y') ?> AC Codigo y Chips
                 </p>
             </div>
-        </div>
+        </main>
     </div>
-
-    <script src="assets/js/vendor.min.js"></script>
-
-    <script src="assets/js/app.js"></script>
-
 </body>
 
 </html>
