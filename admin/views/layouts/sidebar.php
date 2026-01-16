@@ -5,7 +5,7 @@ $esMarcas = strpos($vista_actual, 'brands') === 0;
 $nombreUsuario = $_SESSION['usuario_nombre'] ?? 'Administrador';
 ?>
 
-<aside class="hidden lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-slate-900/10 lg:bg-slate-950 lg:text-slate-100">
+<aside class="hidden min-h-screen lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-slate-900/10 lg:bg-slate-950 lg:text-slate-100">
     <div class="flex h-16 items-center gap-3 px-6">
         <img src="assets/images/logo.png" alt="Autos C&C" class="h-7 w-auto">
         <div class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Autos C&amp;C</div>

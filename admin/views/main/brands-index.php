@@ -41,12 +41,12 @@ $alertClass = $alertStyles[$tipo_mensaje] ?? $alertStyles['info'];
 
 <body class="min-h-screen bg-slate-50 text-slate-900" style="font-family: 'Space Grotesk', sans-serif;">
     <div class="min-h-screen bg-[radial-gradient(1200px_circle_at_top,_rgba(251,146,60,0.12),_transparent)]">
-        <div class="lg:flex">
+        <div class="min-h-screen lg:flex">
             <?php require_once 'views/layouts/sidebar.php'; ?>
             <div class="flex-1">
                 <?php require_once 'views/layouts/topbar.php'; ?>
 
-                <main class="mx-auto w-full max-w-6xl px-4 pb-12 pt-6 lg:px-8">
+                <main class="mx-auto flex w-full max-w-6xl flex-col px-4 pb-12 pt-6 lg:px-8">
                     <div class="flex flex-wrap items-center justify-between gap-4 fade-up">
                         <div>
                             <h1 class="text-2xl font-semibold tracking-tight">Marcas</h1>
