@@ -11,8 +11,8 @@ class Database
     private ?PDO $conn = null;
     private string $host = 'localhost';
     private string $db = 'd4537_autos_gen';
-    private string $user = 'root';
-    private string $pass = '';
+    private string $user = 'd4537_autos_gen';
+    private string $pass = 'o!FG,+O3H{FJQ;z[';
     private string $charset = 'utf8mb4';
 
     public function getConnection(): PDO
