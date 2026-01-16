@@ -1,306 +1,154 @@
+<?php
+$mensaje = $mensaje ?? '';
+$tipo_mensaje = $tipo_mensaje ?? 'info';
+$marca = $marca ?? [];
+$alertStyles = [
+    'success' => 'border-emerald-200 bg-emerald-50 text-emerald-900',
+    'danger' => 'border-rose-200 bg-rose-50 text-rose-900',
+    'warning' => 'border-amber-200 bg-amber-50 text-amber-900',
+    'info' => 'border-sky-200 bg-sky-50 text-sky-900',
+];
+$alertClass = $alertStyles[$tipo_mensaje] ?? $alertStyles['info'];
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
     <title>Editar marca</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Edición de marcas" name="description" />
-    <meta content="Coderthemes" name="author" />
-
+    <meta name="description" content="Edicion de marcas">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-    <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <script src="assets/js/config.js"></script>
-</head>
-
-<body>
-    <?php
-    $mensaje = $mensaje ?? '';
-    $tipo_mensaje = $tipo_mensaje ?? 'info';
-    $marca = $marca ?? [];
-    ?>
-    <div class="wrapper">
-        <?php require_once 'views/layouts/sidebar.php'; ?>
-        <?php require_once 'views/layouts/topbar.php'; ?>
-
-        <div class="page-content">
-            <div class="page-title-head d-flex align-items-center gap-2">
-                <div class="flex-grow-1">
-                    <h4 class="fs-18 fw-bold mb-0">Editar Marca</h4>
-                    <p class="text-muted mb-0">Actualiza nombre o logo. Si no adjuntas uno nuevo se conservará el actual.</p>
-                </div>
-            </div>
-
-            <div class="page-container">
-                <?php if($mensaje): ?>
-                    <div class="alert alert-<?= $tipo_mensaje ?> alert-dismissible fade show" role="alert">
-                        <?= $mensaje ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php endif; ?>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Información de la Marca</h5>
-                            </div>
-                            <div class="card-body">
-                                <form method="POST" action="index.php?route=brands/<?= $marca['id_marca'] ?>/update" enctype="multipart/form-data">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="nombre" class="form-label">Nombre de la Marca <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="nombre" name="nombre" value="<?= htmlspecialchars($marca['nombre'] ?? '') ?>" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="mb-3">
-                                                <label class="form-label d-block">Logo de la Marca (opcional)</label>
-                                                <div class="border border-2 border-dashed rounded-3 p-2 text-center" id="dropZoneLogo">
-                                                    <i class="ri-image-add-line fs-40 text-muted d-block mb-2"></i>
-                                                    <h5 class="mb-2">Arrastra la imagen aquí o haz clic</h5>
-                                                    <p class="text-muted mb-3">Formatos permitidos: JPG, PNG</p>
-                                                    <input type="file" id="logo" name="logo" accept=".jpg,.jpeg,.png" class="d-none" />
-                                                    <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('logo').click()">
-                                                        <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar Logo
-                                                    </button>
-                                                </div>
-                                                <div id="logoPreviewContainer" class="mt-3"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex gap-2">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="ri-save-2-line me-1"></i>Guardar cambios
-                                                </button>
-                                                <a class="btn btn-secondary" href="index.php?route=brands">
-                                                    <i class="ri-arrow-go-back-line me-1"></i>Volver
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <?php require_once 'views/layouts/footer.php'; ?>
-        </div>
-    </div>
-
-    <?php require_once 'views/layouts/theme.php'; ?>
-    <script src="assets/js/vendor.min.js"></script>
-    <script src="assets/js/app.js"></script>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        #dropZoneLogo {
-            cursor: pointer;
-            background-color: var(--bs-gray-100);
-            transition: all 0.3s ease;
+        .fade-up {
+            animation: fadeUp 0.6s ease both;
         }
-
-        [data-bs-theme="dark"] #dropZoneLogo {
-            background-color: var(--bs-gray-800);
-        }
-
-        #dropZoneLogo:hover,
-        #dropZoneLogo.dragover {
-            background-color: rgba(60, 134, 216, 0.1);
-            border-color: #3c86d8 !important;
-        }
-
-        .logo-preview-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .logo-preview-wrapper {
-            position: relative;
-            border: 1px solid var(--bs-border-color);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            background: var(--bs-body-bg);
-            max-width: 260px;
-        }
-
-        .logo-preview-wrapper:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-        }
-
-        [data-bs-theme="dark"] .logo-preview-wrapper:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .logo-preview-wrapper img {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: contain;
-            padding: 1rem;
-            display: block;
-        }
-
-        .logo-preview-badge {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background-color: #3c86d8;
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        [data-bs-theme="dark"] .logo-preview-badge {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .logo-preview-meta {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 6px 10px;
-            background-color: rgba(0, 0, 0, 0.03);
-            font-size: 12px;
-            color: var(--bs-gray-700);
-        }
-
-        [data-bs-theme="dark"] .logo-preview-meta {
-            background-color: rgba(255, 255, 255, 0.06);
-            color: var(--bs-gray-300);
-        }
-
-        .logo-preview-name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .logo-preview-size {
-            flex-shrink: 0;
-            opacity: 0.8;
-        }
-
-        .logo-preview-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo-preview-wrapper:hover .logo-preview-overlay {
-            opacity: 1;
-        }
-
-        .logo-overlay-btn {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .btn-change-logo {
-            background-color: #3c86d8;
-        }
-
-        .btn-change-logo:hover {
-            background-color: #2e6ab1;
-        }
-
-        .btn-delete-logo {
-            background-color: #e31e24;
-        }
-
-        .btn-delete-logo:hover {
-            background-color: #c91a1f;
-        }
-
-        .empty-state-logo {
-            text-align: center;
-            padding: 2rem;
-            color: var(--bs-text-muted);
-        }
-
-        .empty-state-logo i {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-900" style="font-family: 'Space Grotesk', sans-serif;">
+    <div class="min-h-screen bg-[radial-gradient(1200px_circle_at_top,_rgba(14,116,144,0.12),_transparent)]">
+        <div class="lg:flex">
+            <?php require_once 'views/layouts/sidebar.php'; ?>
+            <div class="flex-1">
+                <?php require_once 'views/layouts/topbar.php'; ?>
+
+                <main class="mx-auto w-full max-w-6xl px-4 pb-12 pt-6 lg:px-8">
+                    <div class="fade-up">
+                        <h1 class="text-2xl font-semibold tracking-tight">Editar marca</h1>
+                        <p class="mt-2 text-sm text-slate-600">Actualiza el nombre o el logo. Si no adjuntas uno nuevo se conserva el actual.</p>
+                    </div>
+
+                    <?php if (!empty($mensaje)): ?>
+                        <div class="mt-6 rounded-xl border px-4 py-3 text-sm <?= $alertClass ?>">
+                            <?= htmlspecialchars((string) $mensaje) ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="mt-6 rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm">
+                        <form method="POST" action="index.php?route=brands/<?= $marca['id_marca'] ?>/update" enctype="multipart/form-data" class="space-y-6">
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label for="nombre" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Nombre de la marca</label>
+                                    <input type="text" id="nombre" name="nombre" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" value="<?= htmlspecialchars($marca['nombre'] ?? '') ?>" required>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="text-xs font-semibold uppercase tracking-widest text-slate-500">Logo de la marca (opcional)</label>
+                                <div id="dropZoneLogo" class="mt-3 flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 bg-white/70 px-6 py-8 text-center transition">
+                                    <p class="text-sm font-semibold text-slate-700">Arrastra la imagen aqui</p>
+                                    <p class="text-xs text-slate-500">o selecciona un archivo JPG o PNG</p>
+                                    <input type="file" id="logo" name="logo" accept=".jpg,.jpeg,.png" class="hidden">
+                                    <button type="button" class="mt-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-700 transition hover:border-slate-300 hover:bg-slate-50" onclick="document.getElementById('logo').click()">
+                                        Seleccionar logo
+                                    </button>
+                                </div>
+                                <div id="logoPreviewContainer" class="mt-4"></div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-3">
+                                <button type="submit" class="rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white transition hover:bg-slate-800">
+                                    Guardar cambios
+                                </button>
+                                <a class="rounded-full border border-slate-200 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-slate-700 transition hover:border-slate-300 hover:bg-slate-50" href="index.php?route=brands">
+                                    Volver
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <?php require_once 'views/layouts/footer.php'; ?>
+                </main>
+            </div>
+        </div>
+    </div>
 
     <script>
         const dropZoneLogo = document.getElementById('dropZoneLogo');
         const logoInput = document.getElementById('logo');
         const logoPreviewContainer = document.getElementById('logoPreviewContainer');
-        const existingLogoUrl = "<?= $marca['imagen'] ?? '' ?>";
+        const existingLogoUrl = "<?= htmlspecialchars($marca['imagen'] ?? '', ENT_QUOTES) ?>";
         let uploadedLogo = null;
+
+        function setDropZoneState(active) {
+            if (active) {
+                dropZoneLogo.classList.add('border-sky-400', 'bg-sky-50', 'ring-2', 'ring-sky-200');
+            } else {
+                dropZoneLogo.classList.remove('border-sky-400', 'bg-sky-50', 'ring-2', 'ring-sky-200');
+            }
+        }
 
         if (existingLogoUrl) {
             uploadedLogo = { src: existingLogoUrl, name: 'Logo actual', file: null, size: null, existing: true };
         }
         renderLogo();
 
-        dropZoneLogo.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZoneLogo.classList.add('dragover');
+        dropZoneLogo.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            setDropZoneState(true);
         });
 
         dropZoneLogo.addEventListener('dragleave', () => {
-            dropZoneLogo.classList.remove('dragover');
+            setDropZoneState(false);
         });
 
-        dropZoneLogo.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZoneLogo.classList.remove('dragover');
-            handleLogoFile(e.dataTransfer.files);
+        dropZoneLogo.addEventListener('drop', (event) => {
+            event.preventDefault();
+            setDropZoneState(false);
+            handleLogoFile(event.dataTransfer.files);
         });
 
-        logoInput.addEventListener('change', (e) => {
-            if(e.target.files.length > 0) {
-                handleLogoFile(e.target.files);
+        logoInput.addEventListener('change', (event) => {
+            if (event.target.files.length > 0) {
+                handleLogoFile(event.target.files);
             }
         });
 
         function handleLogoFile(files) {
             const allowedFormats = ['image/jpeg', 'image/png'];
-
             if (files.length === 0) return;
 
             const file = files[0];
             if (allowedFormats.includes(file.type)) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
+                reader.onload = (event) => {
                     uploadedLogo = {
-                        src: e.target.result,
+                        src: event.target.result,
                         name: file.name,
                         size: file.size,
                         file: file
@@ -310,16 +158,15 @@
                 };
                 reader.readAsDataURL(file);
             } else {
-                alert(`Formato no permitido: ${file.name}. Usa JPG o PNG`);
+                alert(`Formato no permitido: ${file.name}. Usa JPG o PNG.`);
                 logoInput.value = '';
-                uploadedLogo = existingLogoUrl ? { src: existingLogoUrl, name: 'Logo actual', file: null, existing: true } : null;
+                uploadedLogo = existingLogoUrl ? { src: existingLogoUrl, name: 'Logo actual', file: null, size: null, existing: true } : null;
                 renderLogo();
             }
         }
 
         function updateLogoInput() {
             const dataTransfer = new DataTransfer();
-            
             if (uploadedLogo && uploadedLogo.file) {
                 dataTransfer.items.add(uploadedLogo.file);
                 logoInput.files = dataTransfer.files;
@@ -332,42 +179,40 @@
             logoPreviewContainer.innerHTML = '';
 
             if (!uploadedLogo) {
-                logoPreviewContainer.innerHTML = '<div class="empty-state-logo"><i class="ri-image-line"></i><p>No hay logo cargado</p></div>';
+                logoPreviewContainer.innerHTML = '<div class="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-6 text-center text-sm text-slate-500">No hay logo cargado.</div>';
                 return;
             }
 
-            const container = document.createElement('div');
-            container.className = 'logo-preview-container';
-
             const wrapper = document.createElement('div');
-            wrapper.className = 'logo-preview-wrapper';
+            wrapper.className = 'group relative mx-auto max-w-xs overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm';
 
             const img = document.createElement('img');
             img.src = uploadedLogo.src;
             img.alt = uploadedLogo.name;
+            img.className = 'h-48 w-full object-contain bg-slate-50 p-4';
 
             if (uploadedLogo.existing) {
                 const badge = document.createElement('div');
-                badge.className = 'logo-preview-badge';
+                badge.className = 'absolute left-3 top-3 rounded-full bg-slate-900 px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-white';
                 badge.textContent = 'Actual';
                 wrapper.appendChild(badge);
             }
 
             const overlay = document.createElement('div');
-            overlay.className = 'logo-preview-overlay';
+            overlay.className = 'absolute inset-0 flex items-center justify-center gap-2 bg-slate-900/60 opacity-0 transition group-hover:opacity-100';
 
             const changeBtn = document.createElement('button');
             changeBtn.type = 'button';
-            changeBtn.className = 'logo-overlay-btn btn-change-logo';
-            changeBtn.innerHTML = '<i class="ri-image-edit-line"></i>Cambiar';
+            changeBtn.className = 'rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-800 shadow';
+            changeBtn.textContent = 'Cambiar';
             changeBtn.onclick = () => {
                 logoInput.click();
             };
 
             const deleteBtn = document.createElement('button');
             deleteBtn.type = 'button';
-            deleteBtn.className = 'logo-overlay-btn btn-delete-logo';
-            deleteBtn.innerHTML = '<i class="ri-delete-bin-line"></i>Eliminar';
+            deleteBtn.className = 'rounded-full bg-rose-500/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white shadow';
+            deleteBtn.textContent = 'Eliminar';
             deleteBtn.onclick = () => {
                 uploadedLogo = null;
                 updateLogoInput();
@@ -377,22 +222,19 @@
             overlay.appendChild(changeBtn);
             overlay.appendChild(deleteBtn);
 
+            const meta = document.createElement('div');
+            meta.className = 'flex items-center justify-between gap-2 border-t border-slate-100 px-4 py-2 text-xs text-slate-600';
+            const sizeLabel = uploadedLogo.size ? formatFileSize(uploadedLogo.size) : (uploadedLogo.existing ? 'Actual' : '');
+            meta.innerHTML = `<span class="truncate" title="${uploadedLogo.name}">${uploadedLogo.name}</span><span>${sizeLabel}</span>`;
+
             wrapper.appendChild(img);
             wrapper.appendChild(overlay);
-            const meta = document.createElement('div');
-            meta.className = 'logo-preview-meta';
-            const sizeLabel = uploadedLogo.size ? formatFileSize(uploadedLogo.size) : (uploadedLogo.existing ? 'Actual' : '');
-            meta.innerHTML = `<span class="logo-preview-name" title="${uploadedLogo.name}">${uploadedLogo.name}</span><span class="logo-preview-size">${sizeLabel}</span>`;
             wrapper.appendChild(meta);
-            container.appendChild(wrapper);
-
-            logoPreviewContainer.appendChild(container);
+            logoPreviewContainer.appendChild(wrapper);
         }
 
         function formatFileSize(bytes) {
-            if (!bytes) {
-                return '';
-            }
+            if (!bytes) return '';
             const units = ['B', 'KB', 'MB', 'GB'];
             let size = bytes;
             let unitIndex = 0;

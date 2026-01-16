@@ -1,701 +1,398 @@
+﻿<?php
+$mensaje = $mensaje ?? '';
+$tipo_mensaje = $tipo_mensaje ?? 'info';
+$marcas = $marcas ?? [];
+$alertStyles = [
+    'success' => 'border-emerald-200 bg-emerald-50 text-emerald-900',
+    'danger' => 'border-rose-200 bg-rose-50 text-rose-900',
+    'warning' => 'border-amber-200 bg-amber-50 text-amber-900',
+    'info' => 'border-sky-200 bg-sky-50 text-sky-900',
+];
+$alertClass = $alertStyles[$tipo_mensaje] ?? $alertStyles['info'];
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
     <title>Agregar auto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
-
-    <!-- App favicon -->
+    <meta name="description" content="Alta de autos">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-    <!-- Vendor css -->
-    <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- App css -->
-    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
-    <!-- Icons css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/forms-minimal.css" rel="stylesheet" type="text/css" />
-
-    <!-- Theme Config Js -->
-    <script src="assets/js/config.js"></script>
-</head>
-
-<body>
-    <?php
-    $mensaje = $mensaje ?? '';
-    $tipo_mensaje = $tipo_mensaje ?? 'info';
-    $marcas = $marcas ?? [];
-    ?>
-    <!-- Begin page -->
-    <div class="wrapper">
-
-        <!-- sidebar -->
-        <?php require_once 'views/layouts/sidebar.php'; ?>
-
-        <!-- topbar -->
-        <?php require_once 'views/layouts/topbar.php'; ?>
-
-        <!-- Search Modal -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content bg-transparent">
-                    <form>
-                        <div class="card mb-1">
-                            <div class="px-3 py-2 d-flex flex-row align-items-center" id="top-search">
-                                <i class="ri-search-line fs-22"></i>
-                                <input type="search" class="form-control border-0" id="search-modal-input"
-                                    placeholder="Search for actions, people,">
-                                <button type="submit" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">[esc]</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-                        
-
-        <!-- ============================================================== -->
-        <!-- Start Page Content here -->
-        <!-- ============================================================== -->
-
-        <div class="page-content">
-
-            
-            <div class="page-title-head d-flex align-items-center gap-2">
-                <div class="flex-grow-1">
-                    <h4 class="fs-18 fw-bold mb-0">Agregar auto</h4>
-                </div>
-
-                <!-- <div class="text-end">
-                    <ol class="breadcrumb m-0 py-0 fs-13">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Abstack</a></li>
-                        
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                        
-                        <li class="breadcrumb-item active">Agregar auto</li>
-                    </ol>
-                </div> -->
-            </div>
-            
-
-            
-
-            <div class="page-container">
-
-                <?php if($mensaje): ?>
-                    <div class="alert alert-<?= $tipo_mensaje ?> alert-dismissible fade show" role="alert">
-                        <?= $mensaje ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                <?php endif; ?>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card form-card-minimal">
-                            <div class="card-header">
-                                <h5 class="card-title">Datos del vehículo</h5>
-                            </div>
-                            <div class="card-body">
-                                <form method="POST" action="index.php?route=autos" enctype="multipart/form-data" class="form-minimal">
-                                    
-                                    <!-- Marca y Submarca -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="id_marca" class="form-label">Marca <span class="text-danger">*</span></label>
-                                                <select class="form-select" id="id_marca" name="id_marca" required>
-                                                    <option selected disabled value="">Selecciona una marca</option>
-                                                    
-                                                    <?php foreach ($marcas as $row): ?>
-                                                        <option value="<?= $row['id_marca'] ?>"><?= $row['nombre'] ?></option>
-                                                    <?php endforeach; ?>
-                                                    
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="modelo" class="form-label">Submarca <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Ej: Corolla, Civic, Mustang" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Tipo y Modelo -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="tipo" class="form-label">Tipo de vehículo</label>
-                                                <select class="form-select" id="tipo" name="tipo">
-                                                    <option selected value="">Selecciona un tipo</option>
-                                                    <option value="Sedán">Sedán</option>
-                                                    <option value="SUV">SUV</option>
-                                                    <option value="Hatchback">Hatchback</option>
-                                                    <option value="Coupé">Coupé</option>
-                                                    <option value="Convertible">Convertible</option>
-                                                    <option value="Camioneta">Camioneta</option>
-                                                    <option value="Minivan">Minivan</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="year" class="form-label">Modelo <span class="text-danger">*</span></label>
-                                                <?php $currentYear = (int) date('Y'); ?>
-                                                <select class="form-select" id="year" name="year" required>
-                                                    <option value="" disabled selected>Selecciona</option>
-                                                    <?php for ($year = $currentYear; $year >= 1990; $year--): ?>
-                                                        <option value="<?= $year ?>"><?= $year ?></option>
-                                                    <?php endfor; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Combustible y Transmisión -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="combustible" class="form-label">Combustible</label>
-                                                <select class="form-select" id="combustible" name="combustible">
-                                                    <option selected value="">Selecciona un combustible</option>
-                                                    <option value="Gasolina">Gasolina</option>
-                                                    <option value="Diésel">Diésel</option>
-                                                    <option value="Híbrido">Híbrido</option>
-                                                    <option value="Eléctrico">Eléctrico</option>
-                                                    <option value="GLP">GLP</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="transmision" class="form-label">Transmisión</label>
-                                                <select class="form-select" id="transmision" name="transmision">
-                                                    <option selected value="">Selecciona una transmisión</option>
-                                                    <option value="Automática">Automática</option>
-                                                    <option value="Manual">Manual</option>
-                                                    <option value="CVT">CVT</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Kilometraje y Precio -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="kilometraje" class="form-label">Kilometraje</label>
-                                                <input type="number" class="form-control" id="kilometraje" name="kilometraje" min="0" placeholder="Ej: 50000">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">$</span>
-                                                    <input type="number" class="form-control" id="precio" name="precio" min="0" step="0.01" placeholder="0.00" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Descripcion -->
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="mb-3">
-                                                <label for="descripcion" class="form-label">Descripcion</label>
-                                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Describe el vehiculo"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Opciones -->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3 form-check">
-                                                <input type="checkbox" class="form-check-input" id="ocultar_kilometraje" name="ocultar_kilometraje" value="1">
-                                                <label class="form-check-label" for="ocultar_kilometraje">Ocultar kilometraje</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3 form-check">
-                                                <input type="checkbox" class="form-check-input" id="consignacion" name="consignacion" value="1">
-                                                <label class="form-check-label" for="consignacion">Consignacion</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Color -->
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="mb-3">
-                                                <label class="form-label d-block">Color</label>
-                                                <div class="d-flex gap-2 flex-wrap">
-                                                    <input type="hidden" id="color" name="color" value="">
-                                                    
-                                                    <!-- Blanco -->
-                                                    <label class="color-option" title="Blanco">
-                                                        <input type="radio" name="color_option" value="#FFFFFF" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #FFFFFF; border: 2px solid #333;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Gris -->
-                                                    <label class="color-option" title="Gris">
-                                                        <input type="radio" name="color_option" value="#808080" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #808080;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Negro -->
-                                                    <label class="color-option" title="Negro">
-                                                        <input type="radio" name="color_option" value="#000000" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #000000;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Rojo -->
-                                                    <label class="color-option" title="Rojo">
-                                                        <input type="radio" name="color_option" value="#E31E24" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #E31E24;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Azul -->
-                                                    <label class="color-option" title="Azul">
-                                                        <input type="radio" name="color_option" value="#0066CC" class="color-radio">
-                                                        <span class="color-circle" style="background-color: #0066CC;"></span>
-                                                    </label>
-                                                    
-                                                    <!-- Personalizado -->
-                                                    <label class="color-option" title="Personalizado">
-                                                        <input type="radio" name="color_option" value="Personalizado" class="color-radio">
-                                                        <span class="color-circle custom-color-circle">
-                                                            <input type="color" id="custom-color-input" value="#ffffff" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;">
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Imágenes del Vehículo -->
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="mb-3">
-                                                <label class="form-label d-block">Imágenes del Vehículo <span class="text-danger">*</span></label>
-                                                <div class="border border-2 border-dashed rounded-3 p-1 text-center dropzone-compact" id="dropZone">
-                                                    <i class="ri-image-add-line fs-32 text-muted d-block mb-1"></i>
-                                                    <h6 class="mb-1">Arrastra imágenes aquí</h6>
-                                                    <p class="text-muted mb-2 small">o haz clic para seleccionar archivos</p>
-                                                    
-                                                    <input type="file" id="imagenes" name="imagenes[]" multiple accept=".jpg,.jpeg,.png" class="d-none" required />
-                                                    
-                                                    <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('imagenes').click()">
-                                                        <i class="ri-upload-cloud-2-line me-1"></i>Seleccionar Imágenes
-                                                    </button>
-                                                    <p class="text-muted fs-13 mt-2 mb-0">Formatos permitidos: JPG, PNG</p>
-                                                </div>
-                                                <!-- Vista previa de imágenes -->
-                                                <div id="imagePreviewContainer" class="mt-2"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Botones -->
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex gap-2">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="ri-add-line me-1"></i>Agregar Coche
-                                                </button>
-                                                <button type="reset" class="btn btn-secondary">
-                                                    <i class="ri-refresh-line me-1"></i>Limpiar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            <!-- Footer -->
-            <?php require_once 'views/layouts/footer.php'; ?>
-
-
-        </div>
-
-        <!-- ============================================================== -->
-        <!-- End Page content -->
-        <!-- ============================================================== -->
-
-    </div>
-    <!-- END wrapper -->
-
-    <!-- Theme Settings -->
-    <?php require_once 'views/layouts/theme.php'; ?>
-    
-    <!-- Vendor js -->
-    <script src="assets/js/vendor.min.js"></script>
-
-    <!-- App js -->
-    <script src="assets/js/app.js"></script>
-
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .color-option {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+        .fade-up {
+            animation: fadeUp 0.6s ease both;
         }
-
-        .color-option input[type="radio"] {
-            display: none;
-        }
-
-        .color-circle {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .color-option input[type="radio"]:checked + .color-circle,
-        .color-option input[type="radio"]:checked + .custom-color-circle {
-            border-color: #3c86d8;
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3c86d8;
-            transform: scale(1.1);
-        }
-
-        .color-option:hover .color-circle,
-        .color-option:hover .custom-color-circle {
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .custom-color-circle {
-            background: conic-gradient(#ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000);
-            border: 2px solid #fff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 2px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .custom-color-circle::after {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 700;
-            color: rgba(0, 0, 0, 0.5);
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-            pointer-events: none;
-        }
-        #dropZone {
-            cursor: pointer;
-            background-color: var(--bs-gray-100);
-            transition: all 0.3s ease;
-        }
-
-        [data-bs-theme="dark"] #dropZone {
-            background-color: var(--bs-gray-800);
-        }
-
-        #dropZone:hover,
-        #dropZone.dragover {
-            background-color: rgba(60, 134, 216, 0.1);
-            border-color: #3c86d8 !important;
-        }
-
-        .image-preview-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .image-preview-wrapper {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: var(--bs-gray-100);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        [data-bs-theme="dark"] .image-preview-wrapper {
-            background-color: var(--bs-gray-800);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .image-preview-wrapper:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        [data-bs-theme="dark"] .image-preview-wrapper:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .image-preview-wrapper img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .image-preview-meta {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 6px 8px;
-            background-color: rgba(0, 0, 0, 0.03);
-            font-size: 12px;
-            color: var(--bs-gray-700);
-        }
-
-        [data-bs-theme="dark"] .image-preview-meta {
-            background-color: rgba(255, 255, 255, 0.06);
-            color: var(--bs-gray-300);
-        }
-
-        .image-preview-name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .image-preview-size {
-            flex-shrink: 0;
-            opacity: 0.8;
-        }
-
-        .image-preview-wrapper.primary img {
-            border: 3px solid #3c86d8;
-        }
-
-        .image-preview-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .image-preview-wrapper:hover .image-preview-overlay {
-            opacity: 1;
-        }
-
-        .image-overlay-btn {
-            padding: 6px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .btn-set-primary {
-            background-color: #3c86d8;
-        }
-
-        .btn-set-primary:hover {
-            background-color: #2e6ab1;
-        }
-
-        .btn-delete {
-            background-color: #e31e24;
-        }
-
-        .btn-delete:hover {
-            background-color: #c91a1f;
-        }
-
-        .image-badge-primary {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background-color: #3c86d8;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        [data-bs-theme="dark"] .image-badge-primary {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 2rem;
-            color: var(--bs-text-muted);
-        }
-
-        .empty-state i {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-900" style="font-family: 'Space Grotesk', sans-serif;">
+    <div class="min-h-screen bg-[radial-gradient(1200px_circle_at_top,_rgba(59,130,246,0.12),_transparent)]">
+        <div class="lg:flex">
+            <?php require_once 'views/layouts/sidebar.php'; ?>
+            <div class="flex-1">
+                <?php require_once 'views/layouts/topbar.php'; ?>
+
+                <main class="mx-auto w-full max-w-6xl px-4 pb-12 pt-6 lg:px-8">
+                    <div class="fade-up">
+                        <h1 class="text-2xl font-semibold tracking-tight">Agregar auto</h1>
+                        <p class="mt-2 text-sm text-slate-600">Completa la ficha del vehiculo y carga sus imagenes.</p>
+                    </div>
+
+                    <?php if (!empty($mensaje)): ?>
+                        <div class="mt-6 rounded-xl border px-4 py-3 text-sm <?= $alertClass ?>">
+                            <?= htmlspecialchars((string) $mensaje) ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="mt-6 rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm">
+                        <form method="POST" action="index.php?route=autos" enctype="multipart/form-data" class="space-y-8">
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label for="id_marca" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Marca</label>
+                                    <select id="id_marca" name="id_marca" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" required>
+                                        <option value="" disabled selected>Selecciona una marca</option>
+                                        <?php foreach ($marcas as $row): ?>
+                                            <option value="<?= $row['id_marca'] ?>"><?= $row['nombre'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="modelo" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Submarca</label>
+                                    <input type="text" id="modelo" name="modelo" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" placeholder="Ej: Corolla, Civic, Mustang" required>
+                                </div>
+                            </div>
+
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label for="tipo" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Tipo de vehículo</label>
+                                    <select id="tipo" name="tipo" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+                                        <option value="" selected>Selecciona un tipo</option>
+                                        <option value="Sedán">Sedán</option>
+                                        <option value="SUV">SUV</option>
+                                        <option value="Hatchback">Hatchback</option>
+                                        <option value="Coupé">Coupé</option>
+                                        <option value="Convertible">Convertible</option>
+                                        <option value="Camioneta">Camioneta</option>
+                                        <option value="Minivan">Minivan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="year" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Modelo</label>
+                                    <?php $currentYear = (int) date('Y'); ?>
+                                    <select id="year" name="year" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" required>
+                                        <option value="" disabled selected>Selecciona</option>
+                                        <?php for ($year = $currentYear; $year >= 1990; $year--): ?>
+                                            <option value="<?= $year ?>"><?= $year ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label for="combustible" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Combustible</label>
+                                    <select id="combustible" name="combustible" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+                                        <option value="" selected>Selecciona un combustible</option>
+                                        <option value="Gasolina">Gasolina</option>
+                                        <option value="Diésel">Diésel</option>
+                                        <option value="Híbrido">Híbrido</option>
+                                        <option value="Eléctrico">Eléctrico</option>
+                                        <option value="GLP">GLP</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="Transmisión" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Transmisión</label>
+                                                                        <select id="transmision" name="transmision" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+                                        <option value="" selected>Selecciona una transmisión</option>
+                                        <option value="Automática">Automática</option>
+                                        <option value="Manual">Manual</option>
+                                        <option value="CVT">CVT</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label for="kilometraje" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Kilometraje</label>
+                                    <input type="number" id="kilometraje" name="kilometraje" min="0" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" placeholder="Ej: 50000">
+                                </div>
+                                <div>
+                                    <label for="precio" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Precio</label>
+                                    <div class="mt-2 flex rounded-xl border border-slate-200 bg-white/70 shadow-sm focus-within:border-sky-400 focus-within:ring-4 focus-within:ring-sky-100">
+                                        <span class="flex items-center px-3 text-sm text-slate-500">$</span>
+                                        <input type="number" id="precio" name="precio" min="0" step="0.01" class="w-full rounded-xl bg-transparent px-3 py-3 text-sm outline-none" placeholder="0.00" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="descripcion" class="text-xs font-semibold uppercase tracking-widest text-slate-500">Descripcion</label>
+                                <textarea id="descripcion" name="descripcion" rows="4" class="mt-2 w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" placeholder="Describe el vehiculo"></textarea>
+                            </div>
+
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <label class="flex items-center gap-2 text-sm text-slate-600">
+                                    <input type="checkbox" id="ocultar_kilometraje" name="ocultar_kilometraje" value="1" class="h-4 w-4 rounded border-slate-300 text-sky-500 focus:ring-sky-400">
+                                    Ocultar kilometraje
+                                </label>
+                                <label class="flex items-center gap-2 text-sm text-slate-600">
+                                    <input type="checkbox" id="consignacion" name="consignacion" value="1" class="h-4 w-4 rounded border-slate-300 text-sky-500 focus:ring-sky-400">
+                                    Consignacion
+                                </label>
+                            </div>
+
+                            <div>
+                                <label class="text-xs font-semibold uppercase tracking-widest text-slate-500">Color</label>
+                                <input type="hidden" id="color" name="color" value="">
+                                <div class="mt-3 flex flex-wrap gap-3">
+                                    <?php
+                                    $colores = [
+                                        ['label' => 'Blanco', 'value' => '#FFFFFF'],
+                                        ['label' => 'Gris', 'value' => '#808080'],
+                                        ['label' => 'Negro', 'value' => '#000000'],
+                                        ['label' => 'Rojo', 'value' => '#E31E24'],
+                                        ['label' => 'Azul', 'value' => '#0066CC'],
+                                    ];
+                                    ?>
+                                    <?php foreach ($colores as $color): ?>
+                                        <label class="relative">
+                                            <input type="radio" name="color_option" value="<?= $color['value'] ?>" class="peer sr-only color-radio">
+                                            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white shadow-sm transition peer-checked:ring-2 peer-checked:ring-sky-400" style="background-color: <?= $color['value'] ?>;" title="<?= $color['label'] ?>"></span>
+                                        </label>
+                                    <?php endforeach; ?>
+                                    <label class="relative">
+                                        <input type="radio" name="color_option" value="custom" class="peer sr-only color-radio">
+                                        <span id="custom-color-chip" class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-[conic-gradient(at_top,_#ff0000,_#ff8000,_#ffff00,_#80ff00,_#00ff00,_#00ff80,_#00ffff,_#0080ff,_#0000ff,_#8000ff,_#ff00ff,_#ff0080,_#ff0000)] shadow-sm transition peer-checked:ring-2 peer-checked:ring-sky-400">
+                                            <input type="color" id="custom-color-input" value="#ffffff" class="absolute inset-0 h-full w-full cursor-pointer opacity-0">
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="text-xs font-semibold uppercase tracking-widest text-slate-500">Imagenes del vehiculo</label>
+                                <div id="dropZone" class="mt-3 flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 bg-white/70 px-6 py-8 text-center transition">
+                                    <p class="text-sm font-semibold text-slate-700">Arrastra las imagenes aqui</p>
+                                    <p class="text-xs text-slate-500">o selecciona archivos JPG o PNG</p>
+                                    <input type="file" id="imagenes" name="imagenes[]" multiple accept=".jpg,.jpeg,.png" class="hidden" required>
+                                    <button type="button" class="mt-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-700 transition hover:border-slate-300 hover:bg-slate-50" onclick="document.getElementById('imagenes').click()">
+                                        Seleccionar imagenes
+                                    </button>
+                                </div>
+                                <div id="imagePreviewContainer" class="mt-4"></div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-3">
+                                <button type="submit" class="rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white transition hover:bg-slate-800">
+                                    Guardar auto
+                                </button>
+                                <button type="reset" class="rounded-full border border-slate-200 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-slate-700 transition hover:border-slate-300 hover:bg-slate-50">
+                                    Limpiar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <?php require_once 'views/layouts/footer.php'; ?>
+                </main>
+            </div>
+        </div>
+    </div>
 
     <script>
-
         const customColorInput = document.getElementById('custom-color-input');
-        const customCircle = document.querySelector('.custom-color-circle');
+        const customColorChip = document.getElementById('custom-color-chip');
         const hiddenColorInput = document.getElementById('color');
         const colorRadios = document.querySelectorAll('.color-radio');
 
-        // logica de los circulos
-        colorRadios.forEach(radio => {
-            radio.addEventListener('change', function() {
-                if (this.value === 'Personalizado') {
-                    // Si selecciona  manualmente, asignamos el valor actual del input color
+        colorRadios.forEach((radio) => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'custom') {
                     hiddenColorInput.value = customColorInput.value;
-                    // Pintamos el circulo con el color que tenga el input
-                    customCircle.style.background = customColorInput.value;
+                    customColorChip.style.background = customColorInput.value;
                 } else {
-                    // Si es un color predefinido
-                    hiddenColorInput.value = this.value;
-                    // reiniciamos el circulo arcoiris
-                    customCircle.style.background = ''; 
+                    hiddenColorInput.value = radio.value;
+                    customColorChip.style.background = '';
                 }
             });
         });
 
-        //color picker
-        customColorInput.addEventListener('input', function() {
-            // Actualizamos el input oculto que se envia al servidor
-            hiddenColorInput.value = this.value;
-                
-            //Forzamos la selección del radio button "Personalizado"
-            document.querySelector('input[name="color_option"][value="Personalizado"]').checked = true;
-
-            // cambiamos el background del circulo con el color que seleccionamos
-            customCircle.style.background = this.value;
+        customColorInput.addEventListener('input', () => {
+            hiddenColorInput.value = customColorInput.value;
+            document.querySelector('input[name="color_option"][value="custom"]').checked = true;
+            customColorChip.style.background = customColorInput.value;
         });
-
-
-        // Logica para las imagenes, drag and drop y preview
 
         const dropZone = document.getElementById('dropZone');
         const imageInput = document.getElementById('imagenes');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-        
-        // Variables de estado
         let uploadedImages = [];
         let primaryImageIndex = -1;
 
-        // Eventos Drag and drop visuales
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
+        function setDropZoneState(active) {
+            if (active) {
+                dropZone.classList.add('border-sky-400', 'bg-sky-50', 'ring-2', 'ring-sky-200');
+            } else {
+                dropZone.classList.remove('border-sky-400', 'bg-sky-50', 'ring-2', 'ring-sky-200');
+            }
+        }
+
+        dropZone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            setDropZoneState(true);
         });
 
         dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
+            setDropZoneState(false);
         });
 
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            handleFiles(e.dataTransfer.files);
+        dropZone.addEventListener('drop', (event) => {
+            event.preventDefault();
+            setDropZoneState(false);
+            handleFiles(event.dataTransfer.files);
         });
 
-        // seleccion manual usando el boton
-        imageInput.addEventListener('change', (e) => {
-            // Nota: Al seleccionar manual, input.files ya tiene los archivos,
-            // pero necesitamos procesarlos para añadirlos a nuestro array y permitir añadir más después.
-            if (e.target.files.length > 0) {
-                handleFiles(e.target.files);
+        imageInput.addEventListener('change', (event) => {
+            if (event.target.files.length > 0) {
+                handleFiles(event.target.files);
             }
         });
 
-        // Procesar archivos seleccionados
         function handleFiles(files) {
-            const allowedFormats = ['image/jpeg', 'image/png', 'image/webp'];
-
+            const allowedFormats = ['image/jpeg', 'image/png'];
             Array.from(files).forEach((file) => {
-                if (allowedFormats.includes(file.type)) {
-                    
-                    // Evitar duplicados por nombre y tamaño
-                    const exists = uploadedImages.some(img => img.file.name === file.name && img.file.size === file.size);
-                    
-                    if (!exists) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            uploadedImages.push({
-                                src: e.target.result,
-                                name: file.name,
-                                file: file // Guardamos el objeto File original
-                            });
-
-                            // Si es la primera imagen y no hay principal, se asigna
-                            if (primaryImageIndex === -1) {
-                                primaryImageIndex = 0;
-                            }
-                            
-                            renderImages();
-                            updateInputFiles(); //  Actualizar el input real
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                } else {
+                if (!allowedFormats.includes(file.type)) {
                     alert(`Formato no permitido: ${file.name}. Usa JPG o PNG.`);
+                    return;
                 }
+                const exists = uploadedImages.some((img) => img.file.name === file.name && img.file.size === file.size);
+                if (exists) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    uploadedImages.push({
+                        src: event.target.result,
+                        name: file.name,
+                        file: file
+                    });
+                    if (primaryImageIndex === -1) {
+                        primaryImageIndex = 0;
+                    }
+                    renderImages();
+                    updateInputFiles();
+                };
+                reader.readAsDataURL(file);
             });
         }
 
-        // Sincronizar Array JS con Input HTML
         function updateInputFiles() {
             const dataTransfer = new DataTransfer();
-            
-            // Agregar primero la imagen principal para que el backend la tome como thumbnail
-            if (uploadedImages.length > 0 && primaryImageIndex >= 0 && primaryImageIndex < uploadedImages.length) {
+            if (uploadedImages.length > 0 && primaryImageIndex >= 0) {
                 dataTransfer.items.add(uploadedImages[primaryImageIndex].file);
             }
-
             uploadedImages.forEach((imageObj, index) => {
                 if (index !== primaryImageIndex) {
                     dataTransfer.items.add(imageObj.file);
                 }
             });
-
-            // Asignar los archivos al input real
             imageInput.files = dataTransfer.files;
         }
 
-        function formatFileSize(bytes) {
-            if (!bytes) {
-                return '0 KB';
+        function renderImages() {
+            imagePreviewContainer.innerHTML = '';
+
+            if (uploadedImages.length === 0) {
+                imagePreviewContainer.innerHTML = '<div class="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-6 text-center text-sm text-slate-500">No hay imagenes cargadas.</div>';
+                return;
             }
+
+            const previewRow = document.createElement('div');
+            previewRow.className = 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3';
+
+            uploadedImages.forEach((image, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm';
+                if (index === primaryImageIndex) {
+                    wrapper.classList.add('ring-2', 'ring-sky-400');
+                }
+
+                const img = document.createElement('img');
+                img.src = image.src;
+                img.alt = image.name;
+                img.className = 'h-40 w-full object-cover';
+
+                if (index === primaryImageIndex) {
+                    const badge = document.createElement('div');
+                    badge.className = 'absolute right-3 top-3 rounded-full bg-slate-900 px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-white';
+                    badge.textContent = 'Principal';
+                    wrapper.appendChild(badge);
+                }
+
+                const overlay = document.createElement('div');
+                overlay.className = 'absolute inset-0 flex items-center justify-center gap-2 bg-slate-900/60 opacity-0 transition group-hover:opacity-100';
+
+                const primaryBtn = document.createElement('button');
+                primaryBtn.type = 'button';
+                primaryBtn.className = 'rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-800 shadow';
+                primaryBtn.textContent = 'Principal';
+                primaryBtn.onclick = () => setPrimaryImage(index);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.type = 'button';
+                deleteBtn.className = 'rounded-full bg-rose-500/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white shadow';
+                deleteBtn.textContent = 'Eliminar';
+                deleteBtn.onclick = () => deleteImage(index);
+
+                overlay.appendChild(primaryBtn);
+                overlay.appendChild(deleteBtn);
+
+                const meta = document.createElement('div');
+                meta.className = 'flex items-center justify-between gap-2 border-t border-slate-100 px-4 py-2 text-xs text-slate-600';
+                meta.innerHTML = `<span class="truncate" title="${image.name}">${image.name}</span><span>${formatFileSize(image.file.size)}</span>`;
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(overlay);
+                wrapper.appendChild(meta);
+                previewRow.appendChild(wrapper);
+            });
+
+            imagePreviewContainer.appendChild(previewRow);
+        }
+
+        function setPrimaryImage(index) {
+            primaryImageIndex = index;
+            renderImages();
+            updateInputFiles();
+        }
+
+        function deleteImage(index) {
+            uploadedImages.splice(index, 1);
+            if (primaryImageIndex === index) {
+                primaryImageIndex = uploadedImages.length > 0 ? 0 : -1;
+            } else if (primaryImageIndex > index) {
+                primaryImageIndex--;
+            }
+            renderImages();
+            updateInputFiles();
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes) return '0 KB';
             const units = ['B', 'KB', 'MB', 'GB'];
             let size = bytes;
             let unitIndex = 0;
@@ -706,117 +403,24 @@
             return `${size.toFixed(unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
         }
 
-        // Renderizar la vista previa de las imágenes
-        function renderImages() {
-            imagePreviewContainer.innerHTML = '';
-
-            if (uploadedImages.length === 0) {
-                imagePreviewContainer.innerHTML = `
-                    <div class="empty-state">
-                        <i class="ri-gallery-line"></i>
-                        <p>No hay imágenes cargadas</p>
-                    </div>`;
-                return;
-            }
-
-            const previewRow = document.createElement('div');
-            previewRow.className = 'image-preview-row';
-
-            uploadedImages.forEach((image, index) => {
-                const wrapper = document.createElement('div');
-                // Agregar la clase primary si es la principal
-                wrapper.className = `image-preview-wrapper ${index === primaryImageIndex ? 'primary' : ''}`;
-
-                const img = document.createElement('img');
-                img.src = image.src;
-                img.alt = image.name;
-
-                // Badge visual de de princial
-                if (index === primaryImageIndex) {
-                    const badge = document.createElement('div');
-                    badge.className = 'image-badge-primary';
-                    badge.innerHTML = '<i class="ri-star-fill"></i>Principal';
-                    wrapper.appendChild(badge);
-                }
-
-                // Overlay con botones
-                const overlay = document.createElement('div');
-                overlay.className = 'image-preview-overlay';
-
-                const primaryBtn = document.createElement('button');
-                primaryBtn.type = 'button';
-                primaryBtn.className = 'image-overlay-btn btn-set-primary';
-                primaryBtn.innerHTML = '<i class="ri-star-line"></i>Principal';
-                primaryBtn.onclick = () => setPrimaryImage(index);
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.type = 'button';
-                deleteBtn.className = 'image-overlay-btn btn-delete';
-                deleteBtn.innerHTML = '<i class="ri-delete-bin-line"></i>Eliminar';
-                deleteBtn.onclick = () => deleteImage(index);
-
-                overlay.appendChild(primaryBtn);
-                overlay.appendChild(deleteBtn);
-
-                wrapper.appendChild(img);
-                wrapper.appendChild(overlay);
-                const meta = document.createElement('div');
-                meta.className = 'image-preview-meta';
-                meta.innerHTML = `<span class="image-preview-name" title="${image.name}">${image.name}</span><span class="image-preview-size">${formatFileSize(image.file.size)}</span>`;
-                wrapper.appendChild(meta);
-                previewRow.appendChild(wrapper);
-            });
-
-            imagePreviewContainer.appendChild(previewRow);
-        }
-
-        // Establecer imagen principal
-        function setPrimaryImage(index) {
-            primaryImageIndex = index;
-            renderImages();
-            updateInputFiles();
-        }
-
-        // Eliminar imagen
-        function deleteImage(index) {
-            uploadedImages.splice(index, 1);
-            
-            // re asignar índice de principal si se borró la imagen marcada como principal
-            if (primaryImageIndex === index) {
-                primaryImageIndex = uploadedImages.length > 0 ? 0 : -1;
-            } else if (primaryImageIndex > index) {
-                primaryImageIndex--;
-            }
-            
-            renderImages();
-            updateInputFiles(); // Actualizar el input real al borrar
-        }
-
-
-        // RESETEO DEL FORMULARIO
-
-        document.querySelector('form').addEventListener('reset', function() {
-            //limpiar campos de color
+        document.querySelector('form').addEventListener('reset', () => {
             hiddenColorInput.value = '';
-            customColorInput.value = '#ffffff'; //picker default
-                
-            // picker default
-            customCircle.style.background = ''; 
-            
-            //Desmarcar radios
-            colorRadios.forEach(radio => {
+            customColorInput.value = '#ffffff';
+            customColorChip.style.background = '';
+            colorRadios.forEach((radio) => {
                 radio.checked = false;
             });
-
-            // clear images
             uploadedImages = [];
             primaryImageIndex = -1;
-            imageInput.value = ''; // Limpiar input file del DOM
+            imageInput.value = '';
             renderImages();
         });
-        
-    </script>
 
+        renderImages();
+    </script>
 </body>
 
 </html>
+
+
+

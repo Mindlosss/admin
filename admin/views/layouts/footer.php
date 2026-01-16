@@ -1,16 +1,5 @@
-<footer class="footer">
-    <div class="page-container">
-        <div class="row">
-            <div class="col-md-6 text-center text-md-start">
-                <script>document.write(new Date().getFullYear())</script> © Código y chips
-            </div>
-            <!-- <div class="col-md-6">
-                <div class="text-md-end footer-links d-none d-md-block">
-                    <a href="javascript: void(0);">About</a>
-                    <a href="javascript: void(0);">Support</a>
-                    <a href="javascript: void(0);">Contact Us</a>
-                </div>
-            </div> -->
-        </div>
+<footer class="mt-12 border-t border-slate-200/70 py-6 text-center text-xs text-slate-500">
+    <div class="mx-auto w-full max-w-6xl px-4 lg:px-8">
+        <span>&copy; <?= date('Y') ?> AC Codigo y Chips. Todos los derechos reservados.</span>
     </div>
 </footer>

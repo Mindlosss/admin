@@ -91,7 +91,7 @@ class MarcaController
         $nuevoLogo = $this->procesarLogo(false);
 
         if ($nuevoLogo === '') {
-            flash('mensaje', 'El logo no es vA¡lido. Usa JPG o PNG.');
+            flash('mensaje', 'El logo no es valido. Usa JPG o PNG.');
             flash('tipo_mensaje', 'warning');
             redirect("brands/{$id}/edit");
         }
@@ -152,7 +152,7 @@ class MarcaController
             return $esObligatorio ? '' : null;
         }
 
-        $directorio = "assets/images/brands/";
+        $directorio = 'assets/images/brands/';
         $baseUrl = App::imageBaseUrl();
         $destino = __DIR__ . "/../{$directorio}";
         if (!is_dir($destino)) {
@@ -167,7 +167,7 @@ class MarcaController
             return $esObligatorio ? '' : null;
         }
 
-        $nombreArchivo = uniqid() . "_brand." . $extension;
+        $nombreArchivo = uniqid() . '_brand.' . $extension;
 
         if (move_uploaded_file($_FILES['logo']['tmp_name'], $destino . $nombreArchivo)) {
             return $baseUrl . $directorio . $nombreArchivo;
@@ -186,7 +186,7 @@ class MarcaController
         if ($relativa === null) {
             return;
         }
-        $ruta = __DIR__ . "/../" . $relativa;
+        $ruta = __DIR__ . '/../' . $relativa;
         if (file_exists($ruta)) {
             @unlink($ruta);
         }
